@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algérie Expo - Euromag Fusion</title>
+    <meta name="description"
+        content="Algérie Expo - Une exposition exceptionnelle dédiée au patrimoine et à la culture algérienne. Bientôt disponible.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="./assets/css/styles-algerie-expo.css">
+    <link rel="icon" type="image/png" href="./assets/img/logo.png">
+</head>
+
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" /></span>
+                <span class="logo-text">Euromag Fusion</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#apropos">À Propos</a></li>
+                <li><a href="index.html#evenements">Événements</a></li>
+                <li><a href="algerie-expo.html" class="expo-link">
+                        <span>Algérie Expo</span>
+                        <span class="coming-soon-tag">Bientôt</span>
+                    </a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-menu" id="mobileMenu" role="button" aria-label="Menu mobile" tabindex="0">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Coming Soon Hero -->
+    <section class="coming-soon-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <div class="floating-elements">
+                <div class="float-element element-1">🍽️</div>
+                <div class="float-element element-2">🏖️</div>
+                <div class="float-element element-3">🏭</div>
+                <div class="float-element element-4">🏛️</div>
+                <div class="float-element element-5">🏢</div>
+                <div class="float-element element-6">🌾</div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <div class="coming-soon-badge">
+                <span>Bientôt</span>
+            </div>
+
+            <h1 class="main-title">
+                <span class="title-line">Algérie</span>
+                <span class="title-line gradient-text">Expo</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Une exposition exceptionnelle dédiée au patrimoine, à l'art et à la culture algérienne.
+                Préparez-vous à vivre une expérience immersive unique qui célèbre la richesse de notre héritage.
+            </p>
+
+            <div class="countdown-container">
+                <div class="countdown-title">Lancement dans :</div>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Jours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Heures</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Secondes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="index.html#evenements" class="explore-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Nos événements</span>
+                </a>
+                <button class="notify-btn" id="notifyBtn">
+                    <i class="fas fa-bell"></i>
+                    <span>Me notifier</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="scroll-indicator" id="scrollIndicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Preview Section -->
+    <section class="preview-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Aperçu de</span>
+                <span class="title-main">l'Exposition</span>
+            </h2>
+
+            <div class="preview-grid">
+                <div class="preview-card">
+                    <div class="preview-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Gastronomie Algérienne</h3>
+                    <p>Découvrez les saveurs authentiques de l'Algérie : couscous, tajines, pâtisseries orientales et
+                        spécialités régionales dans un parcours gustatif unique.</p>
+                </div>
+
+                <div class="preview-card">
+                    <div class="preview-icon">
+                        <i class="fas fa-mountain-sun"></i>
+                    </div>
+                    <h3>Tourisme & Destinations</h3>
+                    <p>Explorez les merveilles touristiques de l'Algérie : du Sahara aux plages méditerranéennes, des
+                        sites archéologiques aux oasis du Sud.</p>
+                </div>
+
+                <div class="preview-card">
+                    <div class="preview-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Industrie & Innovation</h3>
+                    <p>Découvrez le dynamisme industriel algérien : secteurs énergétiques, technologies émergentes et
+                        innovations dans l'industrie moderne.</p>
+                </div>
+
+                <div class="preview-card">
+                    <div class="preview-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>Culture & Patrimoine</h3>
+                    <p>Plongez dans la richesse culturelle millénaire : art traditionnel, musique, littérature et
+                        monuments historiques classés UNESCO.</p>
+                </div>
+
+                <div class="preview-card">
+                    <div class="preview-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>Agroalimentaire</h3>
+                    <p>Explorez l'agriculture algérienne moderne : production d'oliviers, agrumes, céréales et
+                        innovations dans l'industrie agroalimentaire.</p>
+                </div>
+
+                <div class="preview-card">
+                    <div class="preview-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Immobilier & Urbanisme</h3>
+                    <p>Découvrez les projets urbains modernes, l'architecture contemporaine et les opportunités
+                        d'investissement immobilier en Algérie.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section" id="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>Restez informé</h2>
+                    <p>Inscrivez-vous à notre newsletter pour recevoir toutes les actualités sur Algérie Expo.</p>
+                </div>
+
+                <form class="newsletter-form" id="newsletterForm" method="POST">
+                    <input type="text" name="_gotcha" style="display:none">
+
+                    <div class="form-group">
+                        <input type="email" name="email" id="newsletter-email" placeholder="Votre adresse email"
+                            required>
+                        <button type="submit" class="newsletter-btn">
+                            <span>S'inscrire</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="form-note">
+                        <small>En vous inscrivant, vous acceptez de recevoir nos communications. Vous pourrez vous
+                            désinscrire à tout moment.</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Ils nous</span>
+                <span class="title-main">Soutiennent</span>
+            </h2>
+
+            <div class="partners-announcement">
+                <div class="announcement-content">
+                    <div class="announcement-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Nos Partenaires Prestigieux</h3>
+                    <p>Nous sommes actuellement en discussion avec plusieurs organismes prestigieux et entreprises leaders qui soutiendront Algérie Expo. Ces partenariats stratégiques nous permettront d'offrir une exposition d'exception.</p>
+                    
+                    <div class="coming-partners">
+                        <div class="partner-placeholder">
+                            <div class="placeholder-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <span>Institutions Officielles</span>
+                        </div>
+                        <div class="partner-placeholder">
+                            <div class="placeholder-icon">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <span>Entreprises Leaders</span>
+                        </div>
+                        <div class="partner-placeholder">
+                            <div class="placeholder-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span>Associations Culturelles</span>
+                        </div>
+                    </div>
+
+                    <div class="announcement-badge">
+                        <i class="fas fa-clock"></i>
+                        <span>Annonces prochainement</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" /></span>
+                        <span class="logo-text">Euromag Fusion</span>
+                    </div>
+                    <p>Association culturelle dédiée à la promotion de la culture algérienne à travers des spectacles et
+                        événements d'exception.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link tiktok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="social-link youtube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="social-link linkedin">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="index.html#apropos">À Propos</a></li>
+                        <li><a href="index.html#evenements">Événements</a></li>
+                        <li><a href="algerie-expo.html">Algérie Expo</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Organisation d'événements</a></li>
+                        <li><a href="#">Spectacles culturels</a></li>
+                        <li><a href="#">Formations artistiques</a></li>
+                        <li><a href="#">Location de matériel</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Informations Légales</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="legal-link" data-legal="mentions">Mentions légales</a></li>
+                        <li><a href="#" class="legal-link" data-legal="conditions">Conditions générales</a></li>
+                        <li><a href="#" class="legal-link" data-legal="confidentialite">Politique de confidentialité</a>
+                        </li>
+                        <li><a href="#" class="legal-link" data-legal="cookies">Gestion des cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy;
+                    <script>document.write(new Date().getFullYear());</script> Euromag Fusion. Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Legal Modal -->
+    <div id="legalModal" class="modal">
+        <div class="modal-content legal-modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="legalContent"></div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop">↑</button>
+
+    <script src="./assets/js/common.js"></script>
+    <script src="./assets/js/script-algerie-expo.js"></script>
+</body>
+
+</html>

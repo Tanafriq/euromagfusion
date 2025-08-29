@@ -114,7 +114,7 @@ function initLegalAndServices() {
                 Siège social : Paris, France<br>
                 SIRET : 123 456 789 00012<br>
                 Email : contact@euromagfusion.com<br>
-                Téléphone : +33 6 95 15 99 33</p>
+                Téléphone : +33 6 12 34 56 78</p>
             </div>
             <div class="legal-section">
                 <h3>Directeur de la publication</h3>

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="./assets/css/common.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/styles-algerie-expo.css">
-    <link rel="icon" type="image/png" href="./assets/img/logo.png">
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
 </head>
 
 <body>
@@ -25,14 +25,15 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">
-                <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" /></span>
+            <a href="index.html" class="logo" title="Euromag Fusion, accueil">
+                <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" alt="Logo Euromag Fusion"
+                        loading="lazy" /></span>
                 <span class="logo-text">Euromag Fusion</span>
             </a>
             <ul class="nav-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="index.html#apropos">À Propos</a></li>
-                <li><a href="index.html#evenements">Événements</a></li>
+                <li><a href="index.html#evenements">Concerts</a></li>
                 <li><a href="algerie-expo.html" class="expo-link">
                         <span>Algérie Expo</span>
                         <span class="coming-soon-tag">Bientôt</span>
@@ -69,12 +70,13 @@
             <h1 class="main-title">
                 <span class="title-line">Algérie</span>
                 <span class="title-line gradient-text">Expo</span>
+                <span class="title-line paris-2026">Paris 2026</span>
             </h1>
-
-            <p class="hero-subtitle">
-                Une exposition exceptionnelle dédiée au patrimoine, à l'art et à la culture algérienne.
-                Préparez-vous à vivre une expérience immersive unique qui célèbre la richesse de notre héritage.
-            </p>
+            <p class="hero-subtitle">Le premier grand salon en France dédié à l'Algérie : une vitrine vivante de son
+                économie, sa culture, son tourisme et son dynamisme.</p>
+            <p class="hero-subtitle">Au programme : expositions, conférences, animations et rencontres pour découvrir
+                les opportunités d'investissement et plonger au cœur d'un patrimoine culturel et touristique
+                exceptionnel.</p>
 
             <div class="countdown-container">
                 <div class="countdown-title">Lancement dans :</div>
@@ -101,7 +103,7 @@
             <div class="cta-buttons">
                 <a href="index.html#evenements" class="explore-btn">
                     <i class="fas fa-arrow-left"></i>
-                    <span>Nos événements</span>
+                    <span>Nos concerts</span>
                 </a>
                 <button class="notify-btn" id="notifyBtn">
                     <i class="fas fa-bell"></i>
@@ -115,12 +117,219 @@
         </div>
     </section>
 
+    <!-- Salon Details Section -->
+    <section class="salon-details" id="salon-details">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Le premier</span>
+                <span class="title-main">salon de l'Algérie</span>
+            </h2>
+
+            <!-- Key Numbers -->
+            <div class="key-numbers">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">18-19</h3>
+                            <p class="stat-label">Avril 2026</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">20 000</h3>
+                            <p class="stat-label">Visiteurs</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">5 000</h3>
+                            <p class="stat-label">M² d'exposition</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">+150</h3>
+                            <p class="stat-label">Exposants</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Target Audience -->
+            <div class="audience-section">
+                <h3 class="subsection-title">Public attendu</h3>
+                <div class="audience-grid">
+                    <div class="audience-category">
+                        <div class="audience-card grand-public">
+                            <div class="audience-header">
+                                <div class="audience-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h4>Grand public</h4>
+                            </div>
+                            <ul class="audience-list">
+                                <li>Diasporas algériennes</li>
+                                <li>Français et européens</li>
+                                <li>Passionnés de culture et de voyage</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="audience-category">
+                        <div class="audience-card professionals">
+                            <div class="audience-header">
+                                <div class="audience-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <h4>Professionnels</h4>
+                            </div>
+                            <ul class="audience-list">
+                                <li>Acteurs économiques</li>
+                                <li>Investisseurs</li>
+                                <li>Agences et opérateurs internationaux</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="audience-category">
+                        <div class="audience-card institutions">
+                            <div class="audience-header">
+                                <div class="audience-icon">
+                                    <i class="fas fa-landmark"></i>
+                                </div>
+                                <h4>Institutions et médias</h4>
+                            </div>
+                            <ul class="audience-list">
+                                <li>Partenaires institutionnels</li>
+                                <li>Presse spécialisée</li>
+                                <li>TV, radios et influencers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Programming & Activities -->
+            <div class="programming-section">
+                <h3 class="subsection-title">Animations et programmation</h3>
+                <div class="programming-grid">
+                    <div class="programming-card">
+                        <div class="programming-number">01</div>
+                        <div class="programming-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h4>Scène culturelle</h4>
+                        <p>Musique traditionnelle, défilés de mode et spectacles authentiques</p>
+                    </div>
+                    <div class="programming-card">
+                        <div class="programming-number">02</div>
+                        <div class="programming-icon">
+                            <i class="fas fa-campground"></i>
+                        </div>
+                        <h4>Tente touarègue</h4>
+                        <p>Animations traditionnelles immersives au cœur de la culture nomade</p>
+                    </div>
+                    <div class="programming-card">
+                        <div class="programming-number">03</div>
+                        <div class="programming-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h4>Ateliers culinaires</h4>
+                        <p>Découverte des saveurs algériennes avec des chefs reconnus</p>
+                    </div>
+                    <div class="programming-card">
+                        <div class="programming-number">04</div>
+                        <div class="programming-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h4>Conférences</h4>
+                        <p>Tables rondes sur le tourisme et les opportunités d'investissement</p>
+                    </div>
+                    <div class="programming-card">
+                        <div class="programming-number">05</div>
+                        <div class="programming-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4>Espace networking</h4>
+                        <p>Rencontres privilégiées entre professionnels et investisseurs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication & Visibility -->
+            <div class="communication-section">
+                <h3 class="subsection-title">Communication et visibilité</h3>
+                <div class="communication-content">
+                    <p class="communication-intro">Une stratégie de communication 360° pour assurer une visibilité
+                        maximale à l'événement.</p>
+
+                    <div class="media-channels">
+                        <div class="media-channel">
+                            <div class="media-icon">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <div class="media-content">
+                                <h4>Médias traditionnels</h4>
+                                <p>Télévision, radios et presse écrite</p>
+                            </div>
+                        </div>
+                        <div class="media-channel">
+                            <div class="media-icon">
+                                <i class="fas fa-share-alt"></i>
+                            </div>
+                            <div class="media-content">
+                                <h4>Digital</h4>
+                                <p>Réseaux sociaux & influenceurs</p>
+                            </div>
+                        </div>
+                        <div class="media-channel">
+                            <div class="media-icon">
+                                <i class="fas fa-map-signs"></i>
+                            </div>
+                            <div class="media-content">
+                                <h4>Affichage</h4>
+                                <p>Campagnes urbaines et supports print</p>
+                            </div>
+                        </div>
+                        <div class="media-channel">
+                            <div class="media-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="media-content">
+                                <h4>Web</h4>
+                                <p>Site internet dédié au salon</p>
+                            </div>
+                        </div>
+                        <div class="media-channel">
+                            <div class="media-icon">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                            <div class="media-content">
+                                <h4>International</h4>
+                                <p>Partenariats médias Algérie & France</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
     <!-- Preview Section -->
     <section class="preview-section">
         <div class="container">
             <h2 class="section-title">
                 <span class="title-accent">Aperçu de</span>
-                <span class="title-main">l'Exposition</span>
+                <span class="title-main">l'exposition</span>
             </h2>
 
             <div class="preview-grid">
@@ -128,7 +337,7 @@
                     <div class="preview-icon">
                         <i class="fas fa-utensils"></i>
                     </div>
-                    <h3>Gastronomie Algérienne</h3>
+                    <h3>Gastronomie algérienne</h3>
                     <p>Découvrez les saveurs authentiques de l'Algérie : couscous, tajines, pâtisseries orientales et
                         spécialités régionales dans un parcours gustatif unique.</p>
                 </div>
@@ -215,7 +424,7 @@
         <div class="container">
             <h2 class="section-title">
                 <span class="title-accent">Ils nous</span>
-                <span class="title-main">Soutiennent</span>
+                <span class="title-main">soutiennent</span>
             </h2>
 
             <div class="partners-announcement">
@@ -223,27 +432,29 @@
                     <div class="announcement-icon">
                         <i class="fas fa-handshake"></i>
                     </div>
-                    <h3>Nos Partenaires Prestigieux</h3>
-                    <p>Nous sommes actuellement en discussion avec plusieurs organismes prestigieux et entreprises leaders qui soutiendront Algérie Expo. Ces partenariats stratégiques nous permettront d'offrir une exposition d'exception.</p>
-                    
+                    <h3>Nos partenaires prestigieux</h3>
+                    <p>Nous sommes actuellement en discussion avec plusieurs organismes prestigieux et entreprises
+                        leaders qui soutiendront Algérie Expo. Ces partenariats stratégiques nous permettront d'offrir
+                        une exposition d'exception.</p>
+
                     <div class="coming-partners">
                         <div class="partner-placeholder">
                             <div class="placeholder-icon">
                                 <i class="fas fa-building"></i>
                             </div>
-                            <span>Institutions Officielles</span>
+                            <span>Institutions officielles</span>
                         </div>
                         <div class="partner-placeholder">
                             <div class="placeholder-icon">
                                 <i class="fas fa-industry"></i>
                             </div>
-                            <span>Entreprises Leaders</span>
+                            <span>Entreprises leaders</span>
                         </div>
                         <div class="partner-placeholder">
                             <div class="placeholder-icon">
                                 <i class="fas fa-users"></i>
                             </div>
-                            <span>Associations Culturelles</span>
+                            <span>Associations culturelles</span>
                         </div>
                     </div>
 
@@ -266,7 +477,7 @@
                         <span class="logo-text">Euromag Fusion</span>
                     </div>
                     <p>Association culturelle dédiée à la promotion de la culture algérienne à travers des spectacles et
-                        événements d'exception.</p>
+                        concerts d'exception.</p>
                     <div class="social-links">
                         <a href="#" class="social-link facebook">
                             <i class="fab fa-facebook-f"></i>
@@ -291,7 +502,7 @@
                     <ul class="footer-links">
                         <li><a href="index.html">Accueil</a></li>
                         <li><a href="index.html#apropos">À Propos</a></li>
-                        <li><a href="index.html#evenements">Événements</a></li>
+                        <li><a href="index.html#evenements">Concerts</a></li>
                         <li><a href="algerie-expo.html">Algérie Expo</a></li>
                         <li><a href="index.html#contact">Contact</a></li>
                     </ul>
@@ -300,7 +511,7 @@
                 <div class="footer-section">
                     <h3>Services</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Organisation d'événements</a></li>
+                        <li><a href="#">Organisation de concerts</a></li>
                         <li><a href="#">Spectacles culturels</a></li>
                         <li><a href="#">Formations artistiques</a></li>
                         <li><a href="#">Location de matériel</a></li>

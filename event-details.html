@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de l'événement - Euromag Fusion</title>
+    <title>Détails du concert - Euromag Fusion</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -12,21 +12,22 @@
     <link rel="stylesheet" href="./assets/css/common.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/styles-event-details.css">
-    <link rel="icon" type="image/png" href="./assets/img/logo.png">
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
 </head>
 
 <body>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">
-                <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" /></span>
+            <a href="index.html" class="logo" title="Euromag Fusion, accueil">
+                <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" alt="Logo Euromag Fusion"
+                        loading="lazy" /></span>
                 <span class="logo-text">Euromag Fusion</span>
             </a>
             <ul class="nav-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="index.html#apropos">À Propos</a></li>
-                <li><a href="index.html#evenements">Événements</a></li>
+                <li><a href="index.html#evenements">Concerts</a></li>
                 <li><a href="algerie-expo.html" class="expo-link">
                         <span>Algérie Expo</span>
                         <span class="coming-soon-tag">Bientôt</span>
@@ -69,7 +70,7 @@
             <nav>
                 <a href="index.html">Accueil</a>
                 <span>›</span>
-                <a href="index.html#evenements">Événements</a>
+                <a href="index.html#evenements">Concerts</a>
                 <span>›</span>
                 <span id="breadcrumbTitle">Détails</span>
             </nav>
@@ -80,12 +81,12 @@
     <section class="event-content">
         <div class="container">
             <a href="index.html#evenements" class="back-btn">
-                ← Retour aux événements
+                ← Retour aux concerts
             </a>
 
             <div class="event-details-grid">
                 <div class="event-description">
-                    <h2>À propos de cet événement</h2>
+                    <h2>À propos de ce concert</h2>
                     <div id="eventFullDescription">
                         <!-- Contenu dynamique -->
                     </div>
@@ -140,7 +141,7 @@
                                 <div class="info-icon">📱</div>
                                 <div>
                                     <strong>Téléphone</strong><br>
-                                    +33 6 95 15 99 33
+                                    +33 6 12 34 56 78
                                 </div>
                             </div>
                         </div>
@@ -158,7 +159,7 @@
 
             <!-- Video Section -->
             <div class="video-section" id="videoSection">
-                <h2 style="text-align: center; margin-bottom: var(--space-8);">Vidéo de l'événement</h2>
+                <h2 style="text-align: center; margin-bottom: var(--space-8);">Vidéo du concert</h2>
                 <div class="video-player">
                     <iframe id="eventVideo" src="" frameborder="0" allowfullscreen></iframe>
                 </div>
@@ -174,7 +175,7 @@
 
             <!-- Share Section -->
             <div class="share-section">
-                <h2>Partager cet événement</h2>
+                <h2>Partager ce concert</h2>
                 <p>Faites découvrir la culture algérienne à vos proches</p>
                 <div class="share-buttons">
                     <a href="#" class="share-btn" onclick="shareOnFacebook()" title="Facebook"><i
@@ -203,7 +204,7 @@
                         <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" alt="Logo Euromag Fusion" loading="lazy"/></span>
                         <span class="logo-text">Euromag Fusion</span>
                     </div>
-                    <p>Association culturelle dédiée à la promotion de la culture algérienne à travers des spectacles et événements d'exception en France et en Europe.</p>
+                    <p>Association culturelle dédiée à la promotion de la culture algérienne à travers des spectacles et concerts d'exception en France et en Europe.</p>
                     <div class="social-links">
                         <a href="#" class="social-link facebook" aria-label="Facebook Euromag Fusion"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-link instagram" aria-label="Instagram Euromag Fusion"><i class="fab fa-instagram"></i></a>
@@ -217,14 +218,15 @@
                     <ul class="footer-links">
                         <li><a href="index.html">Accueil</a></li>
                         <li><a href="index.html#apropos">À Propos</a></li>
-                        <li><a href="index.html#evenements">Événements</a></li>
+                        <li><a href="index.html#evenements">Concerts</a></li>
+                        <li><a href="algerie-expo.html">Algérie Expo</a></li>
                         <li><a href="index.html#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h3>Services</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Organisation d'événements</a></li>
+                        <li><a href="#">Organisation de concerts</a></li>
                         <li><a href="#">Spectacles culturels</a></li>
                         <li><a href="#">Formations artistiques</a></li>
                         <li><a href="#">Location de matériel</a></li>

@@ -53,23 +53,167 @@ window.addEventListener('DOMContentLoaded', () => {
 function initHeroAnimations() {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        const text = heroTitle.textContent;
-        heroTitle.textContent = '';
-        heroTitle.style.opacity = '1';
-        setTimeout(() => typeWriter(heroTitle, text), 1000);
+        // Choisissez l'animation que vous préférez en décommentant une des lignes ci-dessous :
+        
+        // Option 1: Animation lettre par lettre avec effet 3D (recommandée)
+        animateTitle3DLetters(heroTitle);
+        
+        // Option 2: Animation de révélation par masque moderne
+        // animateTitleReveal(heroTitle);
+        
+        // Option 3: Animation de typing moderne
+        // animateModernTyping(heroTitle);
+        
+        // Option 4: Animation de morphing géométrique
+        // animateTitleMorph(heroTitle);
     }
 }
 
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    function step() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(step, speed);
+// Option 1: Animation 3D lettre par lettre sophistiquée
+function animateTitle3DLetters(heroTitle) {
+    const text = heroTitle.textContent;
+    heroTitle.innerHTML = '';
+    heroTitle.style.opacity = '1';
+    
+    const words = text.split(' ');
+    
+    words.forEach((word, wordIndex) => {
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'word';
+        wordSpan.style.display = 'inline-block';
+        wordSpan.style.marginRight = wordIndex < words.length - 1 ? '0.3em' : '0';
+        
+        word.split('').forEach((letter, letterIndex) => {
+            const letterSpan = document.createElement('span');
+            letterSpan.textContent = letter;
+            letterSpan.className = 'letter';
+            letterSpan.style.cssText = `
+                display: inline-block;
+                opacity: 0;
+                transform: translateY(100px) rotateX(-90deg) scale(0.5);
+                transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                transition-delay: ${(wordIndex * 0.1) + (letterIndex * 0.05)}s;
+                transform-origin: center bottom;
+            `;
+            wordSpan.appendChild(letterSpan);
+        });
+        
+        heroTitle.appendChild(wordSpan);
+    });
+    
+    setTimeout(() => {
+        const letters = heroTitle.querySelectorAll('.letter');
+        letters.forEach(letter => {
+            letter.style.opacity = '1';
+            letter.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
+        });
+        
+        // Effet de brillance après l'animation
+        setTimeout(() => {
+            heroTitle.classList.add('shimmer-effect');
+        }, 1500);
+    }, 300);
+}
+
+// Option 2: Animation de révélation par masque
+function animateTitleReveal(heroTitle) {
+    const text = heroTitle.textContent;
+    heroTitle.innerHTML = `<span class="title-reveal">${text}</span>`;
+    heroTitle.style.opacity = '1';
+    
+    const titleReveal = heroTitle.querySelector('.title-reveal');
+    titleReveal.style.cssText = `
+        display: inline-block;
+        background: linear-gradient(45deg, #ffffff, #e0e7ff, #c7d2fe, #ffffff);
+        background-size: 400% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+        animation: textReveal 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+                   gradientFlow 4s ease-in-out infinite 2s;
+    `;
+}
+
+// Option 3: Animation de typing moderne
+function animateModernTyping(heroTitle) {
+    const text = heroTitle.textContent;
+    heroTitle.textContent = '';
+    heroTitle.style.opacity = '1';
+    heroTitle.classList.add('modern-typing');
+    
+    let index = 0;
+    const typingSpeed = 100;
+    
+    function typeCharacter() {
+        if (index < text.length) {
+            heroTitle.textContent += text.charAt(index);
+            index++;
+            setTimeout(typeCharacter, typingSpeed);
+        } else {
+            heroTitle.classList.add('completed');
+            setTimeout(() => {
+                heroTitle.classList.add('glow-effect');
+            }, 500);
         }
     }
-    step();
+    
+    setTimeout(typeCharacter, 500);
+}
+
+// Option 4: Animation de morphing géométrique
+function animateTitleMorph(heroTitle) {
+    const text = heroTitle.textContent;
+    heroTitle.innerHTML = '';
+    heroTitle.style.opacity = '1';
+    
+    // Créer un conteneur pour l'effet de morphing
+    const morphContainer = document.createElement('div');
+    morphContainer.className = 'morph-container';
+    morphContainer.style.cssText = `
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+    `;
+    
+    const textSpan = document.createElement('span');
+    textSpan.textContent = text;
+    textSpan.style.cssText = `
+        display: inline-block;
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+        animation: morphIn 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        transform-origin: center center;
+    `;
+    
+    morphContainer.appendChild(textSpan);
+    heroTitle.appendChild(morphContainer);
+    
+    // Ajouter l'effet de particules autour du texte
+    setTimeout(() => {
+        createTitleParticles(morphContainer);
+        textSpan.style.animation += ', shimmer 3s ease-in-out infinite 2s';
+    }, 2000);
+}
+
+// Fonction pour créer des particules autour du titre
+function createTitleParticles(container) {
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: titleParticleFloat 3s ease-out infinite;
+            animation-delay: ${i * 0.1}s;
+            top: 50%;
+            left: 50%;
+        `;
+        container.appendChild(particle);
+    }
 }
 
 // ==================== PARTICLES ====================
@@ -146,20 +290,40 @@ function animateCounter(element, duration = 2000) {
 function initEventTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
-    tabButtons.forEach(button => button.addEventListener('click', () => {
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-        button.classList.add('active');
-        const targetContent = document.getElementById(button.dataset.tab);
-        if (targetContent) {
-            targetContent.classList.add('active');
-            targetContent.querySelectorAll('.event-card').forEach((card, index) => {
-                card.style.animation = 'none';
-                card.offsetHeight;
-                card.style.animation = `slideUp 0.6s ease ${index * 0.2}s forwards`;
-            });
-        }
-    }));
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Retirer la classe active de tous les boutons et contenus
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Activer le bouton cliqué
+            button.classList.add('active');
+            
+            // Trouver et activer le contenu correspondant
+            const targetContent = document.getElementById(button.dataset.tab);
+            if (targetContent) {
+                targetContent.classList.add('active');
+                
+                // Réinitialiser et animer les cartes d'événements
+                const eventCards = targetContent.querySelectorAll('.event-card');
+                eventCards.forEach((card, index) => {
+                    // Retirer toutes les animations précédentes
+                    card.style.animation = 'none';
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    
+                    // Force reflow pour s'assurer que les styles sont appliqués
+                    card.offsetHeight;
+                    
+                    // Appliquer la nouvelle animation avec un délai
+                    setTimeout(() => {
+                        card.style.animation = `slideUp 0.6s ease ${index * 0.15}s forwards`;
+                    }, 50);
+                });
+            }
+        });
+    });
 }
 
 // ==================== MODAL MANAGER ====================
@@ -284,7 +448,7 @@ function showNotification(message, type = 'info') {
 
 // ==================== ADVANCED EFFECTS ====================
 function initAdvancedEffects() {
-    const cards = document.querySelectorAll('.event-card, .contact-card, .stat-item');
+    const cards = document.querySelectorAll('.contact-card, .stat-item'); //.event-card
     cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             requestAnimationFrame(() => {

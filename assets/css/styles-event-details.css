@@ -1,12 +1,13 @@
 /* ===== EVENT HERO SECTION ===== */
 .event-hero {
-    height: 60vh;
+    height: 53vh;
     background: var(--gradient-primary);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    margin-top: 80px;
 }
 
 .event-hero-bg {
@@ -408,28 +409,59 @@
 
 /* ===== ANIMATIONS ===== */
 @keyframes slideInRight {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 @keyframes slideOutRight {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(100%); opacity: 0; }
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 @keyframes scaleIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -446,6 +478,7 @@
     .event-meta-hero {
         flex-direction: column;
         align-items: center;
+        gap: var(--space-4);
     }
 
     .share-buttons {
@@ -462,11 +495,11 @@
         height: 45px;
         font-size: 1.1rem;
     }
-    
+
     .share-buttons {
         gap: var(--space-2);
     }
-    
+
     .share-btn {
         width: 45px;
         height: 45px;

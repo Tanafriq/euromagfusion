@@ -37,14 +37,14 @@ function initMobileMenu() {
         mobileMenu.classList.toggle('active');
         navLinks.classList.toggle('active');
     });
-    
+
     document.addEventListener('click', (e) => {
         if (!mobileMenu.contains(e.target) && !navLinks.contains(e.target)) {
             mobileMenu.classList.remove('active');
             navLinks.classList.remove('active');
         }
     });
-    
+
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
             mobileMenu.classList.remove('active');
@@ -63,7 +63,7 @@ function initScrollToTop() {
 // ==================== MODAL MANAGER FOR LEGAL CONTENT ====================
 const LegalModalManager = (() => {
     const modals = {};
-    
+
     function register(id, { onOpen, onClose } = {}) {
         const modal = document.getElementById(id);
         if (!modal) return;
@@ -75,7 +75,7 @@ const LegalModalManager = (() => {
             document.body.style.overflow = 'hidden';
             onOpen?.(modal);
         }
-        
+
         function close() {
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
@@ -88,10 +88,10 @@ const LegalModalManager = (() => {
 
         modals[id] = { open, close, modal };
     }
-    
+
     function open(id) { modals[id]?.open(); }
     function close(id) { modals[id]?.close(); }
-    
+
     return { register, open, close };
 })();
 
@@ -274,7 +274,7 @@ function initLegalAndServices() {
 
     const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
     const textKeyMap = {
-        'organisationdevenements': 'organisation',
+        'organisationdeconcerts': 'organisation',
         'spectaclesculturels': 'spectacles',
         'formationsartistiques': 'formations',
         'locationdemateriel': 'location'

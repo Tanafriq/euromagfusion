@@ -1,6 +1,6 @@
 /* ===== EVENT HERO SECTION ===== */
 .event-hero {
-    height: 53vh;
+    height: 50vh;
     background: var(--gradient-primary);
     display: flex;
     align-items: center;

@@ -2,6 +2,7 @@
 
 // Variables globales
 let particleTimers = [];
+const FORMSPREE_ID = 'xrbagaao';
 
 // ==================== DOM CONTENT LOADED ====================
 window.addEventListener('DOMContentLoaded', () => {
@@ -10,6 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initEventTabs();
     initContactForm();
+    initNewsletterForm();
     initAdvancedEffects();
 
     // Init modals via a modal manager
@@ -39,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
         NavigationFooter.initMobileMenu();
         NavigationFooter.initScrollToTop();
         NavigationFooter.initLegalAndServices();
-        
+
         // Global scroll handler
         window.addEventListener('scroll', NavigationFooter.debounce(() => requestAnimationFrame(NavigationFooter.handleScroll), 10));
     }
@@ -54,16 +56,16 @@ function initHeroAnimations() {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
         // Choisissez l'animation que vous préférez en décommentant une des lignes ci-dessous :
-        
+
         // Option 1: Animation lettre par lettre avec effet 3D (recommandée)
         animateTitle3DLetters(heroTitle);
-        
+
         // Option 2: Animation de révélation par masque moderne
         // animateTitleReveal(heroTitle);
-        
+
         // Option 3: Animation de typing moderne
         // animateModernTyping(heroTitle);
-        
+
         // Option 4: Animation de morphing géométrique
         // animateTitleMorph(heroTitle);
     }
@@ -74,15 +76,15 @@ function animateTitle3DLetters(heroTitle) {
     const text = heroTitle.textContent;
     heroTitle.innerHTML = '';
     heroTitle.style.opacity = '1';
-    
+
     const words = text.split(' ');
-    
+
     words.forEach((word, wordIndex) => {
         const wordSpan = document.createElement('span');
         wordSpan.className = 'word';
         wordSpan.style.display = 'inline-block';
         wordSpan.style.marginRight = wordIndex < words.length - 1 ? '0.3em' : '0';
-        
+
         word.split('').forEach((letter, letterIndex) => {
             const letterSpan = document.createElement('span');
             letterSpan.textContent = letter;
@@ -97,17 +99,17 @@ function animateTitle3DLetters(heroTitle) {
             `;
             wordSpan.appendChild(letterSpan);
         });
-        
+
         heroTitle.appendChild(wordSpan);
     });
-    
+
     setTimeout(() => {
         const letters = heroTitle.querySelectorAll('.letter');
         letters.forEach(letter => {
             letter.style.opacity = '1';
             letter.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
         });
-        
+
         // Effet de brillance après l'animation
         setTimeout(() => {
             heroTitle.classList.add('shimmer-effect');
@@ -120,7 +122,7 @@ function animateTitleReveal(heroTitle) {
     const text = heroTitle.textContent;
     heroTitle.innerHTML = `<span class="title-reveal">${text}</span>`;
     heroTitle.style.opacity = '1';
-    
+
     const titleReveal = heroTitle.querySelector('.title-reveal');
     titleReveal.style.cssText = `
         display: inline-block;
@@ -141,10 +143,10 @@ function animateModernTyping(heroTitle) {
     heroTitle.textContent = '';
     heroTitle.style.opacity = '1';
     heroTitle.classList.add('modern-typing');
-    
+
     let index = 0;
     const typingSpeed = 100;
-    
+
     function typeCharacter() {
         if (index < text.length) {
             heroTitle.textContent += text.charAt(index);
@@ -157,7 +159,7 @@ function animateModernTyping(heroTitle) {
             }, 500);
         }
     }
-    
+
     setTimeout(typeCharacter, 500);
 }
 
@@ -166,7 +168,7 @@ function animateTitleMorph(heroTitle) {
     const text = heroTitle.textContent;
     heroTitle.innerHTML = '';
     heroTitle.style.opacity = '1';
-    
+
     // Créer un conteneur pour l'effet de morphing
     const morphContainer = document.createElement('div');
     morphContainer.className = 'morph-container';
@@ -175,7 +177,7 @@ function animateTitleMorph(heroTitle) {
         display: inline-block;
         overflow: hidden;
     `;
-    
+
     const textSpan = document.createElement('span');
     textSpan.textContent = text;
     textSpan.style.cssText = `
@@ -185,10 +187,10 @@ function animateTitleMorph(heroTitle) {
         animation: morphIn 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
         transform-origin: center center;
     `;
-    
+
     morphContainer.appendChild(textSpan);
     heroTitle.appendChild(morphContainer);
-    
+
     // Ajouter l'effet de particules autour du texte
     setTimeout(() => {
         createTitleParticles(morphContainer);
@@ -290,21 +292,21 @@ function animateCounter(element, duration = 2000) {
 function initEventTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
-    
+
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             // Retirer la classe active de tous les boutons et contenus
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
-            
+
             // Activer le bouton cliqué
             button.classList.add('active');
-            
+
             // Trouver et activer le contenu correspondant
             const targetContent = document.getElementById(button.dataset.tab);
             if (targetContent) {
                 targetContent.classList.add('active');
-                
+
                 // Réinitialiser et animer les cartes d'événements
                 const eventCards = targetContent.querySelectorAll('.event-card');
                 eventCards.forEach((card, index) => {
@@ -312,10 +314,10 @@ function initEventTabs() {
                     card.style.animation = 'none';
                     card.style.opacity = '0';
                     card.style.transform = 'translateY(30px)';
-                    
+
                     // Force reflow pour s'assurer que les styles sont appliqués
                     card.offsetHeight;
-                    
+
                     // Appliquer la nouvelle animation avec un délai
                     setTimeout(() => {
                         card.style.animation = `slideUp 0.6s ease ${index * 0.15}s forwards`;
@@ -383,6 +385,7 @@ function initContactForm() {
         const nom = formData.get('nom');
         const email = formData.get('email');
         const message = formData.get('message');
+        formData.append('subject', 'Contact formulaire');
 
         // Vérification des champs obligatoires
         if (!nom || !email || !message) {
@@ -401,7 +404,7 @@ function initContactForm() {
         submitBtn.disabled = true;
 
         try {
-            const res = await fetch("https://formspree.io/f/xrbagaao", {
+            const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
                 method: "POST",
                 body: formData,
                 headers: { "Accept": "application/json" }
@@ -421,6 +424,80 @@ function initContactForm() {
         } finally {
             setTimeout(() => {
                 submitBtn.innerHTML = originalText;
+                submitBtn.style.background = '';
+                submitBtn.disabled = false;
+            }, 3000);
+        }
+    });
+}
+
+function initNewsletterForm() {
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (!newsletterForm) return;
+
+    const emailInput = newsletterForm.querySelector('input[type="email"]');
+    const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+
+    // Regex email simple mais efficace
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    newsletterForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = emailInput.value.trim();
+
+        // Vérification email
+        if (!email) {
+            showNotification('Veuillez entrer votre adresse email.', 'error');
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            showNotification('Veuillez entrer une adresse email valide.', 'error');
+            return;
+        }
+
+        // Sauvegarde de l'état original du bouton
+        const originalHTML = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        submitBtn.disabled = true;
+
+        try {
+            // Création du FormData avec email et mention "concert"
+            const formData = new FormData();
+            formData.append('subject', 'Inscription concerts');
+            formData.append('Intérêt', 'Concerts');
+            formData.append('Email', email);
+
+            const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                method: "POST",
+                body: formData,
+                headers: { "Accept": "application/json" }
+            });
+
+            if (res.ok) {
+                submitBtn.innerHTML = '<i class="fas fa-check"></i>';
+                submitBtn.style.background = 'var(--success, #28a745)';
+                showNotification('Inscription réussie ! Merci pour votre intérêt pour nos concerts 🎵', 'success');
+                newsletterForm.reset();
+
+                // Analytics optionnel (si vous utilisez Google Analytics)
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'newsletter_signup', {
+                        event_category: 'engagement',
+                        event_label: 'concert'
+                    });
+                }
+            } else {
+                throw new Error("Erreur lors de l'inscription");
+            }
+        } catch (err) {
+            console.error('Erreur newsletter:', err);
+            showNotification('Une erreur est survenue. Veuillez réessayer.', 'error');
+        } finally {
+            // Réinitialisation après 3 secondes
+            setTimeout(() => {
+                submitBtn.innerHTML = originalHTML;
                 submitBtn.style.background = '';
                 submitBtn.disabled = false;
             }, 3000);

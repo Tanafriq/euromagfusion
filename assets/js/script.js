@@ -465,6 +465,13 @@ function initNewsletterForm() {
         try {
             // Création du FormData avec email et mention "concert"
             const formData = new FormData();
+
+            // Vérifie honeypot (anti-bot)
+            if (formData.get('_gotcha')) {
+                console.warn("Bot détecté, soumission ignorée 🚫");
+                return;
+            }
+            
             formData.append('subject', 'Inscription concerts');
             formData.append('Intérêt', 'Concerts');
             formData.append('Email', email);

@@ -122,138 +122,6 @@ function createParticles() {
     }
 }
 
-// ===== NEWSLETTER FUNCTIONALITY =====
-function initNewsletterForm() {
-    if (!elements.newsletterForm) return;
-    
-    const emailInput = elements.newsletterForm.querySelector('#newsletter-email');
-    const submitBtn = elements.newsletterForm.querySelector('.newsletter-btn');
-    const submitSpan = submitBtn?.querySelector('span');
-    const submitIcon = submitBtn?.querySelector('i');
-    
-    // Regex email simple mais efficace
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    elements.newsletterForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(elements.newsletterForm);
-        
-        // Vérification honeypot (anti-bot)
-        if (formData.get('_gotcha')) {
-            console.warn("Bot détecté, soumission ignorée 🚫");
-            return;
-        }
-        
-        const email = formData.get('email')?.trim();
-        
-        // Vérification email obligatoire
-        if (!email) {
-            showNotification('Veuillez entrer votre adresse email.', 'error');
-            emailInput?.focus();
-            return;
-        }
-        
-        // Vérification format email
-        if (!emailRegex.test(email)) {
-            showNotification('Veuillez entrer une adresse email valide.', 'error');
-            emailInput?.focus();
-            return;
-        }
-        
-        // Sauvegarde de l'état original du bouton
-        const originalSpanText = submitSpan?.textContent || 'S\'inscrire';
-        const originalIconClass = submitIcon?.className || 'fas fa-paper-plane';
-        
-        // État de chargement
-        if (submitSpan) submitSpan.textContent = 'Inscription...';
-        if (submitIcon) submitIcon.className = 'fas fa-spinner fa-spin';
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.7';
-        }
-        
-        try {
-            // Ajout de la mention "Algérie Expo"
-            formData.append('subject', 'Inscription Algérie Expo');
-            formData.append('Intérêt', 'Algérie Expo');
-            formData.append('Email', email);
-            
-            const res = await fetch(`https://formspree.io/f/${CONFIG.FORMSPREE_ID}`, {
-                method: "POST",
-                body: formData,
-                headers: { "Accept": "application/json" }
-            });
-            
-            if (res.ok) {
-                // État de succès
-                if (submitSpan) submitSpan.textContent = 'Inscrit !';
-                if (submitIcon) submitIcon.className = 'fas fa-check';
-                if (submitBtn) {
-                    submitBtn.style.background = 'var(--success, #28a745)';
-                    submitBtn.style.opacity = '1';
-                }
-                
-                showNotification('Inscription réussie ! Vous recevrez toutes les actualités d\'Algérie Expo', 'success');
-                elements.newsletterForm.reset();
-                
-                // Analytics optionnel
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'newsletter_signup', {
-                        event_category: 'engagement',
-                        event_label: 'Algérie Expo',
-                        custom_map: {'custom_parameter_1': 'algerie_expo'}
-                    });
-                }
-                
-                // Tracking Facebook Pixel optionnel
-                if (typeof fbq !== 'undefined') {
-                    fbq('track', 'Lead', {
-                        content_name: 'Newsletter Algérie Expo'
-                    });
-                }
-                
-            } else {
-                const errorData = await res.json().catch(() => ({}));
-                console.error('Erreur Formspree:', errorData);
-                throw new Error(`Erreur ${res.status}: ${errorData.error || 'Inscription échouée'}`);
-            }
-        } catch (err) {
-            console.error('Erreur newsletter:', err);
-            
-            // État d'erreur
-            if (submitSpan) submitSpan.textContent = 'Erreur';
-            if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
-            if (submitBtn) submitBtn.style.background = 'var(--danger, #dc3545)';
-            
-            showNotification('Une erreur est survenue lors de l\'inscription. Veuillez réessayer.', 'error');
-        } finally {
-            // Réinitialisation après 3 secondes
-            setTimeout(() => {
-                if (submitSpan) submitSpan.textContent = originalSpanText;
-                if (submitIcon) submitIcon.className = originalIconClass;
-                if (submitBtn) {
-                    submitBtn.style.background = '';
-                    submitBtn.style.opacity = '';
-                    submitBtn.disabled = false;
-                }
-            }, 3000);
-        }
-    });
-    
-    // Validation en temps réel (optionnel)
-    if (emailInput) {
-        emailInput.addEventListener('input', () => {
-            const email = emailInput.value.trim();
-            if (email && !emailRegex.test(email)) {
-                emailInput.style.borderColor = 'var(--danger, #dc3545)';
-            } else {
-                emailInput.style.borderColor = '';
-            }
-        });
-    }
-}
-
 // ===== NOTIFICATION SYSTEM =====
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
@@ -438,14 +306,15 @@ function initNewsletterForm() {
         }
         
         try {
-            // Ajout de la mention "Algérie Expo"
-            formData.append('subject', 'Algérie Expo');
-            formData.append('mention', 'Algérie Expo');
-            formData.set('message', `Inscription newsletter Algérie Expo - Email: ${email}`);
+            // Création d'un nouveau FormData propre avec uniquement les champs souhaités
+            const cleanFormData = new FormData();
+            cleanFormData.append('subject', 'Inscription Algérie Expo');
+            cleanFormData.append('Intérêt', 'Algérie Expo');
+            cleanFormData.append('Email', email);
             
             const res = await fetch(`https://formspree.io/f/${CONFIG.FORMSPREE_ID}`, {
                 method: "POST",
-                body: formData,
+                body: cleanFormData,
                 headers: { "Accept": "application/json" }
             });
             
@@ -458,14 +327,14 @@ function initNewsletterForm() {
                     submitBtn.style.opacity = '1';
                 }
                 
-                showNotification('Inscription réussie ! Vous recevrez toutes les actualités d\'Algérie Expo 🇩🇿', 'success');
+                showNotification('Inscription réussie ! Vous recevrez toutes les actualités d\'Algérie Expo', 'success');
                 elements.newsletterForm.reset();
                 
                 // Analytics optionnel
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'newsletter_signup', {
                         event_category: 'engagement',
-                        event_label: 'Algérie Expo',
+                        event_label: 'Inscription Algérie Expo',
                         custom_map: {'custom_parameter_1': 'algerie_expo'}
                     });
                 }

@@ -159,7 +159,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo-img {
+    width: 45px;
     height: 45px;
+    object-fit: contain;
+    object-position: center;
 }
 
 .nav-links {
@@ -272,6 +275,12 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: var(--space-12);
     margin-bottom: var(--space-12);
+}
+
+.footer .logo-img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
 }
 
 .footer-logo {

@@ -7,7 +7,7 @@ const eventData = {
         type: 'Concert',
         time: '20h00 - 23h30',
         price: '€',
-        image: './assets/img/chazil-ban.webp',
+        image: './assets/img/banner-chazil.webp',
         video: '8hH7f3WKHyY',
         description: `
             <p>Le concert a été une célébration unique du raï, un genre musical algérien que l'artiste a su réinventer. Son style allie la richesse du raï classique à une touche moderne et audacieuse, pour créer une musique à la fois authentique et novatrice.</p><br />
@@ -43,7 +43,7 @@ const eventData = {
         type: 'Concert',
         time: '19h00 - 24h00',
         price: '€',
-        image: './assets/img/babylone-djam-timoh.webp',
+        image: './assets/img/banner-babylone-djam-timoh.webp',
         video: 'ng6WRvuHRxM',
         description: `
             <p>Cet événement a été une célébration de la richesse et de la diversité de la musique algérienne actuelle, réunissant trois artistes à l'avant-garde de la scène. La soirée a offert une exploration de genres variés, allant de la poésie pop-folk de <strong>Babylone</strong> à la fusion électrique de <strong>Djam</strong>, en passant par l'énergie brute et authentique du rap de <strong>Timoh</strong>.</p><br />
@@ -78,7 +78,7 @@ const eventData = {
         type: 'Concert',
         time: '20h00 - 22h30',
         price: '€',
-        image: './assets/img/tarhaninel-freeklane-ban.webp',
+        image: './assets/img/banner-tarhaninel-freeklane.webp',
         video: 'c7UwD-7BBt0',
         description: `
             <p>Cet événement a été une véritable célébration du voyage et de la fusion musicale, réunissant deux artistes exceptionnels, <strong>Kader Tarhanine</strong> et <strong>Freeklane</strong>. La soirée a offert au public une immersion unique, où les sons du désert et les rythmes folkloriques algériens ont rencontré des influences modernes, créant un dialogue musical fascinant entre le passé et le présent.</p><br />

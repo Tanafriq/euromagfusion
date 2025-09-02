@@ -15,7 +15,7 @@
       "@context": "https://schema.org",
       "@type": "Event",
       "name": "Algérie Expo Paris 2026",
-      "description": "Le premier salon international dédié à l’Algérie à Paris, pour explorer patrimoine, culture, tourisme et innovation.",
+      "description": "Le premier salon international dédié à l'Algérie à Paris, pour explorer patrimoine, culture, tourisme et innovation.",
       "startDate": "2026-04-18",
       "endDate": "2026-04-19",
       "location": {
@@ -41,7 +41,6 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <link rel="stylesheet" href="./assets/css/common.css">
-    <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/styles-algerie-expo.css">
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
 </head>
@@ -75,6 +74,14 @@
             </div>
         </div>
     </nav>
+
+    <!-- Floating Exhibitor Button -->
+    <div class="floating-exhibitor-btn" id="floatingExhibitorBtn">
+        <button class="exhibitor-btn" id="exhibitorBtn">
+            <i class="fas fa-handshake"></i>
+            <span>DEVENEZ EXPOSANT</span>
+        </button>
+    </div>
 
     <!-- Coming Soon Hero -->
     <section class="coming-soon-hero">
@@ -244,7 +251,7 @@
                             <ul class="audience-list">
                                 <li>Partenaires institutionnels</li>
                                 <li>Presse spécialisée</li>
-                                <li>TV, radios et influencers</li>
+                                <li>TV, radios et influenceurs</li>
                             </ul>
                         </div>
                     </div>
@@ -306,7 +313,7 @@
                                 <i class="fas fa-tv"></i>
                             </div>
                             <div class="media-content">
-                                <h4>Médias traditionnels</h4>
+                                <h4>Médias</h4>
                                 <p>Télévision, radios et presse écrite</p>
                             </div>
                         </div>
@@ -349,6 +356,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
     <!-- Preview Section -->
@@ -409,7 +417,7 @@
                     <div class="preview-icon">
                         <i class="fas fa-building"></i>
                     </div>
-                    <h3>Immobilier & Urbanisme</h3>
+                    <h3>Immobilier</h3>
                     <p>Découvrez les projets urbains modernes, l'architecture contemporaine et les opportunités
                         d'investissement immobilier en Algérie.</p>
                 </div>
@@ -493,6 +501,97 @@
             </div>
         </div>
     </section>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content contact-modal-content">
+            <span class="close-btn" id="closeContactModal">&times;</span>
+            <div class="contact-form-container">
+                <h2>Devenez Exposant - Algérie Expo 2026</h2>
+                <p class="modal-subtitle">Rejoignez-nous pour présenter votre entreprise lors du premier salon dédié à l'Algérie en France.</p>
+                
+                <form class="contact-form" id="contactForm" method="POST">
+                    <input type="text" name="_gotcha" style="display:none">
+                    <input type="hidden" name="subject" value="Demande Exposant - Algérie Expo">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nom">Nom *</label>
+                            <input type="text" id="nom" name="nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom">Prénom *</label>
+                            <input type="text" id="prenom" name="prenom" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="typeClient">Type de profil *</label>
+                        <select id="typeClient" name="typeClient" required>
+                            <option value="">Sélectionnez votre profil</option>
+                            <option value="particulier">Particulier</option>
+                            <option value="entreprise">Entreprise</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="entrepriseFields" style="display: none;">
+                        <div class="form-sub-row">
+                            <div class="form-sub-group">
+                                <label for="nomEntreprise">Nom de l'entreprise *</label>
+                                <input type="text" id="nomEntreprise" name="nomEntreprise">
+                            </div>
+                            <div class="form-sub-group">
+                                <label for="secteurActivite">Secteur d'activité *</label>
+                                <input type="text" id="secteurActivite" name="secteurActivite">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fonction">Fonction</label>
+                        <input type="text" id="fonction" name="fonction" placeholder="Directeur, Manager, etc.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adresse">Adresse</label>
+                        <input type="text" id="adresse" name="adresse" placeholder="Numéro et nom de rue">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ville">Ville</label>
+                            <input type="text" id="ville" name="ville">
+                        </div>
+                        <div class="form-group">
+                            <label for="codePostal">Code postal *</label>
+                            <input type="text" id="codePostal" name="codePostal" required pattern="[0-9]{5}" 
+                                   title="Veuillez entrer un code postal valide (5 chiffres)">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Votre message</label>
+                        <textarea id="message" name="message" rows="4" 
+                                  placeholder="Parlez-nous de votre projet, de vos produits ou services..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span>Envoyer ma demande</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    
+                    <div class="form-note">
+                        <small>En soumettant ce formulaire, vous acceptez d'être contacté par notre équipe concernant votre participation à Algérie Expo 2026.</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">

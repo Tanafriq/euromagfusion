@@ -32,35 +32,35 @@ function initFloatingButton() {
     if (!elements.floatingExhibitorBtn || !elements.exhibitorBtn) return;
 
     let lastScrollY = window.pageYOffset;
-    
+
     function updateButtonPosition() {
         const currentScrollY = window.pageYOffset;
         const scrollDifference = currentScrollY - lastScrollY;
-        
+
         // Calculer la position basée sur le scroll
         const viewportHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         const scrollPercentage = currentScrollY / (documentHeight - viewportHeight);
-        
+
         // Position du bouton entre 20% et 70% de la hauteur de l'écran
         const minPosition = 20; // 20% du haut
         const maxPosition = 70; // 70% du haut
         const newPosition = minPosition + (scrollPercentage * (maxPosition - minPosition));
-        
+
         elements.floatingExhibitorBtn.style.bottom = `${100 - newPosition}%`;
         elements.floatingExhibitorBtn.style.transform = `translateY(-50%)`;
-        
+
         lastScrollY = currentScrollY;
     }
 
     // Écouter le scroll avec throttling
     window.addEventListener('scroll', throttle(updateButtonPosition, 16), { passive: true });
-    
+
     // Click handler pour ouvrir le modal
-    elements.exhibitorBtn.addEventListener('click', function() {
+    elements.exhibitorBtn.addEventListener('click', function () {
         openContactModal();
     });
-    
+
     // Position initiale
     updateButtonPosition();
 }
@@ -70,7 +70,7 @@ function openContactModal() {
     if (elements.contactModal) {
         elements.contactModal.style.display = 'block';
         document.body.style.overflow = 'hidden';
-        
+
         // Focus sur le premier champ
         const firstInput = elements.contactModal.querySelector('input[type="text"]');
         if (firstInput) {
@@ -95,7 +95,7 @@ function initContactModal() {
     }
 
     // Click outside to close
-    elements.contactModal.addEventListener('click', function(e) {
+    elements.contactModal.addEventListener('click', function (e) {
         if (e.target === elements.contactModal) {
             closeContactModal();
         }
@@ -108,7 +108,7 @@ function initContactModal() {
     const secteurActivite = document.getElementById('secteurActivite');
 
     if (typeClientSelect && entrepriseFields) {
-        typeClientSelect.addEventListener('change', function() {
+        typeClientSelect.addEventListener('change', function () {
             if (this.value === 'entreprise') {
                 entrepriseFields.style.display = 'block';
                 if (nomEntreprise) nomEntreprise.required = true;
@@ -134,69 +134,69 @@ function initContactForm() {
     const submitBtn = elements.contactForm.querySelector('.submit-btn');
     const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
-    
+
     // Regex email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     elements.contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const formData = new FormData(elements.contactForm);
-        
+
         // Vérification honeypot (anti-bot)
         if (formData.get('_gotcha')) {
             console.warn("Bot détecté, soumission ignorée 🚫");
             return;
         }
-        
+
         // Validation des champs obligatoires
         const nom = formData.get('nom')?.trim();
         const prenom = formData.get('prenom')?.trim();
         const typeClient = formData.get('typeClient');
         const email = formData.get('email')?.trim();
         const codePostal = formData.get('codePostal')?.trim();
-        
+
         // Vérifications de base
         if (!nom || !prenom || !typeClient || !email || !codePostal) {
             showNotification('Veuillez remplir tous les champs obligatoires.', 'error');
             return;
         }
-        
+
         // Vérification email
         if (!emailRegex.test(email)) {
             showNotification('Veuillez entrer une adresse email valide.', 'error');
             return;
         }
-        
+
         // Vérification code postal
         const codePostalRegex = /^[0-9]{5}$/;
         if (!codePostalRegex.test(codePostal)) {
             showNotification('Veuillez entrer un code postal valide (5 chiffres).', 'error');
             return;
         }
-        
+
         // Vérifications spécifiques pour entreprise
         if (typeClient === 'entreprise') {
             const nomEntreprise = formData.get('nomEntreprise')?.trim();
             const secteurActivite = formData.get('secteurActivite')?.trim();
-            
+
             if (!nomEntreprise || !secteurActivite) {
                 showNotification('Veuillez remplir le nom de l\'entreprise et le secteur d\'activité.', 'error');
                 return;
             }
         }
-        
+
         // État de chargement
         const originalSpanText = submitSpan?.textContent || 'Envoyer ma demande';
         const originalIconClass = submitIcon?.className || 'fas fa-paper-plane';
-        
+
         if (submitSpan) submitSpan.textContent = 'Envoi en cours...';
         if (submitIcon) submitIcon.className = 'fas fa-spinner fa-spin';
         if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.style.opacity = '0.7';
         }
-        
+
         try {
             // Préparation des données
             const cleanFormData = new FormData();
@@ -204,33 +204,33 @@ function initContactForm() {
             cleanFormData.append('Nom', nom);
             cleanFormData.append('Prénom', prenom);
             cleanFormData.append('Type', typeClient);
-            
+
             if (typeClient === 'entreprise') {
                 cleanFormData.append('Entreprise', formData.get('nomEntreprise') || '');
                 cleanFormData.append('Secteur', formData.get('secteurActivite') || '');
             }
-            
+
             const fonction = formData.get('fonction')?.trim();
             if (fonction) cleanFormData.append('Fonction', fonction);
-            
+
             const adresse = formData.get('adresse')?.trim();
             if (adresse) cleanFormData.append('Adresse', adresse);
-            
+
             const ville = formData.get('ville')?.trim();
             if (ville) cleanFormData.append('Ville', ville);
-            
+
             cleanFormData.append('Code_Postal', codePostal);
             cleanFormData.append('Email', email);
-            
+
             const message = formData.get('message')?.trim();
             if (message) cleanFormData.append('Message', message);
-            
+
             const res = await fetch(`https://formspree.io/f/${CONFIG.FORMSPREE_ID}`, {
                 method: "POST",
                 body: cleanFormData,
                 headers: { "Accept": "application/json" }
             });
-            
+
             if (res.ok) {
                 // État de succès
                 if (submitSpan) submitSpan.textContent = 'Envoyé !';
@@ -239,30 +239,30 @@ function initContactForm() {
                     submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
                     submitBtn.style.opacity = '1';
                 }
-                
+
                 showNotification('Votre demande a été envoyée avec succès ! Nous vous recontacterons bientôt.', 'success');
-                
+
                 // Fermer le modal après succès
                 setTimeout(() => {
                     closeContactModal();
                     elements.contactForm.reset();
-                    
+
                     // Réinitialiser les champs entreprise
                     const entrepriseFields = document.getElementById('entrepriseFields');
                     if (entrepriseFields) {
                         entrepriseFields.style.display = 'none';
                     }
                 }, 2000);
-                
+
                 // Analytics optionnel
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'exhibitor_request', {
                         event_category: 'engagement',
                         event_label: 'Demande Exposant Algérie Expo',
-                        custom_map: {'custom_parameter_1': 'algerie_expo_exhibitor'}
+                        custom_map: { 'custom_parameter_1': 'algerie_expo_exhibitor' }
                     });
                 }
-                
+
             } else {
                 const errorData = await res.json().catch(() => ({}));
                 console.error('Erreur Formspree:', errorData);
@@ -270,12 +270,12 @@ function initContactForm() {
             }
         } catch (err) {
             console.error('Erreur formulaire contact:', err);
-            
+
             // État d'erreur
             if (submitSpan) submitSpan.textContent = 'Erreur';
             if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
             if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
-            
+
             showNotification('Une erreur est survenue lors de l\'envoi. Veuillez réessayer.', 'error');
         } finally {
             // Réinitialisation après 3 secondes
@@ -401,14 +401,14 @@ function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
-    
+
     // Styles pour les différents types
     const styles = {
         success: 'linear-gradient(135deg, #059669, #10b981)',
         error: 'linear-gradient(135deg, #dc2626, #ef4444)',
         info: 'linear-gradient(135deg, #6366f1, #8b5cf6)'
     };
-    
+
     notification.style.cssText = `
         position: fixed; 
         top: 100px; 
@@ -426,7 +426,7 @@ function showNotification(message, type = 'info') {
         line-height: 1.4;
         border: 1px solid rgba(255, 255, 255, 0.2);
     `;
-    
+
     // Ajouter les styles d'animation dans le head si pas déjà présents
     if (!document.querySelector('#notification-styles')) {
         const style = document.createElement('style');
@@ -443,9 +443,9 @@ function showNotification(message, type = 'info') {
         `;
         document.head.appendChild(style);
     }
-    
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.animation = 'slideOutRight 0.3s ease';
         setTimeout(() => notification.remove(), 300);
@@ -519,135 +519,119 @@ function initEventListeners() {
 // ===== NEWSLETTER FUNCTIONALITY =====
 function initNewsletterForm() {
     if (!elements.newsletterForm) return;
-    
+
     const emailInput = elements.newsletterForm.querySelector('#newsletter-email');
     const submitBtn = elements.newsletterForm.querySelector('.newsletter-btn');
     const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
-    
-    // Regex email simple mais efficace
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     elements.newsletterForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const formData = new FormData(elements.newsletterForm);
-        
-        // Vérification honeypot (anti-bot)
+
+        // Honeypot anti-bot
         if (formData.get('_gotcha')) {
-            console.warn("Bot détecté, soumission ignorée 🚫");
+            console.warn("Bot détecté 🚫");
             return;
         }
-        
+
         const email = formData.get('email')?.trim();
-        
-        // Vérification email obligatoire
         if (!email) {
             showNotification('Veuillez entrer votre adresse email.', 'error');
             emailInput?.focus();
             return;
         }
-        
-        // Vérification format email
         if (!emailRegex.test(email)) {
             showNotification('Veuillez entrer une adresse email valide.', 'error');
             emailInput?.focus();
             return;
         }
-        
-        // Sauvegarde de l'état original du bouton
-        const originalSpanText = submitSpan?.textContent || 'S\'inscrire';
-        const originalIconClass = submitIcon?.className || 'fas fa-paper-plane';
-        
-        // État de chargement
-        if (submitSpan) submitSpan.textContent = 'Inscription...';
-        if (submitIcon) submitIcon.className = 'fas fa-spinner fa-spin';
+
+        // Sauvegarde de l’état du bouton
+        const originalText = submitSpan?.textContent || "S'inscrire";
+        const originalIcon = submitIcon?.className || "fas fa-paper-plane";
+
+        // Loader
+        if (submitSpan) submitSpan.textContent = "Inscription...";
+        if (submitIcon) submitIcon.className = "fas fa-spinner fa-spin";
         if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.7';
+            submitBtn.style.opacity = "0.7";
         }
-        
+
         try {
-            // Création d'un nouveau FormData propre avec uniquement les champs souhaités
-            const cleanFormData = new FormData();
-            cleanFormData.append('subject', 'Inscription Algérie Expo');
-            cleanFormData.append('Intérêt', 'Algérie Expo');
-            cleanFormData.append('Email', email);
-            
-            const res = await fetch(`https://formspree.io/f/${CONFIG.FORMSPREE_ID}`, {
+            const res = await fetch(elements.newsletterForm.action, {
                 method: "POST",
-                body: cleanFormData,
-                headers: { "Accept": "application/json" }
+                body: JSON.stringify({
+                    email: email,
+                    subject: "Inscription Algérie Expo"
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
             });
-            
+
             if (res.ok) {
-                // État de succès
-                if (submitSpan) submitSpan.textContent = 'Inscrit !';
-                if (submitIcon) submitIcon.className = 'fas fa-check';
+                if (submitSpan) submitSpan.textContent = "Inscrit !";
+                if (submitIcon) submitIcon.className = "fas fa-check";
                 if (submitBtn) {
-                    submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
-                    submitBtn.style.opacity = '1';
+                    submitBtn.style.background = "var(--success, #28a745)";
+                    submitBtn.style.opacity = "1";
                 }
-                
-                showNotification('Inscription réussie ! Vous recevrez toutes les actualités d\'Algérie Expo', 'success');
+
+                showNotification("Inscription réussie ! Vous recevrez toutes les actualités d'Algérie Expo", "success");
                 elements.newsletterForm.reset();
-                
-                // Analytics optionnel
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'newsletter_signup', {
-                        event_category: 'engagement',
-                        event_label: 'Inscription Algérie Expo',
-                        custom_map: {'custom_parameter_1': 'algerie_expo'}
+
+                // Tracking optionnel
+                if (typeof gtag !== "undefined") {
+                    gtag("event", "newsletter_signup", {
+                        event_category: "engagement",
+                        event_label: "Inscription Algérie Expo"
                     });
                 }
-                
-                // Tracking Facebook Pixel optionnel
-                if (typeof fbq !== 'undefined') {
-                    fbq('track', 'Lead', {
-                        content_name: 'Newsletter Algérie Expo'
-                    });
+                if (typeof fbq !== "undefined") {
+                    fbq("track", "Lead", { content_name: "Newsletter Algérie Expo" });
                 }
-                
             } else {
-                const errorData = await res.json().catch(() => ({}));
-                console.error('Erreur Formspree:', errorData);
-                throw new Error(`Erreur ${res.status}: ${errorData.error || 'Inscription échouée'}`);
+                throw new Error(`Erreur ${res.status}`);
             }
         } catch (err) {
-            console.error('Erreur newsletter:', err);
-            
-            // État d'erreur
-            if (submitSpan) submitSpan.textContent = 'Erreur';
-            if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
-            if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
-            
-            showNotification('Une erreur est survenue lors de l\'inscription. Veuillez réessayer.', 'error');
+            console.error("Erreur newsletter:", err);
+            if (submitSpan) submitSpan.textContent = "Erreur";
+            if (submitIcon) submitIcon.className = "fas fa-exclamation-triangle";
+            if (submitBtn) submitBtn.style.background = "var(--danger, #dc3545)";
+            showNotification("Une erreur est survenue. Veuillez réessayer.", "error");
         } finally {
-            // Réinitialisation après 3 secondes
+            // Réinitialisation du bouton après 3s
             setTimeout(() => {
-                if (submitSpan) submitSpan.textContent = originalSpanText;
-                if (submitIcon) submitIcon.className = originalIconClass;
+                if (submitSpan) submitSpan.textContent = originalText;
+                if (submitIcon) submitIcon.className = originalIcon;
                 if (submitBtn) {
-                    submitBtn.style.background = '';
-                    submitBtn.style.opacity = '';
+                    submitBtn.style.background = "";
+                    submitBtn.style.opacity = "";
                     submitBtn.disabled = false;
                 }
             }, 3000);
         }
     });
-    
-    // Validation en temps réel (optionnel)
+
+    // Validation en temps réel
     if (emailInput) {
-        emailInput.addEventListener('input', () => {
+        emailInput.addEventListener("input", () => {
             const email = emailInput.value.trim();
             if (email && !emailRegex.test(email)) {
-                emailInput.style.borderColor = '#dc2626';
+                emailInput.style.borderColor = "var(--danger, #dc3545)";
             } else {
-                emailInput.style.borderColor = '';
+                emailInput.style.borderColor = "";
             }
         });
     }
 }
+
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function () {

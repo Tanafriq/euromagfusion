@@ -998,11 +998,12 @@ function initEventListeners() {
 function initNewsletterForm() {
     if (!elements.newsletterForm) return null;
 
-    const emailInput = elements.newsletterForm.querySelector('#newsletter-email');
     const submitBtn = elements.newsletterForm.querySelector('.newsletter-btn');
     const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
+    const emailInput = elements.newsletterForm.querySelector('#newsletter-email');
 
+    // Regex email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const submitHandler = async (e) => {
@@ -1010,87 +1011,115 @@ function initNewsletterForm() {
 
         const formData = new FormData(elements.newsletterForm);
 
-        // Honeypot anti-bot
+        // Vérification honeypot (anti-bot)
         if (formData.get('_gotcha')) {
-            console.warn("Bot détecté");
+            console.warn("Bot détecté, soumission ignorée");
             return;
         }
 
+        // Validation de l'email
         const email = formData.get('email')?.trim();
+        
         if (!email) {
             showNotification('Veuillez entrer votre adresse email.', 'error');
-            emailInput?.focus();
+            if (emailInput) emailInput.focus();
             return;
         }
+
+        // Vérification email
         if (!emailRegex.test(email)) {
             showNotification('Veuillez entrer une adresse email valide.', 'error');
-            emailInput?.focus();
+            if (emailInput) emailInput.focus();
             return;
         }
 
-        // Sauvegarde de l'état du bouton
-        const originalText = submitSpan?.textContent || "S'inscrire";
-        const originalIcon = submitIcon?.className || "fas fa-paper-plane";
+        // État de chargement
+        const originalSpanText = submitSpan?.textContent || "S'inscrire";
+        const originalIconClass = submitIcon?.className || 'fas fa-paper-plane';
 
-        // Loader
-        if (submitSpan) submitSpan.textContent = "Inscription...";
-        if (submitIcon) submitIcon.className = "fas fa-spinner fa-spin";
+        if (submitSpan) submitSpan.textContent = 'Inscription...';
+        if (submitIcon) submitIcon.className = 'fas fa-spinner fa-spin';
         if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.style.opacity = "0.7";
+            submitBtn.style.opacity = '0.7';
         }
 
         try {
-            const res = await fetch(elements.newsletterForm.action, {
+            // Préparation des données pour FormSubmit
+            const cleanFormData = new FormData();
+            
+            // Champs requis par FormSubmit
+            cleanFormData.append('_subject', 'Newsletter - Algérie Expo');
+            cleanFormData.append('_captcha', 'true');
+            cleanFormData.append('_next', window.location.href);
+            
+            // Données du formulaire
+            cleanFormData.append('email', email);
+            cleanFormData.append('type_inscription', 'newsletter_algerie_expo');
+
+            // Envoi via FormSubmit (même endpoint que le formulaire contact)
+            const res = await fetch('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
                 method: "POST",
-                body: JSON.stringify({
-                    email: email,
-                    subject: "Inscription Algérie Expo"
-                }),
-                headers: {
-                    "Content-Type": "application/json",
+                body: cleanFormData,
+                headers: { 
                     "Accept": "application/json"
                 }
             });
 
-            if (res.ok) {
-                if (submitSpan) submitSpan.textContent = "Inscrit !";
-                if (submitIcon) submitIcon.className = "fas fa-check";
+            const responseData = await res.json();
+
+            if (res.ok && responseData.success) {
+                // État de succès
+                if (submitSpan) submitSpan.textContent = 'Inscrit !';
+                if (submitIcon) submitIcon.className = 'fas fa-check';
                 if (submitBtn) {
-                    submitBtn.style.background = "var(--success, #28a745)";
-                    submitBtn.style.opacity = "1";
+                    submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                    submitBtn.style.opacity = '1';
                 }
 
-                showNotification("Inscription réussie ! Vous recevrez toutes les actualités d'Algérie Expo", "success");
+                showNotification("Inscription réussie ! Vous recevrez toutes les actualités d'Algérie Expo.", 'success');
+                
+                // Réinitialiser le formulaire
                 elements.newsletterForm.reset();
 
-                // Tracking optionnel
-                if (typeof gtag !== "undefined") {
-                    gtag("event", "newsletter_signup", {
-                        event_category: "engagement",
-                        event_label: "Inscription Algérie Expo"
+                // Analytics optionnel
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'newsletter_signup', {
+                        event_category: 'engagement',
+                        event_label: 'Newsletter Algérie Expo',
+                        custom_map: { 'custom_parameter_1': 'algerie_expo_newsletter' }
                     });
                 }
-                if (typeof fbq !== "undefined") {
-                    fbq("track", "Lead", { content_name: "Newsletter Algérie Expo" });
+
+                // Facebook Pixel optionnel
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Lead', { 
+                        content_name: 'Newsletter Algérie Expo',
+                        content_category: 'newsletter'
+                    });
                 }
+
             } else {
-                throw new Error(`Erreur ${res.status}`);
+                console.error('Erreur FormSubmit:', responseData);
+                throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
             }
         } catch (err) {
-            console.error("Erreur newsletter:", err);
-            if (submitSpan) submitSpan.textContent = "Erreur";
-            if (submitIcon) submitIcon.className = "fas fa-exclamation-triangle";
-            if (submitBtn) submitBtn.style.background = "var(--danger, #dc3545)";
-            showNotification("Une erreur est survenue. Veuillez réessayer.", "error");
+            console.error('Erreur formulaire newsletter:', err);
+
+            // État d'erreur
+            if (submitSpan) submitSpan.textContent = 'Erreur';
+            if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
+            if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
+
+            showNotification('Une erreur est survenue lors de l\'inscription. Veuillez réessayer.', 'error');
         } finally {
-            // Réinitialisation du bouton après 3s
+            // Réinitialisation après 3 secondes
             setTimeout(() => {
-                if (submitSpan) submitSpan.textContent = originalText;
-                if (submitIcon) submitIcon.className = originalIcon;
+                if (submitSpan) submitSpan.textContent = originalSpanText;
+                if (submitIcon) submitIcon.className = originalIconClass;
                 if (submitBtn) {
-                    submitBtn.style.background = "";
-                    submitBtn.style.opacity = "";
+                    submitBtn.style.background = '';
+                    submitBtn.style.opacity = '';
                     submitBtn.disabled = false;
                 }
             }, 3000);
@@ -1099,18 +1128,20 @@ function initNewsletterForm() {
 
     elements.newsletterForm.addEventListener('submit', submitHandler);
 
-    // Validation en temps réel
+    // Validation en temps réel de l'email
     let inputHandler = null;
     if (emailInput) {
-        inputHandler = () => {
+        inputHandler = function() {
             const email = emailInput.value.trim();
             if (email && !emailRegex.test(email)) {
-                emailInput.style.borderColor = "var(--danger, #dc3545)";
+                emailInput.style.borderColor = '#dc2626';
+                emailInput.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
             } else {
-                emailInput.style.borderColor = "";
+                emailInput.style.borderColor = '';
+                emailInput.style.boxShadow = '';
             }
         };
-        emailInput.addEventListener("input", inputHandler);
+        emailInput.addEventListener('input', inputHandler);
     }
 
     // Retourner fonction de cleanup
@@ -1119,7 +1150,7 @@ function initNewsletterForm() {
             elements.newsletterForm.removeEventListener('submit', submitHandler);
         }
         if (emailInput && inputHandler) {
-            emailInput.removeEventListener("input", inputHandler);
+            emailInput.removeEventListener('input', inputHandler);
         }
     };
 }

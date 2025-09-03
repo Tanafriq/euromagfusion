@@ -2,7 +2,6 @@
 
 // Variables globales
 let particleTimers = [];
-const FORMSPREE_ID = 'xrbagaao';
 
 // ==================== DOM CONTENT LOADED ====================
 window.addEventListener('DOMContentLoaded', () => {
@@ -364,31 +363,34 @@ const ModalManager = (() => {
 // ==================== CONTACT FORM ====================
 function initContactForm() {
     const contactForm = document.getElementById('contactForm');
-    if (!contactForm) return;
+    if (!contactForm) return null;
 
     const submitBtn = contactForm.querySelector('.submit-btn');
+    const submitSpan = submitBtn?.querySelector('span');
+    const submitIcon = submitBtn?.querySelector('i');
 
-    // Regex email (simple mais efficace)
+    // Regex email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    contactForm.addEventListener('submit', async (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(contactForm);
 
-        // Vérifie honeypot (anti-bot)
+        // Vérification honeypot (anti-bot)
         if (formData.get('_gotcha')) {
-            console.warn("Bot détecté, soumission ignorée 🚫");
+            console.warn("Bot détecté, soumission ignorée");
             return;
         }
 
-        const nom = formData.get('nom');
-        const email = formData.get('email');
-        const message = formData.get('message');
-        formData.append('subject', 'Contact formulaire');
+        // Validation des champs obligatoires
+        const nom = formData.get('nom')?.trim();
+        const email = formData.get('email')?.trim();
+        const sujet = formData.get('sujet')?.trim();
+        const message = formData.get('message')?.trim();
 
-        // Vérification des champs obligatoires
-        if (!nom || !email || !message) {
+        // Vérifications de base
+        if (!nom || !email || !sujet || !message) {
             showNotification('Veuillez remplir tous les champs obligatoires.', 'error');
             return;
         }
@@ -399,117 +401,278 @@ function initContactForm() {
             return;
         }
 
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<span>Envoi en cours...</span> <div class="loading-spinner"></div>';
-        submitBtn.disabled = true;
+        // État de chargement
+        const originalSpanText = submitSpan?.textContent || 'Envoyer';
+        const originalIconClass = submitIcon?.className || 'arrow';
+
+        if (submitSpan) submitSpan.textContent = 'Envoi en cours...';
+        if (submitIcon) submitIcon.className = 'fas fa-spinner fa-spin';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+        }
 
         try {
-            const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+            // Préparation des données pour FormSubmit
+            const cleanFormData = new FormData();
+
+            // Champs requis par FormSubmit
+            cleanFormData.append('_subject', `Contact Euromag Fusion - ${sujet}`);
+            cleanFormData.append('_captcha', 'true');
+            cleanFormData.append('_next', window.location.href);
+
+            // Données du formulaire
+            cleanFormData.append('nom', nom);
+            cleanFormData.append('email', email);
+            cleanFormData.append('sujet', sujet);
+            cleanFormData.append('message', message);
+            cleanFormData.append('type_formulaire', 'contact_general');
+
+            // Envoi via FormSubmit
+            const res = await fetch('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
                 method: "POST",
-                body: formData,
-                headers: { "Accept": "application/json" }
+                body: cleanFormData,
+                headers: {
+                    "Accept": "application/json"
+                }
             });
 
-            if (res.ok) {
-                submitBtn.innerHTML = '<span>Message envoyé !</span> <span>✓</span>';
-                submitBtn.style.background = 'var(--success)';
-                showNotification('Votre message a été envoyé avec succès ✅', 'success');
+            const responseData = await res.json();
+
+            if (res.ok && responseData.success) {
+                // État de succès
+                if (submitSpan) submitSpan.textContent = 'Envoyé !';
+                if (submitIcon) submitIcon.className = 'fas fa-check';
+                if (submitBtn) {
+                    submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                    submitBtn.style.opacity = '1';
+                }
+
+                showNotification('Votre message a été envoyé avec succès ! Nous vous recontacterons bientôt.', 'success');
+
+                // Réinitialiser le formulaire
                 contactForm.reset();
+
+                // Analytics optionnel
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'contact_form_submit', {
+                        event_category: 'engagement',
+                        event_label: 'Contact General',
+                        custom_map: { 'custom_parameter_1': 'contact_general' }
+                    });
+                }
+
             } else {
-                throw new Error("Erreur Formspree");
+                console.error('Erreur FormSubmit:', responseData);
+                throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
             }
         } catch (err) {
-            console.error(err);
-            showNotification('Une erreur est survenue. Veuillez réessayer.', 'error');
+            console.error('Erreur formulaire contact:', err);
+
+            // État d'erreur
+            if (submitSpan) submitSpan.textContent = 'Erreur';
+            if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
+            if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
+
+            showNotification('Une erreur est survenue lors de l\'envoi. Veuillez réessayer.', 'error');
         } finally {
+            // Réinitialisation après 3 secondes
             setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.style.background = '';
-                submitBtn.disabled = false;
+                if (submitSpan) submitSpan.textContent = originalSpanText;
+                if (submitIcon) submitIcon.className = originalIconClass;
+                if (submitBtn) {
+                    submitBtn.style.background = '';
+                    submitBtn.style.opacity = '';
+                    submitBtn.disabled = false;
+                }
             }, 3000);
         }
-    });
+    };
+
+    contactForm.addEventListener('submit', submitHandler);
+
+    // Validation en temps réel pour l'email
+    const emailInput = contactForm.querySelector('#email');
+    let emailInputHandler = null;
+    if (emailInput) {
+        emailInputHandler = function () {
+            const email = emailInput.value.trim();
+            if (email && !emailRegex.test(email)) {
+                emailInput.style.borderColor = '#dc2626';
+                emailInput.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+            } else {
+                emailInput.style.borderColor = '';
+                emailInput.style.boxShadow = '';
+            }
+        };
+        emailInput.addEventListener('input', emailInputHandler);
+    }
+
+    // Retourner fonction de cleanup
+    return function cleanupContactForm() {
+        if (contactForm && submitHandler) {
+            contactForm.removeEventListener('submit', submitHandler);
+        }
+        if (emailInput && emailInputHandler) {
+            emailInput.removeEventListener('input', emailInputHandler);
+        }
+    };
 }
 
 function initNewsletterForm() {
     const newsletterForm = document.getElementById('newsletterForm');
-    if (!newsletterForm) return;
+    if (!newsletterForm) return null;
 
     const emailInput = newsletterForm.querySelector('input[type="email"]');
     const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+    const submitIcon = submitBtn?.querySelector('i');
 
-    // Regex email simple mais efficace
+    // Regex email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    newsletterForm.addEventListener('submit', async (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
-        const email = emailInput.value.trim();
+        const formData = new FormData(newsletterForm);
 
-        // Vérification email
+        // Vérification honeypot (anti-bot)
+        if (formData.get('_gotcha')) {
+            console.warn("Bot détecté, soumission ignorée");
+            return;
+        }
+
+        // Validation de l'email
+        const email = emailInput?.value.trim();
+
         if (!email) {
             showNotification('Veuillez entrer votre adresse email.', 'error');
+            if (emailInput) emailInput.focus();
             return;
         }
 
+        // Vérification email
         if (!emailRegex.test(email)) {
             showNotification('Veuillez entrer une adresse email valide.', 'error');
+            if (emailInput) emailInput.focus();
             return;
         }
 
-        // Sauvegarde de l'état original du bouton
-        const originalHTML = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        submitBtn.disabled = true;
+        // État de chargement
+        const originalIconClass = submitIcon?.className || 'fas fa-paper-plane';
+
+        if (submitIcon) submitIcon.className = 'fas fa-spinner fa-spin';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+        }
 
         try {
-            // Création du FormData avec email et mention "concert"
-            const formData = new FormData();
+            // Préparation des données pour FormSubmit
+            const cleanFormData = new FormData();
 
-            // Vérifie honeypot (anti-bot)
-            if (formData.get('_gotcha')) {
-                console.warn("Bot détecté, soumission ignorée 🚫");
-                return;
-            }
-            
-            formData.append('subject', 'Inscription concerts');
-            formData.append('Intérêt', 'Concerts');
-            formData.append('Email', email);
+            // Champs requis par FormSubmit
+            cleanFormData.append('_subject', 'Newsletter - Concerts Euromag Fusion');
+            cleanFormData.append('_captcha', 'true');
+            cleanFormData.append('_next', window.location.href);
 
-            const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+            // Données du formulaire
+            cleanFormData.append('email', email);
+            cleanFormData.append('type_inscription', 'newsletter_concerts');
+            cleanFormData.append('interet', 'Concerts et spectacles');
+
+            // Envoi via FormSubmit
+            const res = await fetch('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
                 method: "POST",
-                body: formData,
-                headers: { "Accept": "application/json" }
+                body: cleanFormData,
+                headers: {
+                    "Accept": "application/json"
+                }
             });
 
-            if (res.ok) {
-                submitBtn.innerHTML = '<i class="fas fa-check"></i>';
-                submitBtn.style.background = 'var(--success, #28a745)';
-                showNotification('Inscription réussie ! Merci pour votre intérêt pour nos concerts 🎵', 'success');
+            const responseData = await res.json();
+
+            if (res.ok && responseData.success) {
+                // État de succès
+                if (submitIcon) submitIcon.className = 'fas fa-check';
+                if (submitBtn) {
+                    submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                    submitBtn.style.opacity = '1';
+                }
+
+                showNotification('Inscription réussie ! Vous recevrez toutes les actualités de nos concerts.', 'success');
+
+                // Réinitialiser le formulaire
                 newsletterForm.reset();
 
-                // Analytics optionnel (si vous utilisez Google Analytics)
+                // Analytics optionnel
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'newsletter_signup', {
                         event_category: 'engagement',
-                        event_label: 'concert'
+                        event_label: 'Newsletter Concerts',
+                        custom_map: { 'custom_parameter_1': 'concerts_newsletter' }
                     });
                 }
+
+                // Facebook Pixel optionnel
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Lead', {
+                        content_name: 'Newsletter Concerts',
+                        content_category: 'newsletter'
+                    });
+                }
+
             } else {
-                throw new Error("Erreur lors de l'inscription");
+                console.error('Erreur FormSubmit:', responseData);
+                throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
             }
         } catch (err) {
-            console.error('Erreur newsletter:', err);
-            showNotification('Une erreur est survenue. Veuillez réessayer.', 'error');
+            console.error('Erreur formulaire newsletter:', err);
+
+            // État d'erreur
+            if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
+            if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
+
+            showNotification('Une erreur est survenue lors de l\'inscription. Veuillez réessayer.', 'error');
         } finally {
             // Réinitialisation après 3 secondes
             setTimeout(() => {
-                submitBtn.innerHTML = originalHTML;
-                submitBtn.style.background = '';
-                submitBtn.disabled = false;
+                if (submitIcon) submitIcon.className = originalIconClass;
+                if (submitBtn) {
+                    submitBtn.style.background = '';
+                    submitBtn.style.opacity = '';
+                    submitBtn.disabled = false;
+                }
             }, 3000);
         }
-    });
+    };
+
+    newsletterForm.addEventListener('submit', submitHandler);
+
+    // Validation en temps réel de l'email
+    let inputHandler = null;
+    if (emailInput) {
+        inputHandler = function () {
+            const email = emailInput.value.trim();
+            if (email && !emailRegex.test(email)) {
+                emailInput.style.borderColor = '#dc2626';
+                emailInput.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+            } else {
+                emailInput.style.borderColor = '';
+                emailInput.style.boxShadow = '';
+            }
+        };
+        emailInput.addEventListener('input', inputHandler);
+    }
+
+    // Retourner fonction de cleanup
+    return function cleanupNewsletterForm() {
+        if (newsletterForm && submitHandler) {
+            newsletterForm.removeEventListener('submit', submitHandler);
+        }
+        if (emailInput && inputHandler) {
+            emailInput.removeEventListener('input', inputHandler);
+        }
+    };
 }
 
 // ==================== NOTIFICATIONS ====================

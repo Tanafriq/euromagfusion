@@ -48,7 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Console message
     console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
-    console.log('%cSite développé avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
+    console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
 });
 
 // ==================== HERO ANIMATIONS ====================

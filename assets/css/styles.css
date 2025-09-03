@@ -530,39 +530,127 @@
     opacity: 1;
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-4);
+.music-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    justify-content: center;
     margin-top: var(--space-8);
 }
 
-.stat-item {
-    background: var(--white);
-    padding: var(--space-6);
-    border-radius: var(--radius-xl);
-    text-align: center;
-    box-shadow: var(--shadow-md);
-    transition: transform var(--transition-base);
+.genre-tag {
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all var(--transition-base);
+    cursor: default;
+    border: 2px solid transparent;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
 }
 
-.stat-item:hover {
-    transform: translateY(-5px);
+/* Couleurs uniques et distinctes pour chaque tag */
+.genre-tag:nth-child(1) {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: var(--white);
 }
 
-.stat-number {
-    font-size: 2.5rem;
-    font-weight: 800;
-    background: var(--gradient-primary);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: var(--space-2);
+.genre-tag:nth-child(2) {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    color: var(--white);
 }
 
-.stat-label {
-    color: var(--gray-600);
-    font-weight: 500;
+.genre-tag:nth-child(3) {
+    background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+    color: var(--white);
+}
+
+.genre-tag:nth-child(4) {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: var(--white);
+}
+
+.genre-tag:nth-child(5) {
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    color: var(--white);
+}
+
+/* Effets de survol modernes */
+.genre-tag:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.genre-tag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.genre-tag:hover::before {
+    left: 100%;
+}
+
+/* Version alternative avec style glassmorphisme */
+.genre-tag.glass-style {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--dark);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Version responsive */
+@media (max-width: 768px) {
+    .music-genres {
+        gap: var(--space-2);
+    }
+
+    .genre-tag {
+        font-size: 0.85rem;
+        padding: var(--space-2) var(--space-4);
+    }
+}
+
+/* Animation d'apparition séquentielle */
+.genre-tag {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpTag 0.6s ease forwards;
+}
+
+.genre-tag:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.genre-tag:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.genre-tag:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.genre-tag:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.genre-tag:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+@keyframes slideUpTag {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Events Section */
@@ -923,12 +1011,12 @@
         /* Si exactement 3 cartes, les centre parfaitement */
         justify-content: center;
     }
-    
+
     .events-grid:has(.event-card:nth-child(2):not(.event-card:nth-child(3))) {
         /* Si exactement 2 cartes, les centre parfaitement */
         justify-content: center;
     }
-    
+
     .events-grid:has(.event-card:nth-child(1):not(.event-card:nth-child(2))) {
         /* Si 1 seule carte, la centre parfaitement */
         justify-content: center;
@@ -993,7 +1081,7 @@
     font-weight: 700;
 }
 
-.upcoming-message > p {
+.upcoming-message>p {
     color: var(--gray-600);
     font-size: 1.1rem;
     line-height: 1.8;

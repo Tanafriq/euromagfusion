@@ -24,6 +24,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="./assets/css/common.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
@@ -129,19 +130,12 @@
                                 height="500" loading="lazy">
                             <div class="image-overlay"></div>
                         </div>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-number">3+</div>
-                                <div class="stat-label">Concerts</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">5K+</div>
-                                <div class="stat-label">Spectateurs</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">1</div>
-                                <div class="stat-label">Année</div>
-                            </div>
+                        <div class="music-genres">
+                            <div class="genre-tag">Raï</div>
+                            <div class="genre-tag">Chaâbi</div>
+                            <div class="genre-tag">Gnaoua</div>
+                            <div class="genre-tag">Pop-Folk</div>
+                            <div class="genre-tag">Fusion</div>
                         </div>
                     </div>
                 </div>
@@ -352,6 +346,7 @@
         </section>
     </main>
 
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -407,9 +402,9 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy;
-                    <script>document.write(new Date().getFullYear());</script> Euromag Fusion. Tous droits réservés.
-                </p>
+                <p>&copy; <span id="current-year"></span> Euromag Fusion. Tous droits réservés.</p>
+                <p class="developer-credit">Développé par <a href="mailto:shakbaz@gmail.com" class="developer-link"
+                        title="Contacter le développeur">SL</a></p>
             </div>
         </div>
     </footer>

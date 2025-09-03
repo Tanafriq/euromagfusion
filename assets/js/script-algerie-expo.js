@@ -3,8 +3,7 @@ const CONFIG = {
     COUNTDOWN_TARGET_DATE: new Date('2026-04-18T23:59:59').getTime(),
     SCROLL_THRESHOLD: 300,
     PARTICLES_COUNT: 50,
-    ANIMATION_DURATION: 300,
-    FORMSPREE_ID: 'xrbagaao'
+    ANIMATION_DURATION: 300
 };
 
 // ===== DOM ELEMENTS =====
@@ -27,24 +26,226 @@ const elements = {
     closeContactModal: document.getElementById('closeContactModal')
 };
 
+// ===== GESTION DU CLEANUP GLOBAL =====
+let globalCleanupFunctions = [];
+
+function addCleanupFunction(fn) {
+    if (typeof fn === 'function') {
+        globalCleanupFunctions.push(fn);
+    }
+}
+
+function executeAllCleanup() {
+    globalCleanupFunctions.forEach((cleanup, index) => {
+        try {
+            cleanup();
+        } catch (error) {
+            console.error(`Erreur lors du cleanup ${index + 1}:`, error);
+        }
+    });
+    globalCleanupFunctions = [];
+}
+
+// ===== GESTION DU BOUTON FLOTTANT DYNAMIQUE =====
+function initDynamicFloatingButton() {
+    const floatingBtn = document.getElementById('floatingExhibitorBtn');
+    const btnContainer = document.getElementById('floating-btn-container');
+    const exhibitorSection = document.getElementById('become-exhibitor-section');
+
+    if (!floatingBtn || !btnContainer || !exhibitorSection) {
+        console.warn('Éléments requis non trouvés pour le bouton flottant');
+        return null;
+    }
+
+    let isInSection = false;
+    let originalParent = floatingBtn.parentElement;
+    let ticking = false;
+
+    // Configuration des options pour l'Intersection Observer
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -20% 0px', // Active quand 20% de la section est visible
+        threshold: 0
+    };
+
+    // Fonction pour déplacer le bouton vers la section
+    function moveBtnToSection() {
+        if (isInSection) return;
+
+        isInSection = true;
+
+        // Créer une transition fluide
+        floatingBtn.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        floatingBtn.style.transform = 'scale(0.8)';
+        floatingBtn.style.opacity = '0.7';
+
+        setTimeout(() => {
+            // Déplacer dans le conteneur de la section
+            btnContainer.appendChild(floatingBtn);
+
+            // Réinitialiser les styles
+            floatingBtn.style.position = 'static';
+            floatingBtn.style.right = 'auto';
+            floatingBtn.style.bottom = 'auto';
+            floatingBtn.style.transform = 'scale(1)';
+            floatingBtn.style.opacity = '1';
+            floatingBtn.style.width = '100%';
+            floatingBtn.style.zIndex = 'auto';
+            floatingBtn.style.borderRadius = '50px';
+
+            // Ajouter une classe pour les styles spécifiques
+            floatingBtn.classList.add('btn-in-section');
+        }, 300);
+    }
+
+    // Fonction pour remettre le bouton à sa position flottante
+    function moveBtnToFloat() {
+        if (!isInSection) return;
+
+        isInSection = false;
+
+        // Créer une transition fluide
+        floatingBtn.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        floatingBtn.style.transform = 'scale(0.8)';
+        floatingBtn.style.opacity = '0.7';
+
+        setTimeout(() => {
+            // Remettre dans le conteneur original
+            originalParent.appendChild(floatingBtn);
+
+            // Réinitialiser les styles flottants
+            floatingBtn.style.position = 'fixed';
+            floatingBtn.style.right = '30px';
+            floatingBtn.style.bottom = '30%';
+            floatingBtn.style.transform = 'scale(1)';
+            floatingBtn.style.opacity = '1';
+            floatingBtn.style.width = 'auto';
+            floatingBtn.style.zIndex = '1500';
+            floatingBtn.style.borderRadius = '50px';
+
+            // Retirer la classe spécifique à la section
+            floatingBtn.classList.remove('btn-in-section');
+        }, 300);
+    }
+
+    // Callback pour l'Intersection Observer
+    function handleIntersection(entries) {
+        if (ticking) return;
+
+        ticking = true;
+        requestAnimationFrame(() => {
+            entries.forEach(entry => {
+                if (entry.target === exhibitorSection) {
+                    if (entry.isIntersecting) {
+                        // La section est visible
+                        moveBtnToSection();
+                    } else {
+                        // La section n'est plus visible
+                        moveBtnToFloat();
+                    }
+                }
+            });
+            ticking = false;
+        });
+    }
+
+    // Créer l'observer
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+
+    // Commencer à observer la section
+    observer.observe(exhibitorSection);
+
+    // Fonction de nettoyage pour éviter les fuites mémoire
+    function cleanup() {
+        observer.disconnect();
+        if (isInSection) {
+            moveBtnToFloat();
+        }
+    }
+
+    // Gérer le redimensionnement de fenêtre
+    let resizeTimeout;
+    const resizeHandler = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Réajuster la position si nécessaire
+            if (!isInSection) {
+                updateFloatingPosition();
+            }
+        }, 250);
+    };
+
+    window.addEventListener('resize', resizeHandler);
+
+    // Fonction pour mettre à jour la position flottante selon la taille d'écran
+    function updateFloatingPosition() {
+        if (isInSection) return;
+
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+            floatingBtn.style.right = '20px';
+            floatingBtn.style.bottom = '25%';
+        } else {
+            floatingBtn.style.right = '30px';
+            floatingBtn.style.bottom = '30%';
+        }
+    }
+
+    // Retourner la fonction de nettoyage améliorée
+    return function cleanupDynamic() {
+        window.removeEventListener('resize', resizeHandler);
+        cleanup();
+    };
+}
+
 // ===== FLOATING EXHIBITOR BUTTON FUNCTIONALITY =====
 function initFloatingButton() {
-    if (!elements.floatingExhibitorBtn || !elements.exhibitorBtn) return;
+    if (!elements.floatingExhibitorBtn || !elements.exhibitorBtn) {
+        console.warn('Éléments du bouton flottant non trouvés');
+        return null;
+    }
 
     let lastScrollY = window.pageYOffset;
+    let cleanupDynamic;
+    let scrollListener;
+    let clickHandler;
+    let isDestroyed = false;
+
+    // Vérifier la validité avant toute opération
+    function checkValidity() {
+        if (isDestroyed) {
+            console.warn('Tentative d\'utilisation d\'un bouton flottant détruit');
+            return false;
+        }
+        return elements.floatingExhibitorBtn && 
+               elements.exhibitorBtn && 
+               document.body.contains(elements.floatingExhibitorBtn);
+    }
+
+    // Initialiser le système de déplacement dynamique
+    try {
+        cleanupDynamic = initDynamicFloatingButton();
+    } catch (error) {
+        console.error('Erreur lors de l\'initialisation du bouton dynamique:', error);
+        return null;
+    }
 
     function updateButtonPosition() {
-        const currentScrollY = window.pageYOffset;
-        const scrollDifference = currentScrollY - lastScrollY;
+        if (!checkValidity()) return;
 
-        // Calculer la position basée sur le scroll
+        // Ne mettre à jour la position que si le bouton est en mode flottant
+        const isInSection = elements.floatingExhibitorBtn.classList.contains('btn-in-section');
+        if (isInSection) return;
+
+        const currentScrollY = window.pageYOffset;
         const viewportHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         const scrollPercentage = currentScrollY / (documentHeight - viewportHeight);
 
         // Position du bouton entre 20% et 70% de la hauteur de l'écran
-        const minPosition = 20; // 20% du haut
-        const maxPosition = 70; // 70% du haut
+        const minPosition = 20;
+        const maxPosition = 70;
         const newPosition = minPosition + (scrollPercentage * (maxPosition - minPosition));
 
         elements.floatingExhibitorBtn.style.bottom = `${100 - newPosition}%`;
@@ -53,16 +254,219 @@ function initFloatingButton() {
         lastScrollY = currentScrollY;
     }
 
-    // Écouter le scroll avec throttling
-    window.addEventListener('scroll', throttle(updateButtonPosition, 16), { passive: true });
+    // Créer le listener avec vérification
+    scrollListener = throttle(function() {
+        if (checkValidity()) {
+            updateButtonPosition();
+        }
+    }, 16);
+
+    // Écouter le scroll
+    window.addEventListener('scroll', scrollListener, { passive: true });
 
     // Click handler pour ouvrir le modal
-    elements.exhibitorBtn.addEventListener('click', function () {
-        openContactModal();
-    });
+    clickHandler = function() {
+        if (checkValidity()) {
+            openContactModal();
+        }
+    };
+    elements.exhibitorBtn.addEventListener('click', clickHandler);
 
     // Position initiale
     updateButtonPosition();
+
+    // Retourner la fonction de cleanup complète
+    return function cleanup() {
+        try {
+            // Marquer comme détruit
+            isDestroyed = true;
+            
+            // Nettoyer les event listeners
+            if (scrollListener) {
+                window.removeEventListener('scroll', scrollListener);
+                scrollListener = null;
+            }
+            
+            if (elements.exhibitorBtn && clickHandler) {
+                elements.exhibitorBtn.removeEventListener('click', clickHandler);
+                clickHandler = null;
+            }
+            
+            // Nettoyer le système dynamique
+            if (cleanupDynamic && typeof cleanupDynamic === 'function') {
+                cleanupDynamic();
+                cleanupDynamic = null;
+            }
+            
+            // Remettre le bouton à sa position par défaut si nécessaire
+            if (elements.floatingExhibitorBtn && 
+                elements.floatingExhibitorBtn.classList.contains('btn-in-section')) {
+                
+                const originalParent = document.querySelector('.floating-exhibitor-btn')?.parentElement;
+                if (originalParent && originalParent !== elements.floatingExhibitorBtn.parentElement) {
+                    originalParent.appendChild(elements.floatingExhibitorBtn);
+                    elements.floatingExhibitorBtn.classList.remove('btn-in-section');
+                }
+            }
+            
+        } catch (error) {
+            console.error('Erreur lors du cleanup du bouton flottant:', error);
+        }
+    };
+}
+
+// ===== STYLES CSS DYNAMIQUES POUR LE BOUTON =====
+function addDynamicButtonStyles() {
+    // Vérifier si les styles ont déjà été ajoutés
+    if (document.getElementById('dynamic-button-styles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'dynamic-button-styles';
+    style.textContent = `
+        /* Transition fluide pour le bouton */
+        .floating-exhibitor-btn {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        
+        /* Styles spécifiques quand le bouton est dans la section */
+        .floating-exhibitor-btn.btn-in-section {
+            position: static !important;
+            right: auto !important;
+            bottom: auto !important;
+            transform: none !important;
+            width: 100% !important;
+            animation: none !important;
+            box-shadow: 0 8px 32px rgba(225, 29, 72, 0.25) !important;
+            border-radius = 50px;
+        }
+        
+        .floating-exhibitor-btn.btn-in-section .exhibitor-btn {
+            width: 100%;
+            min-width: auto;
+            justify-content: center;
+        }
+        
+        .floating-exhibitor-btn.btn-in-section .exhibitor-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(225, 29, 72, 0.4);
+        }
+        
+        /* Animation d'entrée pour la section */
+        .become-exhibitor-section {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: sectionFadeIn 0.8s ease 0.2s forwards;
+        }
+        
+        @keyframes sectionFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive pour le bouton dans la section */
+        @media (max-width: 768px) {
+            .floating-exhibitor-btn.btn-in-section .exhibitor-btn {
+                padding: 12px 18px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .floating-exhibitor-btn.btn-in-section .exhibitor-btn {
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .floating-exhibitor-btn.btn-in-section .exhibitor-btn span {
+                display: inline !important;
+            }
+            
+            .floating-exhibitor-btn.btn-in-section .exhibitor-btn::after {
+                display: none !important;
+            }
+        }
+    `;
+
+    document.head.appendChild(style);
+}
+
+// ===== FONCTION D'ANIMATION D'ENTRÉE POUR LES CARTES =====
+function initExhibitorSectionAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observer les éléments à animer
+    const elementsToAnimate = document.querySelectorAll(
+        '.benefit-card, .cta-card, .section-header'
+    );
+
+    elementsToAnimate.forEach((el, index) => {
+        if (el) {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
+            observer.observe(el);
+        }
+    });
+
+    // Retourner fonction de cleanup pour cet observer aussi
+    return function cleanupAnimations() {
+        observer.disconnect();
+    };
+}
+
+// ===== FONCTION D'INITIALISATION GÉNÉRALE =====
+function initExhibitorSection() {
+    // Ajouter les styles dynamiques
+    addDynamicButtonStyles();
+
+    // Initialiser les animations et récupérer le cleanup
+    const animationsCleanup = initExhibitorSectionAnimations();
+    if (animationsCleanup) {
+        addCleanupFunction(animationsCleanup);
+    }
+
+    // Écouter les changements de visibilité pour optimiser les performances
+    const visibilityHandler = function() {
+        if (document.hidden) {
+            // Mettre en pause les animations non critiques
+            const floatingBtn = document.getElementById('floatingExhibitorBtn');
+            if (floatingBtn && !floatingBtn.classList.contains('btn-in-section')) {
+                floatingBtn.style.animationPlayState = 'paused';
+            }
+        } else {
+            // Reprendre les animations
+            const floatingBtn = document.getElementById('floatingExhibitorBtn');
+            if (floatingBtn && !floatingBtn.classList.contains('btn-in-section')) {
+                floatingBtn.style.animationPlayState = 'running';
+            }
+        }
+    };
+
+    document.addEventListener('visibilitychange', visibilityHandler);
+
+    // Retourner cleanup pour le visibility handler
+    return function cleanupExhibitorSection() {
+        document.removeEventListener('visibilitychange', visibilityHandler);
+    };
 }
 
 // ===== CONTACT MODAL FUNCTIONALITY =====
@@ -87,19 +491,21 @@ function closeContactModal() {
 }
 
 function initContactModal() {
-    if (!elements.contactModal) return;
+    if (!elements.contactModal) return null;
 
     // Close button
+    const closeHandler = () => closeContactModal();
     if (elements.closeContactModal) {
-        elements.closeContactModal.addEventListener('click', closeContactModal);
+        elements.closeContactModal.addEventListener('click', closeHandler);
     }
 
     // Click outside to close
-    elements.contactModal.addEventListener('click', function (e) {
+    const clickOutsideHandler = function(e) {
         if (e.target === elements.contactModal) {
             closeContactModal();
         }
-    });
+    };
+    elements.contactModal.addEventListener('click', clickOutsideHandler);
 
     // Type de client change handler
     const typeClientSelect = document.getElementById('typeClient');
@@ -107,8 +513,9 @@ function initContactModal() {
     const nomEntreprise = document.getElementById('nomEntreprise');
     const secteurActivite = document.getElementById('secteurActivite');
 
+    let typeChangeHandler = null;
     if (typeClientSelect && entrepriseFields) {
-        typeClientSelect.addEventListener('change', function () {
+        typeChangeHandler = function() {
             if (this.value === 'entreprise') {
                 entrepriseFields.style.display = 'block';
                 if (nomEntreprise) nomEntreprise.required = true;
@@ -124,12 +531,26 @@ function initContactModal() {
                     secteurActivite.value = '';
                 }
             }
-        });
+        };
+        typeClientSelect.addEventListener('change', typeChangeHandler);
     }
+
+    // Retourner fonction de cleanup
+    return function cleanupContactModal() {
+        if (elements.closeContactModal && closeHandler) {
+            elements.closeContactModal.removeEventListener('click', closeHandler);
+        }
+        if (elements.contactModal && clickOutsideHandler) {
+            elements.contactModal.removeEventListener('click', clickOutsideHandler);
+        }
+        if (typeClientSelect && typeChangeHandler) {
+            typeClientSelect.removeEventListener('change', typeChangeHandler);
+        }
+    };
 }
 
 function initContactForm() {
-    if (!elements.contactForm) return;
+    if (!elements.contactForm) return null;
 
     const submitBtn = elements.contactForm.querySelector('.submit-btn');
     const submitSpan = submitBtn?.querySelector('span');
@@ -138,14 +559,14 @@ function initContactForm() {
     // Regex email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    elements.contactForm.addEventListener('submit', async (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(elements.contactForm);
 
         // Vérification honeypot (anti-bot)
         if (formData.get('_gotcha')) {
-            console.warn("Bot détecté, soumission ignorée 🚫");
+            console.warn("Bot détecté, soumission ignorée");
             return;
         }
 
@@ -198,40 +619,52 @@ function initContactForm() {
         }
 
         try {
-            // Préparation des données
+            // Préparation des données pour FormSubmit
             const cleanFormData = new FormData();
-            cleanFormData.append('subject', 'Demande Exposant - Algérie Expo');
-            cleanFormData.append('Nom', nom);
-            cleanFormData.append('Prénom', prenom);
-            cleanFormData.append('Type', typeClient);
+            
+            // Champs requis par FormSubmit
+            cleanFormData.append('_subject', 'Demande Exposant - Algérie Expo');
+            cleanFormData.append('_captcha', 'true');
+            cleanFormData.append('_next', window.location.href);
+            
+            // Données du formulaire
+            cleanFormData.append('nom', nom);
+            cleanFormData.append('prenom', prenom);
+            cleanFormData.append('type_client', typeClient);
+            cleanFormData.append('email', email);
+            cleanFormData.append('code_postal', codePostal);
 
             if (typeClient === 'entreprise') {
-                cleanFormData.append('Entreprise', formData.get('nomEntreprise') || '');
-                cleanFormData.append('Secteur', formData.get('secteurActivite') || '');
+                const nomEntreprise = formData.get('nomEntreprise')?.trim();
+                const secteurActivite = formData.get('secteurActivite')?.trim();
+                if (nomEntreprise) cleanFormData.append('nom_entreprise', nomEntreprise);
+                if (secteurActivite) cleanFormData.append('secteur_activite', secteurActivite);
             }
 
             const fonction = formData.get('fonction')?.trim();
-            if (fonction) cleanFormData.append('Fonction', fonction);
+            if (fonction) cleanFormData.append('fonction', fonction);
 
             const adresse = formData.get('adresse')?.trim();
-            if (adresse) cleanFormData.append('Adresse', adresse);
+            if (adresse) cleanFormData.append('adresse', adresse);
 
             const ville = formData.get('ville')?.trim();
-            if (ville) cleanFormData.append('Ville', ville);
-
-            cleanFormData.append('Code_Postal', codePostal);
-            cleanFormData.append('Email', email);
+            if (ville) cleanFormData.append('ville', ville);
 
             const message = formData.get('message')?.trim();
-            if (message) cleanFormData.append('Message', message);
+            if (message) cleanFormData.append('message', message);
 
-            const res = await fetch(`https://formspree.io/f/${CONFIG.FORMSPREE_ID}`, {
+            // Envoi via FormSubmit (même endpoint que la newsletter)
+            const res = await fetch('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
                 method: "POST",
                 body: cleanFormData,
-                headers: { "Accept": "application/json" }
+                headers: { 
+                    "Accept": "application/json"
+                }
             });
 
-            if (res.ok) {
+            const responseData = await res.json();
+
+            if (res.ok && responseData.success) {
                 // État de succès
                 if (submitSpan) submitSpan.textContent = 'Envoyé !';
                 if (submitIcon) submitIcon.className = 'fas fa-check';
@@ -264,9 +697,8 @@ function initContactForm() {
                 }
 
             } else {
-                const errorData = await res.json().catch(() => ({}));
-                console.error('Erreur Formspree:', errorData);
-                throw new Error(`Erreur ${res.status}: ${errorData.error || 'Envoi échoué'}`);
+                console.error('Erreur FormSubmit:', responseData);
+                throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
             }
         } catch (err) {
             console.error('Erreur formulaire contact:', err);
@@ -289,7 +721,16 @@ function initContactForm() {
                 }
             }, 3000);
         }
-    });
+    };
+
+    elements.contactForm.addEventListener('submit', submitHandler);
+
+    // Retourner fonction de cleanup
+    return function cleanupContactForm() {
+        if (elements.contactForm && submitHandler) {
+            elements.contactForm.removeEventListener('submit', submitHandler);
+        }
+    };
 }
 
 // ===== COUNTDOWN FUNCTIONALITY =====
@@ -456,8 +897,10 @@ function showNotification(message, type = 'info') {
 function initSmoothScrolling() {
     const links = document.querySelectorAll('a[href^="#"]');
 
+    const linkHandlers = [];
+
     links.forEach(link => {
-        link.addEventListener('click', function (e) {
+        const handler = function(e) {
             const href = this.getAttribute('href');
             if (href === '#') return;
 
@@ -472,23 +915,40 @@ function initSmoothScrolling() {
                     behavior: 'smooth'
                 });
             }
-        });
+        };
+
+        link.addEventListener('click', handler);
+        linkHandlers.push({ link, handler });
     });
+
+    // Retourner fonction de cleanup
+    return function cleanupSmoothScrolling() {
+        linkHandlers.forEach(({ link, handler }) => {
+            link.removeEventListener('click', handler);
+        });
+    };
 }
 
 // ===== EVENT LISTENERS =====
 function initEventListeners() {
+    let scrollHandler;
+    let scrollTopHandler;
+    let notifyHandler;
+    let keydownHandler;
+
     // Scroll events
-    window.addEventListener('scroll', throttle(handleScroll, 16), { passive: true });
+    scrollHandler = throttle(handleScroll, 16);
+    window.addEventListener('scroll', scrollHandler, { passive: true });
 
     // Scroll to top button
     if (elements.scrollTop) {
-        elements.scrollTop.addEventListener('click', scrollToTop);
+        scrollTopHandler = scrollToTop;
+        elements.scrollTop.addEventListener('click', scrollTopHandler);
     }
 
     // Notification button - scroll to newsletter section
     if (elements.notifyBtn) {
-        elements.notifyBtn.addEventListener('click', function () {
+        notifyHandler = function() {
             const newsletterSection = document.getElementById('newsletter-section');
             if (newsletterSection) {
                 const offsetTop = newsletterSection.offsetTop - 80; // Account for fixed navbar
@@ -497,11 +957,12 @@ function initEventListeners() {
                     behavior: 'smooth'
                 });
             }
-        });
+        };
+        elements.notifyBtn.addEventListener('click', notifyHandler);
     }
 
     // Close modals with Escape key
-    window.addEventListener('keydown', function (e) {
+    keydownHandler = function(e) {
         if (e.key === 'Escape') {
             const openModal = document.querySelector('.modal[style*="display: block"]');
             if (openModal) {
@@ -513,12 +974,29 @@ function initEventListeners() {
                 }
             }
         }
-    });
+    };
+    window.addEventListener('keydown', keydownHandler);
+
+    // Retourner fonction de cleanup
+    return function cleanupEventListeners() {
+        if (scrollHandler) {
+            window.removeEventListener('scroll', scrollHandler);
+        }
+        if (elements.scrollTop && scrollTopHandler) {
+            elements.scrollTop.removeEventListener('click', scrollTopHandler);
+        }
+        if (elements.notifyBtn && notifyHandler) {
+            elements.notifyBtn.removeEventListener('click', notifyHandler);
+        }
+        if (keydownHandler) {
+            window.removeEventListener('keydown', keydownHandler);
+        }
+    };
 }
 
 // ===== NEWSLETTER FUNCTIONALITY =====
 function initNewsletterForm() {
-    if (!elements.newsletterForm) return;
+    if (!elements.newsletterForm) return null;
 
     const emailInput = elements.newsletterForm.querySelector('#newsletter-email');
     const submitBtn = elements.newsletterForm.querySelector('.newsletter-btn');
@@ -527,14 +1005,14 @@ function initNewsletterForm() {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    elements.newsletterForm.addEventListener('submit', async (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(elements.newsletterForm);
 
         // Honeypot anti-bot
         if (formData.get('_gotcha')) {
-            console.warn("Bot détecté 🚫");
+            console.warn("Bot détecté");
             return;
         }
 
@@ -550,7 +1028,7 @@ function initNewsletterForm() {
             return;
         }
 
-        // Sauvegarde de l’état du bouton
+        // Sauvegarde de l'état du bouton
         const originalText = submitSpan?.textContent || "S'inscrire";
         const originalIcon = submitIcon?.className || "fas fa-paper-plane";
 
@@ -617,24 +1095,110 @@ function initNewsletterForm() {
                 }
             }, 3000);
         }
-    });
+    };
+
+    elements.newsletterForm.addEventListener('submit', submitHandler);
 
     // Validation en temps réel
+    let inputHandler = null;
     if (emailInput) {
-        emailInput.addEventListener("input", () => {
+        inputHandler = () => {
             const email = emailInput.value.trim();
             if (email && !emailRegex.test(email)) {
                 emailInput.style.borderColor = "var(--danger, #dc3545)";
             } else {
                 emailInput.style.borderColor = "";
             }
+        };
+        emailInput.addEventListener("input", inputHandler);
+    }
+
+    // Retourner fonction de cleanup
+    return function cleanupNewsletterForm() {
+        if (elements.newsletterForm && submitHandler) {
+            elements.newsletterForm.removeEventListener('submit', submitHandler);
+        }
+        if (emailInput && inputHandler) {
+            emailInput.removeEventListener("input", inputHandler);
+        }
+    };
+}
+
+// ===== PERFORMANCE OPTIMIZATION =====
+function throttle(func, limit) {
+    let inThrottle;
+    return function () {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+// ===== ÉVÉNEMENTS DE CLEANUP AUTOMATIQUE =====
+function initGlobalCleanup() {
+    // 1. Avant fermeture/rechargement de page
+    window.addEventListener('beforeunload', function() {
+        executeAllCleanup();
+    });
+
+    // 2. Gestion des erreurs globales
+    window.addEventListener('error', function(event) {
+        console.error('Erreur JavaScript détectée:', event.error);
+        
+        // En cas d'erreur critique, nettoyer pour éviter les fuites
+        if (event.error.message.includes('cleanup') || 
+            event.error.message.includes('observer') ||
+            event.error.message.includes('memory')) {
+            executeAllCleanup();
+        }
+    });
+
+    // 3. Gestion spécifique pour les erreurs non capturées
+    window.addEventListener('unhandledrejection', function(event) {
+        console.error('Promise rejetée non gérée:', event.reason);
+        
+        // Nettoyer si l'erreur semble liée aux observers
+        if (event.reason?.message?.includes('observer') || 
+            event.reason?.message?.includes('intersection')) {
+            executeAllCleanup();
+        }
+    });
+
+    // 4. Détection de navigation SPA (si applicable)
+    if (window.history && window.history.pushState) {
+        const originalPushState = window.history.pushState;
+        const originalReplaceState = window.history.replaceState;
+
+        window.history.pushState = function() {
+            executeAllCleanup();
+            return originalPushState.apply(window.history, arguments);
+        };
+
+        window.history.replaceState = function() {
+            executeAllCleanup();
+            return originalReplaceState.apply(window.history, arguments);
+        };
+
+        window.addEventListener('popstate', function() {
+            executeAllCleanup();
         });
     }
 }
 
+// ===== FONCTION DE CLEANUP MANUELLE (pour debug) =====
+window.debugCleanup = function() {
+    executeAllCleanup();
+};
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function () {
+    // Initialiser le système de cleanup global
+    initGlobalCleanup();
+
     // Initialize navigation and legal functionalities from common.js
     if (window.NavigationFooter) {
         NavigationFooter.initNavigation();
@@ -651,18 +1215,43 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 10));
     }
 
-    // Initialiser les fonctionnalités spécifiques à cette page
-    initEventListeners();
-    initSmoothScrolling();
-    initNewsletterForm();
-    initFloatingButton();
-    initContactModal();
-    initContactForm();
+    // Initialiser les fonctionnalités et collecter les fonctions de cleanup
+    const eventListenersCleanup = initEventListeners();
+    if (eventListenersCleanup) addCleanupFunction(eventListenersCleanup);
+
+    const smoothScrollingCleanup = initSmoothScrolling();
+    if (smoothScrollingCleanup) addCleanupFunction(smoothScrollingCleanup);
+
+    const newsletterCleanup = initNewsletterForm();
+    if (newsletterCleanup) addCleanupFunction(newsletterCleanup);
+
+    const contactModalCleanup = initContactModal();
+    if (contactModalCleanup) addCleanupFunction(contactModalCleanup);
+
+    const contactFormCleanup = initContactForm();
+    if (contactFormCleanup) addCleanupFunction(contactFormCleanup);
+
+    // Initialiser la section exposant
+    const exhibitorSectionCleanup = initExhibitorSection();
+    if (exhibitorSectionCleanup) addCleanupFunction(exhibitorSectionCleanup);
+
+    // Initialiser le bouton flottant en dernier
+    const floatingCleanup = initFloatingButton();
+    if (floatingCleanup) addCleanupFunction(floatingCleanup);
+
+    // Créer les particules
     createParticles();
 
     // Démarrer le countdown
     updateCountdown();
-    setInterval(updateCountdown, 1000);
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    // Ajouter le cleanup pour le countdown
+    addCleanupFunction(() => {
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
+        }
+    });
 
     // Gestion initiale du scroll
     handleScroll();
@@ -688,18 +1277,13 @@ document.addEventListener('DOMContentLoaded', function () {
         el.classList.add('animate-ready');
         observer.observe(el);
     });
-});
 
-// ===== PERFORMANCE OPTIMIZATION =====
-function throttle(func, limit) {
-    let inThrottle;
-    return function () {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    }
-}
+    // Cleanup pour cet observer
+    addCleanupFunction(() => {
+        observer.disconnect();
+    });
+
+    // Console message
+    console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
+    console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
+});

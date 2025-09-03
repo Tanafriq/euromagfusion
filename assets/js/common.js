@@ -294,6 +294,24 @@ function initLegalAndServices() {
     });
 }
 
+// ==================== DEVELOPER SIGNATURE ====================
+function initDeveloperSignature() {
+    // Gestion du clic sur la signature sans message console
+    const developerSignature = document.getElementById('developer-signature');
+    if (developerSignature) {
+        developerSignature.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Créer un lien temporaire et le supprimer immédiatement pour éviter le message console
+            const link = document.createElement('a');
+            link.href = 'mailto:shakbaz@gmail.com';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    }
+}
+
 // ==================== GLOBAL SCROLL HANDLER ====================
 function handleScroll() {
     if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
@@ -309,12 +327,25 @@ function debounce(func, wait) {
     };
 }
 
+// ==================== INITIALIZATION ====================
+document.addEventListener('DOMContentLoaded', function() {
+    // Mise à jour automatique de l'année
+    const currentYearElement = document.getElementById('current-year');
+    if (currentYearElement) {
+        currentYearElement.textContent = new Date().getFullYear();
+    }
+
+    // Initialiser toutes les fonctionnalités
+    initDeveloperSignature();
+});
+
 // Export des fonctions pour utilisation dans le fichier principal
 window.NavigationFooter = {
     initNavigation,
     initMobileMenu,
     initScrollToTop,
     initLegalAndServices,
+    initDeveloperSignature,
     handleScroll,
     debounce
 };

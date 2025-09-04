@@ -631,10 +631,15 @@ function initNewsletterForm() {
 
     const emailInput = newsletterForm.querySelector('input[type="email"]');
     const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+    const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
 
-    // Regex email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Regex email plus stricte
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    // Configuration des timeouts
+    const LOADING_TIMEOUT = 30000; // 30 secondes maximum
+    const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -647,8 +652,8 @@ function initNewsletterForm() {
             return;
         }
 
-        // Validation de l'email
-        const email = emailInput?.value.trim();
+        // Validation de l'email avec trim
+        const email = formData.get('email')?.trim() || emailInput?.value.trim();
 
         if (!email) {
             showNotification('Veuillez entrer votre adresse email.', 'error');
@@ -664,13 +669,20 @@ function initNewsletterForm() {
         }
 
         // État de chargement
+        const originalSpanText = submitSpan?.textContent || 'S\'inscrire';
         const originalIconClass = submitIcon?.className || 'fas fa-paper-plane';
 
+        if (submitSpan) submitSpan.textContent = 'Inscription...';
         if (submitIcon) submitIcon.className = 'fas fa-spinner fa-spin';
         if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.style.opacity = '0.7';
         }
+
+        // Timeout de sécurité
+        const timeoutId = setTimeout(() => {
+            throw new Error('Délai d\'attente dépassé');
+        }, LOADING_TIMEOUT);
 
         try {
             // Préparation des données pour FormSubmit
@@ -680,14 +692,17 @@ function initNewsletterForm() {
             cleanFormData.append('_subject', 'Newsletter - Concerts Euromag Fusion');
             cleanFormData.append('_captcha', 'true');
             cleanFormData.append('_next', window.location.href);
+            cleanFormData.append('_template', 'table');
 
-            // Données du formulaire
+            // Données du formulaire avec formatage
             cleanFormData.append('email', email);
+            cleanFormData.append('type_formulaire', 'newsletter_concerts');
             cleanFormData.append('type_inscription', 'newsletter_concerts');
             cleanFormData.append('interet', 'Concerts et spectacles');
+            cleanFormData.append('date_inscription', new Date().toLocaleString('fr-FR'));
 
-            // Envoi via FormSubmit
-            const res = await fetch('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
+            // Envoi via FormSubmit avec retry logic
+            const response = await fetchWithRetry('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
                 method: "POST",
                 body: cleanFormData,
                 headers: {
@@ -695,89 +710,160 @@ function initNewsletterForm() {
                 }
             });
 
-            const responseData = await res.json();
+            clearTimeout(timeoutId);
 
-            if (res.ok && responseData.success) {
-                // État de succès
-                if (submitIcon) submitIcon.className = 'fas fa-check';
-                if (submitBtn) {
-                    submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
-                    submitBtn.style.opacity = '1';
+            if (response.ok) {
+                const responseData = await response.json();
+                
+                if (responseData.success) {
+                    // État de succès
+                    if (submitSpan) submitSpan.textContent = 'Inscrit !';
+                    if (submitIcon) submitIcon.className = 'fas fa-check';
+                    if (submitBtn) {
+                        submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                        submitBtn.style.opacity = '1';
+                    }
+
+                    showNotification('Inscription réussie ! Vous recevrez toutes les actualités de nos concerts.', 'success');
+
+                    // Réinitialiser le formulaire
+                    newsletterForm.reset();
+
+                    // Analytics optionnel
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'newsletter_signup', {
+                            event_category: 'engagement',
+                            event_label: 'Newsletter Concerts',
+                            custom_map: { 'custom_parameter_1': 'concerts_newsletter' }
+                        });
+                    }
+
+                    // Facebook Pixel optionnel
+                    if (typeof fbq !== 'undefined') {
+                        fbq('track', 'Lead', {
+                            content_name: 'Newsletter Concerts',
+                            content_category: 'newsletter'
+                        });
+                    }
+                } else {
+                    throw new Error(`Erreur FormSubmit: ${responseData.message || 'Inscription échouée'}`);
                 }
-
-                showNotification('Inscription réussie ! Vous recevrez toutes les actualités de nos concerts.', 'success');
-
-                // Réinitialiser le formulaire
-                newsletterForm.reset();
-
-                // Analytics optionnel
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'newsletter_signup', {
-                        event_category: 'engagement',
-                        event_label: 'Newsletter Concerts',
-                        custom_map: { 'custom_parameter_1': 'concerts_newsletter' }
-                    });
-                }
-
-                // Facebook Pixel optionnel
-                if (typeof fbq !== 'undefined') {
-                    fbq('track', 'Lead', {
-                        content_name: 'Newsletter Concerts',
-                        content_category: 'newsletter'
-                    });
-                }
-
             } else {
-                console.error('Erreur FormSubmit:', responseData);
-                throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
+                throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
             }
+
         } catch (err) {
+            clearTimeout(timeoutId);
             console.error('Erreur formulaire newsletter:', err);
 
             // État d'erreur
+            if (submitSpan) submitSpan.textContent = 'Erreur';
             if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
             if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
 
-            showNotification('Une erreur est survenue lors de l\'inscription. Veuillez réessayer.', 'error');
+            // Message d'erreur plus spécifique
+            let errorMessage = 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.';
+            if (err.message.includes('Délai')) {
+                errorMessage = 'Le délai d\'attente a été dépassé. Vérifiez votre connexion et réessayez.';
+            } else if (err.message.includes('Failed to fetch')) {
+                errorMessage = 'Problème de connexion. Vérifiez votre réseau et réessayez.';
+            }
+
+            showNotification(errorMessage, 'error');
         } finally {
-            // Réinitialisation après 3 secondes
+            // Réinitialisation après délai
             setTimeout(() => {
+                if (submitSpan) submitSpan.textContent = originalSpanText;
                 if (submitIcon) submitIcon.className = originalIconClass;
                 if (submitBtn) {
                     submitBtn.style.background = '';
                     submitBtn.style.opacity = '';
                     submitBtn.disabled = false;
                 }
-            }, 3000);
+            }, RESET_TIMEOUT);
         }
     };
 
-    newsletterForm.addEventListener('submit', submitHandler);
-
-    // Validation en temps réel de l'email
-    let inputHandler = null;
-    if (emailInput) {
-        inputHandler = function () {
-            const email = emailInput.value.trim();
-            if (email && !emailRegex.test(email)) {
-                emailInput.style.borderColor = '#dc2626';
-                emailInput.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
-            } else {
-                emailInput.style.borderColor = '';
-                emailInput.style.boxShadow = '';
+    // Fonction de retry pour les requêtes
+    async function fetchWithRetry(url, options, maxRetries = 2) {
+        let lastError;
+        
+        for (let i = 0; i <= maxRetries; i++) {
+            try {
+                const response = await fetch(url, options);
+                return response;
+            } catch (error) {
+                lastError = error;
+                if (i < maxRetries) {
+                    // Attendre avant de réessayer (exponential backoff)
+                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                }
             }
-        };
-        emailInput.addEventListener('input', inputHandler);
+        }
+        
+        throw lastError;
     }
 
-    // Retourner fonction de cleanup
+    // Validation en temps réel améliorée
+    function setupRealTimeValidation() {
+        const validators = {
+            email: {
+                element: emailInput,
+                validate: (value) => emailRegex.test(value),
+                message: 'Format d\'email invalide'
+            }
+        };
+
+        Object.values(validators).forEach(({ element, validate, message }) => {
+            if (element) {
+                element.addEventListener('blur', function() {
+                    const value = this.value.trim();
+                    if (value && !validate(value)) {
+                        this.style.borderColor = '#dc2626';
+                        this.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+                        this.setAttribute('aria-invalid', 'true');
+                        this.setAttribute('title', message);
+                    } else {
+                        this.style.borderColor = '';
+                        this.style.boxShadow = '';
+                        this.removeAttribute('aria-invalid');
+                        this.removeAttribute('title');
+                    }
+                });
+
+                // Validation en temps réel pendant la saisie
+                element.addEventListener('input', function() {
+                    const value = this.value.trim();
+                    if (value && !validate(value)) {
+                        this.style.borderColor = '#dc2626';
+                        this.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+                    } else {
+                        this.style.borderColor = '';
+                        this.style.boxShadow = '';
+                    }
+                });
+            }
+        });
+
+        return validators;
+    }
+
+    newsletterForm.addEventListener('submit', submitHandler);
+    const validators = setupRealTimeValidation();
+
+    // Retourner fonction de cleanup améliorée
     return function cleanupNewsletterForm() {
         if (newsletterForm && submitHandler) {
             newsletterForm.removeEventListener('submit', submitHandler);
         }
-        if (emailInput && inputHandler) {
-            emailInput.removeEventListener('input', inputHandler);
-        }
+        
+        // Nettoyer les validateurs
+        Object.values(validators).forEach(({ element }) => {
+            if (element) {
+                element.removeEventListener('blur', element.validationHandler);
+                element.removeEventListener('input', element.inputHandler);
+            }
+        });
     };
 }
 

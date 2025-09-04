@@ -557,8 +557,12 @@ function initContactForm() {
     const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
 
-    // Regex email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Regex email plus stricte
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    // Configuration des timeouts
+    const LOADING_TIMEOUT = 30000; // 30 secondes maximum
+    const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -571,7 +575,7 @@ function initContactForm() {
             return;
         }
 
-        // Validation des champs obligatoires
+        // Validation des champs obligatoires avec trim
         const nom = formData.get('nom')?.trim();
         const prenom = formData.get('prenom')?.trim();
         const typeClient = formData.get('typeClient');
@@ -581,6 +585,12 @@ function initContactForm() {
         // Vérifications de base
         if (!nom || !prenom || !typeClient || !email || !codePostal) {
             showNotification('Veuillez remplir tous les champs obligatoires.', 'error');
+            return;
+        }
+
+        // Validation longueur minimale
+        if (nom.length < 2 || prenom.length < 2) {
+            showNotification('Le nom et prénom doivent contenir au moins 2 caractères.', 'error');
             return;
         }
 
@@ -606,6 +616,11 @@ function initContactForm() {
                 showNotification('Veuillez remplir le nom de l\'entreprise et le secteur d\'activité.', 'error');
                 return;
             }
+
+            if (nomEntreprise.length < 2 || secteurActivite.length < 2) {
+                showNotification('Le nom de l\'entreprise et le secteur d\'activité doivent contenir au moins 2 caractères.', 'error');
+                return;
+            }
         }
 
         // État de chargement
@@ -619,6 +634,11 @@ function initContactForm() {
             submitBtn.style.opacity = '0.7';
         }
 
+        // Timeout de sécurité
+        const timeoutId = setTimeout(() => {
+            throw new Error('Délai d\'attente dépassé');
+        }, LOADING_TIMEOUT);
+
         try {
             // Préparation des données pour FormSubmit
             const cleanFormData = new FormData();
@@ -627,8 +647,9 @@ function initContactForm() {
             cleanFormData.append('_subject', 'Demande Exposant - Algérie Expo');
             cleanFormData.append('_captcha', 'true');
             cleanFormData.append('_next', window.location.href);
+            cleanFormData.append('_template', 'table');
             
-            // Données du formulaire
+            // Données du formulaire avec formatage
             cleanFormData.append('nom', nom);
             cleanFormData.append('prenom', prenom);
             cleanFormData.append('type_client', typeClient);
@@ -654,8 +675,11 @@ function initContactForm() {
             const message = formData.get('message')?.trim();
             if (message) cleanFormData.append('message', message);
 
-            // Envoi via FormSubmit (même endpoint que la newsletter)
-            const res = await fetch('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
+            cleanFormData.append('type_formulaire', 'exposant_algerie_expo');
+            cleanFormData.append('date_envoi', new Date().toLocaleString('fr-FR'));
+
+            // Envoi via FormSubmit avec retry logic
+            const response = await fetchWithRetry('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
                 method: "POST",
                 body: cleanFormData,
                 headers: { 
@@ -663,45 +687,51 @@ function initContactForm() {
                 }
             });
 
-            const responseData = await res.json();
+            clearTimeout(timeoutId);
 
-            if (res.ok && responseData.success) {
-                // État de succès
-                if (submitSpan) submitSpan.textContent = 'Envoyé !';
-                if (submitIcon) submitIcon.className = 'fas fa-check';
-                if (submitBtn) {
-                    submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
-                    submitBtn.style.opacity = '1';
-                }
-
-                showNotification('Votre demande a été envoyée avec succès ! Nous vous recontacterons bientôt.', 'success');
-
-                // Fermer le modal après succès
-                setTimeout(() => {
-                    closeContactModal();
-                    elements.contactForm.reset();
-
-                    // Réinitialiser les champs entreprise
-                    const entrepriseFields = document.getElementById('entrepriseFields');
-                    if (entrepriseFields) {
-                        entrepriseFields.style.display = 'none';
+            if (response.ok) {
+                const responseData = await response.json();
+                
+                if (responseData.success) {
+                    // État de succès
+                    if (submitSpan) submitSpan.textContent = 'Envoyé !';
+                    if (submitIcon) submitIcon.className = 'fas fa-check';
+                    if (submitBtn) {
+                        submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                        submitBtn.style.opacity = '1';
                     }
-                }, 2000);
 
-                // Analytics optionnel
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'exhibitor_request', {
-                        event_category: 'engagement',
-                        event_label: 'Demande Exposant Algérie Expo',
-                        custom_map: { 'custom_parameter_1': 'algerie_expo_exhibitor' }
-                    });
+                    showNotification('Votre demande a été envoyée avec succès ! Nous vous recontacterons bientôt.', 'success');
+
+                    // Fermer le modal après succès
+                    setTimeout(() => {
+                        closeContactModal();
+                        elements.contactForm.reset();
+
+                        // Réinitialiser les champs entreprise
+                        const entrepriseFields = document.getElementById('entrepriseFields');
+                        if (entrepriseFields) {
+                            entrepriseFields.style.display = 'none';
+                        }
+                    }, 2000);
+
+                    // Analytics optionnel
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'exhibitor_request', {
+                            event_category: 'engagement',
+                            event_label: 'Demande Exposant Algérie Expo',
+                            custom_map: { 'custom_parameter_1': 'algerie_expo_exhibitor' }
+                        });
+                    }
+                } else {
+                    throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
                 }
-
             } else {
-                console.error('Erreur FormSubmit:', responseData);
-                throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
+                throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
             }
+
         } catch (err) {
+            clearTimeout(timeoutId);
             console.error('Erreur formulaire contact:', err);
 
             // État d'erreur
@@ -709,9 +739,17 @@ function initContactForm() {
             if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
             if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
 
-            showNotification('Une erreur est survenue lors de l\'envoi. Veuillez réessayer.', 'error');
+            // Message d'erreur plus spécifique
+            let errorMessage = 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer.';
+            if (err.message.includes('Délai')) {
+                errorMessage = 'Le délai d\'attente a été dépassé. Vérifiez votre connexion et réessayez.';
+            } else if (err.message.includes('Failed to fetch')) {
+                errorMessage = 'Problème de connexion. Vérifiez votre réseau et réessayez.';
+            }
+
+            showNotification(errorMessage, 'error');
         } finally {
-            // Réinitialisation après 3 secondes
+            // Réinitialisation après délai
             setTimeout(() => {
                 if (submitSpan) submitSpan.textContent = originalSpanText;
                 if (submitIcon) submitIcon.className = originalIconClass;
@@ -720,17 +758,109 @@ function initContactForm() {
                     submitBtn.style.opacity = '';
                     submitBtn.disabled = false;
                 }
-            }, 3000);
+            }, RESET_TIMEOUT);
         }
     };
 
-    elements.contactForm.addEventListener('submit', submitHandler);
+    // Fonction de retry pour les requêtes
+    async function fetchWithRetry(url, options, maxRetries = 2) {
+        let lastError;
+        
+        for (let i = 0; i <= maxRetries; i++) {
+            try {
+                const response = await fetch(url, options);
+                return response;
+            } catch (error) {
+                lastError = error;
+                if (i < maxRetries) {
+                    // Attendre avant de réessayer (exponential backoff)
+                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                }
+            }
+        }
+        
+        throw lastError;
+    }
 
-    // Retourner fonction de cleanup
+    // Validation en temps réel améliorée
+    function setupRealTimeValidation() {
+        const nomInput = elements.contactForm.querySelector('#nom');
+        const prenomInput = elements.contactForm.querySelector('#prenom');
+        const emailInput = elements.contactForm.querySelector('#email');
+        const codePostalInput = elements.contactForm.querySelector('#codePostal');
+        const nomEntrepriseInput = elements.contactForm.querySelector('#nomEntreprise');
+        const secteurActiviteInput = elements.contactForm.querySelector('#secteurActivite');
+
+        const validators = {
+            nom: {
+                element: nomInput,
+                validate: (value) => value.trim().length >= 2,
+                message: 'Le nom doit contenir au moins 2 caractères'
+            },
+            prenom: {
+                element: prenomInput,
+                validate: (value) => value.trim().length >= 2,
+                message: 'Le prénom doit contenir au moins 2 caractères'
+            },
+            email: {
+                element: emailInput,
+                validate: (value) => emailRegex.test(value),
+                message: 'Format d\'email invalide'
+            },
+            codePostal: {
+                element: codePostalInput,
+                validate: (value) => /^[0-9]{5}$/.test(value),
+                message: 'Code postal invalide (5 chiffres requis)'
+            },
+            nomEntreprise: {
+                element: nomEntrepriseInput,
+                validate: (value) => value.trim().length >= 2,
+                message: 'Le nom de l\'entreprise doit contenir au moins 2 caractères'
+            },
+            secteurActivite: {
+                element: secteurActiviteInput,
+                validate: (value) => value.trim().length >= 2,
+                message: 'Le secteur d\'activité doit contenir au moins 2 caractères'
+            }
+        };
+
+        Object.values(validators).forEach(({ element, validate, message }) => {
+            if (element) {
+                element.addEventListener('blur', function() {
+                    const value = this.value.trim();
+                    if (value && !validate(value)) {
+                        this.style.borderColor = '#dc2626';
+                        this.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+                        this.setAttribute('aria-invalid', 'true');
+                        this.setAttribute('title', message);
+                    } else {
+                        this.style.borderColor = '';
+                        this.style.boxShadow = '';
+                        this.removeAttribute('aria-invalid');
+                        this.removeAttribute('title');
+                    }
+                });
+            }
+        });
+
+        return validators;
+    }
+
+    elements.contactForm.addEventListener('submit', submitHandler);
+    const validators = setupRealTimeValidation();
+
+    // Retourner fonction de cleanup améliorée
     return function cleanupContactForm() {
         if (elements.contactForm && submitHandler) {
             elements.contactForm.removeEventListener('submit', submitHandler);
         }
+        
+        // Nettoyer les validateurs
+        Object.values(validators).forEach(({ element }) => {
+            if (element) {
+                element.removeEventListener('blur', element.validationHandler);
+            }
+        });
     };
 }
 
@@ -1004,36 +1134,44 @@ function initNewsletterForm() {
     const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Regex email plus stricte
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    // Configuration des timeouts
+    const LOADING_TIMEOUT = 30000; // 30 secondes maximum
+    const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
 
     const submitHandler = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(elements.newsletterForm);
 
-        // Honeypot anti-bot
+        // Vérification honeypot (anti-bot)
         if (formData.get('_gotcha')) {
-            console.warn("Bot détecté");
+            console.warn("Bot détecté, soumission ignorée");
             return;
         }
 
+        // Validation de l'email avec trim
         const email = formData.get('email')?.trim();
+
         if (!email) {
             showNotification('Veuillez entrer votre adresse email.', 'error');
             emailInput?.focus();
             return;
         }
+
+        // Vérification email
         if (!emailRegex.test(email)) {
             showNotification('Veuillez entrer une adresse email valide.', 'error');
             emailInput?.focus();
             return;
         }
 
-        // Sauvegarde de l'état du bouton
-        const originalText = submitSpan?.textContent || "S'inscrire";
-        const originalIcon = submitIcon?.className || "fas fa-paper-plane";
+        // État de chargement
+        const originalSpanText = submitSpan?.textContent || "S'inscrire";
+        const originalIconClass = submitIcon?.className || "fas fa-paper-plane";
 
-        // Loader
         if (submitSpan) submitSpan.textContent = "Inscription...";
         if (submitIcon) submitIcon.className = "fas fa-spinner fa-spin";
         if (submitBtn) {
@@ -1041,12 +1179,20 @@ function initNewsletterForm() {
             submitBtn.style.opacity = "0.7";
         }
 
+        // Timeout de sécurité
+        const timeoutId = setTimeout(() => {
+            throw new Error('Délai d\'attente dépassé');
+        }, LOADING_TIMEOUT);
+
         try {
-            const res = await fetch(elements.newsletterForm.action, {
+            // Envoi avec retry logic
+            const response = await fetchWithRetry(elements.newsletterForm.action, {
                 method: "POST",
                 body: JSON.stringify({
                     email: email,
-                    subject: "Inscription Algérie Expo"
+                    subject: "Inscription Algérie Expo",
+                    date_inscription: new Date().toLocaleString('fr-FR'),
+                    type_formulaire: 'newsletter_algerie_expo'
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -1054,7 +1200,10 @@ function initNewsletterForm() {
                 }
             });
 
-            if (res.ok) {
+            clearTimeout(timeoutId);
+
+            if (response.ok) {
+                // État de succès
                 if (submitSpan) submitSpan.textContent = "Inscrit !";
                 if (submitIcon) submitIcon.className = "fas fa-check";
                 if (submitBtn) {
@@ -1076,52 +1225,119 @@ function initNewsletterForm() {
                     fbq("track", "Lead", { content_name: "Newsletter Algérie Expo" });
                 }
             } else {
-                throw new Error(`Erreur ${res.status}`);
+                throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
             }
+
         } catch (err) {
-            console.error("Erreur newsletter:", err);
+            clearTimeout(timeoutId);
+            console.error("Erreur formulaire newsletter:", err);
+
+            // État d'erreur
             if (submitSpan) submitSpan.textContent = "Erreur";
             if (submitIcon) submitIcon.className = "fas fa-exclamation-triangle";
             if (submitBtn) submitBtn.style.background = "var(--danger, #dc3545)";
-            showNotification("Une erreur est survenue. Veuillez réessayer.", "error");
+
+            // Message d'erreur plus spécifique
+            let errorMessage = "Une erreur est survenue lors de l'inscription. Veuillez réessayer.";
+            if (err.message.includes('Délai')) {
+                errorMessage = 'Le délai d\'attente a été dépassé. Vérifiez votre connexion et réessayez.';
+            } else if (err.message.includes('Failed to fetch')) {
+                errorMessage = 'Problème de connexion. Vérifiez votre réseau et réessayez.';
+            }
+
+            showNotification(errorMessage, "error");
         } finally {
-            // Réinitialisation du bouton après 3s
+            // Réinitialisation après délai
             setTimeout(() => {
-                if (submitSpan) submitSpan.textContent = originalText;
-                if (submitIcon) submitIcon.className = originalIcon;
+                if (submitSpan) submitSpan.textContent = originalSpanText;
+                if (submitIcon) submitIcon.className = originalIconClass;
                 if (submitBtn) {
                     submitBtn.style.background = "";
                     submitBtn.style.opacity = "";
                     submitBtn.disabled = false;
                 }
-            }, 3000);
+            }, RESET_TIMEOUT);
         }
     };
 
-    elements.newsletterForm.addEventListener('submit', submitHandler);
-
-    // Validation en temps réel
-    let inputHandler = null;
-    if (emailInput) {
-        inputHandler = () => {
-            const email = emailInput.value.trim();
-            if (email && !emailRegex.test(email)) {
-                emailInput.style.borderColor = "var(--danger, #dc3545)";
-            } else {
-                emailInput.style.borderColor = "";
+    // Fonction de retry pour les requêtes
+    async function fetchWithRetry(url, options, maxRetries = 2) {
+        let lastError;
+        
+        for (let i = 0; i <= maxRetries; i++) {
+            try {
+                const response = await fetch(url, options);
+                return response;
+            } catch (error) {
+                lastError = error;
+                if (i < maxRetries) {
+                    // Attendre avant de réessayer (exponential backoff)
+                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                }
             }
-        };
-        emailInput.addEventListener("input", inputHandler);
+        }
+        
+        throw lastError;
     }
 
-    // Retourner fonction de cleanup
+    // Validation en temps réel améliorée
+    function setupRealTimeValidation() {
+        const validators = {
+            email: {
+                element: emailInput,
+                validate: (value) => emailRegex.test(value),
+                message: 'Format d\'email invalide'
+            }
+        };
+
+        Object.values(validators).forEach(({ element, validate, message }) => {
+            if (element) {
+                element.addEventListener('blur', function() {
+                    const value = this.value.trim();
+                    if (value && !validate(value)) {
+                        this.style.borderColor = 'var(--danger, #dc3545)';
+                        this.style.boxShadow = '0 0 0 3px rgba(220, 53, 69, 0.1)';
+                        this.setAttribute('aria-invalid', 'true');
+                        this.setAttribute('title', message);
+                    } else {
+                        this.style.borderColor = '';
+                        this.style.boxShadow = '';
+                        this.removeAttribute('aria-invalid');
+                        this.removeAttribute('title');
+                    }
+                });
+
+                // Validation en temps réel pendant la saisie
+                element.addEventListener('input', function() {
+                    const value = this.value.trim();
+                    if (value && !validate(value)) {
+                        this.style.borderColor = 'var(--danger, #dc3545)';
+                    } else {
+                        this.style.borderColor = '';
+                    }
+                });
+            }
+        });
+
+        return validators;
+    }
+
+    elements.newsletterForm.addEventListener('submit', submitHandler);
+    const validators = setupRealTimeValidation();
+
+    // Retourner fonction de cleanup améliorée
     return function cleanupNewsletterForm() {
         if (elements.newsletterForm && submitHandler) {
             elements.newsletterForm.removeEventListener('submit', submitHandler);
         }
-        if (emailInput && inputHandler) {
-            emailInput.removeEventListener("input", inputHandler);
-        }
+        
+        // Nettoyer les validateurs
+        Object.values(validators).forEach(({ element }) => {
+            if (element) {
+                element.removeEventListener('blur', element.validationHandler);
+                element.removeEventListener('input', element.inputHandler);
+            }
+        });
     };
 }
 

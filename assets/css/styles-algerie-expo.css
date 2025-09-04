@@ -2712,6 +2712,47 @@
     }
 }
 
+.feature-item-with-tooltip {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1rem);
+    margin-bottom: clamp(1rem, 2.5vw, 1.25rem);
+    padding: clamp(0.75rem, 2vw, 1rem);
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: clamp(10px, 2.5vw, 12px);
+    border: 1px solid rgba(34, 197, 94, 0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between; /* Distribue l'espace uniformément */
+}
+
+.feature-content {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1rem);
+    flex: 1;
+}
+
+.feature-content i {
+    color: #059669;
+    font-size: clamp(0.9rem, 2.2vw, 1rem);
+    width: 20px;
+    flex-shrink: 0;
+}
+
+.feature-content span {
+    color: var(--gray-700);
+    font-weight: 600;
+    font-size: clamp(0.95rem, 2.2vw, 1rem);
+}
+
+/* Le tooltip reste à droite sans affecter la largeur */
+.tooltip-right {
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
 /* Animation améliorée pour la bulle */
 @keyframes tooltipFadeIn {
     from {

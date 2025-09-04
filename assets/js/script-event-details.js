@@ -5,29 +5,28 @@ const eventData = {
         date: '25 Avril 2025',
         location: 'New Morning, Paris',
         type: 'Concert',
-        time: '20h00 - 23h30',
-        price: '€',
+        time: '19h30 - 23h00',
+        price: '25€ / 29€',
         image: './assets/img/banner-chazil.webp',
         video: '8hH7f3WKHyY',
         description: `
-            <p>Le concert a été une célébration unique du raï, un genre musical algérien que l'artiste a su réinventer. Son style allie la richesse du raï classique à une touche moderne et audacieuse, pour créer une musique à la fois authentique et novatrice.</p><br />
+            <br />       
+            <h3>1ère partie : Rabie Houti</h3>
+            <p>Née de la volonté de Rabie Houti, violoniste reconnu de la scène oranaise dont le répertoire arabo-andalou a toujours été une invitation au voyage. À peine ses valises posées sur les bords du Lez, son violon ne tarde pas à rassembler autour de lui des musiciens de tout horizon avide de partage. De cette rencontre naîtra le groupe Rabie Houti Band qui propose aujourd’hui une musique de fusion riche et variée, mêlant à la fois la douceur orientale d’airs arabo-andalous revisités, l’énergie percutante d’une gamme de blues, le groove imparable d’un rythme afrobeat, la légèreté d’un swing. Rien ne se perd, tout se transforme. À partir des diverses influences musicales de chacun, le Rabie Houti Band crée un paysage sonore unique, car multicolore, propice à la joie, à la fête et au voyage.</p><br />
             
-            <h3>Un héritage revisité</h3>
-            <p>Le raï, né à l'Ouest de l'Algérie au début du XXe siècle, a longtemps été la voix des générations nouvelles. <strong>CHAZIL</strong> puise dans cet héritage en s'inspirant des grands maîtres, tout en y injectant de nouvelles sonorités. Il modernise les codes de ce genre avec sa voix unique et sa guitare, créant ainsi une atmosphère à la fois nostalgique et rafraîchissante.</p><br />
-            
-            <h3>Un artiste et ses musiciens</h3>
-            <p>Cette soirée exceptionnelle a mis en lumière le talent de <strong>CHAZIL</strong>, accompagné d'un groupe qui a su sublimer ses arrangements. Le public a découvert une instrumentation à la fois traditionnelle et contemporaine, mêlant guitare, percussions et instruments électroniques, pour donner corps à la vision de l'artiste.</p><br />
-            
-            <h3>Une expérience inoubliable</h3>
-            <p>Le public a été transporté par un voyage musical à travers le raï, redécouvrant ses plus beaux classiques à travers le prisme de <strong>CHAZIL</strong>. Les interprétations ont alterné entre des reprises poignantes et des compositions originales, démontrant la capacité de l'artiste à faire vivre et évoluer cet héritage culturel.</p>
+            <h3>Concert : Chazil</h3>
+            <p>Chanteur et compositeur, Chazil Adlene Bahloul incarne une identité musicale profondément enracinée dans l’essence de l’Algérie. Né à Constantine, il grandit au cœur de sa Casbah, où il développe une passion pour la musique en puisant dans l’âme de son quartier populaire. Sa voix grave, à la fois mélancolique et porteuse d’espoir, résonne comme un écho des émotions de l’Algérie profonde.</p><br />
+            <p>Chazil puise son inspiration dans les chants traditionnels algériens, du Aïssaoua, Malouf et El Wesfane à l’Est, au Gnaoui au Sud, en passant par le Chaâbi au Nord et le Raï à l’Ouest, dont il tombe profondément amoureux. Animé par une soif de fusion musicale, il explore également des styles internationaux comme le Flamenco, le Fado, le Reggae et la musique turque, créant un son innovant et universel. Ses voyages lui ont permis de constater l’impact de la musique algérienne à l’international et de séduire un public toujours plus large.</p><br />
+            <p>En février 2025, il marque un tournant dans sa carrière en se produisant au Palais des Congrès de Paris devant plus de 4000 personnes, lors d’un événement emblématique du Raï Nation. Fort de ce succès, il continue son ascension et sera de retour sur scène à Paris le 25 avril 2025.</p><br />
+            <p>À travers ses performances, Chazil fait rayonner à nouveau le vieux RAI, sur la scène nationale et internationale, en ajoutant sa touche de fraîcheur et de modernité.</p><br />
         `,
         program: [
-            { time: '20h00', title: 'Accueil du public', description: 'Les portes s\'ouvrent. Le DJ chauffe la salle' },
-            { time: '20h30', title: 'Ouverture', description: 'Un jeune talent fait le show. Le public se prépare' },
-            { time: '21h00', title: 'Premier ensemble', description: 'Chazil arrive sur scène. Ses succès résonnent' },
-            { time: '22h00', title: 'Intermède', description: 'Petite pause musicale. Le public se rafraîchit' },
-            { time: '22h30', title: 'Second ensemble', description: 'Le Raï reprend ses droits. Chazil rend hommage aux grands' },
-            { time: '23h30', title: 'Clôture', description: 'Le grand final. Le public chante, Chazil met le feu' }
+            { time: '19h30', title: 'Ouverture des portes', description: 'Entrez dans l’univers musical et installez-vous confortablement pour une soirée inoubliable.' },
+            { time: '20h30', title: 'Rabie Houti', description: 'Lancement de la soirée avec le talent exceptionnel de Rabie Houti, violoniste renommé, pour un début plein de magie et de voyage musical.' },
+            { time: '20h50', title: 'Chazil (Première partie)', description: 'Plongez dans l’ambiance avec la première partie du concert de Chazil, qui promet émotions et rythmes envoûtants.' },
+            { time: '21h40', title: 'Pause / Intermède', description: 'Profitez d’un moment pour vous détendre, boire une boisson ou grignoter un snack avant la deuxième partie.' },
+            { time: '22h00', title: 'Chazil (Deuxième partie)', description: 'Rejoignez Chazil pour la deuxième partie du concert et laissez-vous emporter par l’énergie et la passion sur scène.' },
+            { time: '23h00', title: 'Clôture de la soirée', description: 'Une fin en beauté pour une soirée mémorable, remplie de musique, de joie et de souvenirs.' }
         ],
         gallery: [
             './assets/img/event-1-1.webp',
@@ -72,7 +71,7 @@ const eventData = {
         ]
     },
     tarhaninefreeklane: {
-        title: 'TARHANINE & FREEKLANE',
+        title: 'CHEMSOU FREEKLANE & KADER TARHANINE',
         date: '15 Septembre 2024',
         location: 'Cabaret Sauvage, Paris',
         type: 'Concert',
@@ -81,9 +80,8 @@ const eventData = {
         image: './assets/img/banner-tarhaninel-freeklane.webp',
         video: 'c7UwD-7BBt0',
         description: `
-            <p>Cet événement a été une véritable célébration du voyage et de la fusion musicale, réunissant deux artistes exceptionnels, <strong>Kader Tarhanine</strong> et <strong>Freeklane</strong>. La soirée a offert au public une immersion unique, où les sons du désert et les rythmes folkloriques algériens ont rencontré des influences modernes, créant un dialogue musical fascinant entre le passé et le présent.</p><br />
-            
-            <h3>Un héritage revisité</h3>
+            <br />
+            <h3>Kader Tarhanine - Premier concert </h3>
             <p>Les deux artistes ont brillamment démontré la vitalité du patrimoine musical algérien. <strong>Kader Tarhanine</strong> a transporté le public au cœur du Sahara en réinventant la musique touarègue, tout en conservant son authenticité spirituelle. De son côté, <strong>Freeklane</strong> a fusionné avec audace des rythmes traditionnels tels que le chaâbi, le gnawa ou le bédoui avec des genres contemporains comme le rock et le reggae, créant une identité sonore unique et énergique.</p><br />
             
             <h3>Des artistes et leurs musiciens</h3>

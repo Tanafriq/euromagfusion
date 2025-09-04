@@ -3,7 +3,8 @@ const CONFIG = {
     COUNTDOWN_TARGET_DATE: new Date('2026-04-18T23:59:59').getTime(),
     SCROLL_THRESHOLD: 300,
     PARTICLES_COUNT: 50,
-    ANIMATION_DURATION: 300
+    ANIMATION_DURATION: 300,
+    FORMSPREE_ID: 'xrbagaao'
 };
 
 // ===== DOM ELEMENTS =====
@@ -998,12 +999,11 @@ function initEventListeners() {
 function initNewsletterForm() {
     if (!elements.newsletterForm) return null;
 
+    const emailInput = elements.newsletterForm.querySelector('#newsletter-email');
     const submitBtn = elements.newsletterForm.querySelector('.newsletter-btn');
     const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
-    const emailInput = elements.newsletterForm.querySelector('#newsletter-email');
 
-    // Regex email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const submitHandler = async (e) => {
@@ -1011,115 +1011,87 @@ function initNewsletterForm() {
 
         const formData = new FormData(elements.newsletterForm);
 
-        // Vérification honeypot (anti-bot)
+        // Honeypot anti-bot
         if (formData.get('_gotcha')) {
-            console.warn("Bot détecté, soumission ignorée");
+            console.warn("Bot détecté");
             return;
         }
 
-        // Validation de l'email
         const email = formData.get('email')?.trim();
-        
         if (!email) {
             showNotification('Veuillez entrer votre adresse email.', 'error');
-            if (emailInput) emailInput.focus();
+            emailInput?.focus();
             return;
         }
-
-        // Vérification email
         if (!emailRegex.test(email)) {
             showNotification('Veuillez entrer une adresse email valide.', 'error');
-            if (emailInput) emailInput.focus();
+            emailInput?.focus();
             return;
         }
 
-        // État de chargement
-        const originalSpanText = submitSpan?.textContent || "S'inscrire";
-        const originalIconClass = submitIcon?.className || 'fas fa-paper-plane';
+        // Sauvegarde de l'état du bouton
+        const originalText = submitSpan?.textContent || "S'inscrire";
+        const originalIcon = submitIcon?.className || "fas fa-paper-plane";
 
-        if (submitSpan) submitSpan.textContent = 'Inscription...';
-        if (submitIcon) submitIcon.className = 'fas fa-spinner fa-spin';
+        // Loader
+        if (submitSpan) submitSpan.textContent = "Inscription...";
+        if (submitIcon) submitIcon.className = "fas fa-spinner fa-spin";
         if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.7';
+            submitBtn.style.opacity = "0.7";
         }
 
         try {
-            // Préparation des données pour FormSubmit
-            const cleanFormData = new FormData();
-            
-            // Champs requis par FormSubmit
-            cleanFormData.append('_subject', 'Newsletter - Algérie Expo');
-            cleanFormData.append('_captcha', 'true');
-            cleanFormData.append('_next', window.location.href);
-            
-            // Données du formulaire
-            cleanFormData.append('email', email);
-            cleanFormData.append('type_inscription', 'newsletter_algerie_expo');
-
-            // Envoi via FormSubmit (même endpoint que le formulaire contact)
-            const res = await fetch('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
+            const res = await fetch(elements.newsletterForm.action, {
                 method: "POST",
-                body: cleanFormData,
-                headers: { 
+                body: JSON.stringify({
+                    email: email,
+                    subject: "Inscription Algérie Expo"
+                }),
+                headers: {
+                    "Content-Type": "application/json",
                     "Accept": "application/json"
                 }
             });
 
-            const responseData = await res.json();
-
-            if (res.ok && responseData.success) {
-                // État de succès
-                if (submitSpan) submitSpan.textContent = 'Inscrit !';
-                if (submitIcon) submitIcon.className = 'fas fa-check';
+            if (res.ok) {
+                if (submitSpan) submitSpan.textContent = "Inscrit !";
+                if (submitIcon) submitIcon.className = "fas fa-check";
                 if (submitBtn) {
-                    submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
-                    submitBtn.style.opacity = '1';
+                    submitBtn.style.background = "var(--success, #28a745)";
+                    submitBtn.style.opacity = "1";
                 }
 
-                showNotification("Inscription réussie ! Vous recevrez toutes les actualités d'Algérie Expo.", 'success');
-                
-                // Réinitialiser le formulaire
+                showNotification("Inscription réussie ! Vous recevrez toutes les actualités d'Algérie Expo", "success");
                 elements.newsletterForm.reset();
 
-                // Analytics optionnel
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'newsletter_signup', {
-                        event_category: 'engagement',
-                        event_label: 'Newsletter Algérie Expo',
-                        custom_map: { 'custom_parameter_1': 'algerie_expo_newsletter' }
+                // Tracking optionnel
+                if (typeof gtag !== "undefined") {
+                    gtag("event", "newsletter_signup", {
+                        event_category: "engagement",
+                        event_label: "Inscription Algérie Expo"
                     });
                 }
-
-                // Facebook Pixel optionnel
-                if (typeof fbq !== 'undefined') {
-                    fbq('track', 'Lead', { 
-                        content_name: 'Newsletter Algérie Expo',
-                        content_category: 'newsletter'
-                    });
+                if (typeof fbq !== "undefined") {
+                    fbq("track", "Lead", { content_name: "Newsletter Algérie Expo" });
                 }
-
             } else {
-                console.error('Erreur FormSubmit:', responseData);
-                throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
+                throw new Error(`Erreur ${res.status}`);
             }
         } catch (err) {
-            console.error('Erreur formulaire newsletter:', err);
-
-            // État d'erreur
-            if (submitSpan) submitSpan.textContent = 'Erreur';
-            if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
-            if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
-
-            showNotification('Une erreur est survenue lors de l\'inscription. Veuillez réessayer.', 'error');
+            console.error("Erreur newsletter:", err);
+            if (submitSpan) submitSpan.textContent = "Erreur";
+            if (submitIcon) submitIcon.className = "fas fa-exclamation-triangle";
+            if (submitBtn) submitBtn.style.background = "var(--danger, #dc3545)";
+            showNotification("Une erreur est survenue. Veuillez réessayer.", "error");
         } finally {
-            // Réinitialisation après 3 secondes
+            // Réinitialisation du bouton après 3s
             setTimeout(() => {
-                if (submitSpan) submitSpan.textContent = originalSpanText;
-                if (submitIcon) submitIcon.className = originalIconClass;
+                if (submitSpan) submitSpan.textContent = originalText;
+                if (submitIcon) submitIcon.className = originalIcon;
                 if (submitBtn) {
-                    submitBtn.style.background = '';
-                    submitBtn.style.opacity = '';
+                    submitBtn.style.background = "";
+                    submitBtn.style.opacity = "";
                     submitBtn.disabled = false;
                 }
             }, 3000);
@@ -1128,20 +1100,18 @@ function initNewsletterForm() {
 
     elements.newsletterForm.addEventListener('submit', submitHandler);
 
-    // Validation en temps réel de l'email
+    // Validation en temps réel
     let inputHandler = null;
     if (emailInput) {
-        inputHandler = function() {
+        inputHandler = () => {
             const email = emailInput.value.trim();
             if (email && !emailRegex.test(email)) {
-                emailInput.style.borderColor = '#dc2626';
-                emailInput.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+                emailInput.style.borderColor = "var(--danger, #dc3545)";
             } else {
-                emailInput.style.borderColor = '';
-                emailInput.style.boxShadow = '';
+                emailInput.style.borderColor = "";
             }
         };
-        emailInput.addEventListener('input', inputHandler);
+        emailInput.addEventListener("input", inputHandler);
     }
 
     // Retourner fonction de cleanup
@@ -1150,7 +1120,7 @@ function initNewsletterForm() {
             elements.newsletterForm.removeEventListener('submit', submitHandler);
         }
         if (emailInput && inputHandler) {
-            emailInput.removeEventListener('input', inputHandler);
+            emailInput.removeEventListener("input", inputHandler);
         }
     };
 }

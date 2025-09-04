@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page introuvable - 404 | Euromag Fusion</title>
+    <meta name="description"
+        content="Oops ! La page que vous recherchez est introuvable. Retournez à l'accueil d'Euromag Fusion.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./assets/css/404.css">
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+        <div class="floating-shape shape-6"></div>
+        <div class="floating-shape shape-7"></div>
+        <div class="floating-shape shape-8"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="error-container">
+        <div class="error-content">
+            <!-- Logo Section -->
+            <div class="logo-section">
+                <div class="logo-wrapper">
+                    <img class="logo-img" src="./assets/img/logo.png" alt="Logo Euromag Fusion" loading="lazy" />
+                    <div class="logo-pulse"></div>
+                </div>
+                <h2 class="brand-name">Euromag Fusion</h2>
+            </div>
+
+            <!-- 404 Number Animation -->
+            <div class="error-number">
+                <span class="digit digit-4-1">4</span>
+                <span class="digit digit-0">
+                    <div class="zero-animation">
+                        <div class="zero-outer"></div>
+                        <div class="zero-inner"></div>
+                        <div class="zero-center"></div>
+                    </div>
+                </span>
+                <span class="digit digit-4-2">4</span>
+            </div>
+
+            <!-- Glitch Effect Overlay -->
+            <div class="glitch-overlay" id="glitchOverlay">
+                <span class="glitch-text">404</span>
+                <span class="glitch-text">404</span>
+                <span class="glitch-text">404</span>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message">
+                <h1 class="error-title">
+                    <span class="title-line">Oups !</span>
+                    <span class="title-line gradient-text">Page introuvable</span>
+                </h1>
+
+                <p class="error-description">
+                    La page que vous recherchez semble avoir disparu dans les méandres du cyberespace...
+                    <br>Elle a peut-être été déplacée, supprimée ou n'a jamais existé.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a href="index.html" class="btn btn-primary" id="homeBtn">
+                        <i class="fas fa-home"></i>
+                        <span>Retour à l'accueil</span>
+                        <div class="btn-shine"></div>
+                    </a>
+
+                    <a href="index.html#contact" class="btn btn-outline" id="contactBtn">
+                        <i class="fas fa-envelope"></i>
+                        <span>Nous contacter</span>
+                        <div class="btn-shine"></div>
+                    </a>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="quick-links">
+                    <h3>Pages populaires</h3>
+                    <div class="links-grid">
+                        <a href="index.html#apropos" class="quick-link">
+                            <div class="link-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span>À propos</span>
+                            <div class="link-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </a>
+                        <a href="index.html#evenements" class="quick-link">
+                            <div class="link-icon">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <span>Concerts</span>
+                            <div class="link-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </a>
+                        <a href="algerie-expo.html" class="quick-link">
+                            <div class="link-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <span>Algérie Expo</span>
+                            <div class="link-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Fun Fact -->
+                <div class="fun-fact">
+                    <div class="fact-icon">
+                        <i class="fas fa-lightbulb"></i>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <div class="fact-content">
+                        <p class="fact-title">Le saviez-vous ?</p>
+                        <p id="randomFact">L'erreur 404 tire son nom du bureau 404 au CERN où était hébergé le premier serveur web !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Elements -->
+        <div class="interactive-elements">
+            <div class="floating-icon icon-1">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="floating-icon icon-2">
+                <i class="fas fa-heart"></i>
+            </div>
+            <div class="floating-icon icon-3">
+                <i class="fas fa-music"></i>
+            </div>
+            <div class="floating-icon icon-4">
+                <i class="fas fa-sun"></i>
+            </div>
+            <div class="floating-icon icon-5">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div class="floating-icon icon-6">
+                <i class="fas fa-sparkles"></i>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <span>Explorez</span>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img class="logo-img" src="./assets/img/logo.png" alt="Logo Euromag Fusion" />
+                    <div class="footer-text">
+                        <span class="logo-text">Euromag Fusion</span>
+                        <p>Association culturelle dédiée à la promotion de la culture algérienne</p>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="index.html" class="footer-link">
+                        <i class="fas fa-home"></i>
+                        <span>Accueil</span>
+                    </a>
+                    <a href="index.html#contact" class="footer-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-divider"></div>
+                <p>&copy; <span id="currentYear"></span> Euromag Fusion. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./assets/js/404.js"></script>
+</body>
+
+</html>

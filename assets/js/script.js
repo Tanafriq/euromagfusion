@@ -369,8 +369,12 @@ function initContactForm() {
     const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
 
-    // Regex email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Regex email plus stricte
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    // Configuration des timeouts
+    const LOADING_TIMEOUT = 30000; // 30 secondes maximum
+    const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -383,15 +387,27 @@ function initContactForm() {
             return;
         }
 
-        // Validation des champs obligatoires
+        // Validation des champs obligatoires avec trim
         const nom = formData.get('nom')?.trim();
+        const prenom = formData.get('prenom')?.trim(); // Ajout du prénom
         const email = formData.get('email')?.trim();
         const sujet = formData.get('sujet')?.trim();
         const message = formData.get('message')?.trim();
 
         // Vérifications de base
-        if (!nom || !email || !sujet || !message) {
+        if (!nom || !prenom || !email || !sujet || !message) {
             showNotification('Veuillez remplir tous les champs obligatoires.', 'error');
+            return;
+        }
+
+        // Validation longueur minimale
+        if (nom.length < 2 || prenom.length < 2) {
+            showNotification('Le nom et prénom doivent contenir au moins 2 caractères.', 'error');
+            return;
+        }
+
+        if (message.length < 10) {
+            showNotification('Le message doit contenir au moins 10 caractères.', 'error');
             return;
         }
 
@@ -412,6 +428,11 @@ function initContactForm() {
             submitBtn.style.opacity = '0.7';
         }
 
+        // Timeout de sécurité
+        const timeoutId = setTimeout(() => {
+            throw new Error('Délai d\'attente dépassé');
+        }, LOADING_TIMEOUT);
+
         try {
             // Préparation des données pour FormSubmit
             const cleanFormData = new FormData();
@@ -420,16 +441,27 @@ function initContactForm() {
             cleanFormData.append('_subject', `Contact Euromag Fusion - ${sujet}`);
             cleanFormData.append('_captcha', 'true');
             cleanFormData.append('_next', window.location.href);
+            cleanFormData.append('_template', 'table');
 
-            // Données du formulaire
+            // Données du formulaire avec formatage
             cleanFormData.append('nom', nom);
+            cleanFormData.append('prenom', prenom);
             cleanFormData.append('email', email);
             cleanFormData.append('sujet', sujet);
             cleanFormData.append('message', message);
+            
+            // Ajout du téléphone s'il existe
+            const telephone = formData.get('telephone')?.trim();
+            const countryCode = formData.get('country-code')?.trim();
+            if (telephone) {
+                cleanFormData.append('telephone', `${countryCode} ${telephone}`);
+            }
+            
             cleanFormData.append('type_formulaire', 'contact_general');
+            cleanFormData.append('date_envoi', new Date().toLocaleString('fr-FR'));
 
-            // Envoi via FormSubmit
-            const res = await fetch('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
+            // Envoi via FormSubmit avec retry logic
+            const response = await fetchWithRetry('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
                 method: "POST",
                 body: cleanFormData,
                 headers: {
@@ -437,36 +469,42 @@ function initContactForm() {
                 }
             });
 
-            const responseData = await res.json();
+            clearTimeout(timeoutId);
 
-            if (res.ok && responseData.success) {
-                // État de succès
-                if (submitSpan) submitSpan.textContent = 'Envoyé !';
-                if (submitIcon) submitIcon.className = 'fas fa-check';
-                if (submitBtn) {
-                    submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
-                    submitBtn.style.opacity = '1';
+            if (response.ok) {
+                const responseData = await response.json();
+                
+                if (responseData.success) {
+                    // État de succès
+                    if (submitSpan) submitSpan.textContent = 'Envoyé !';
+                    if (submitIcon) submitIcon.className = 'fas fa-check';
+                    if (submitBtn) {
+                        submitBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                        submitBtn.style.opacity = '1';
+                    }
+
+                    showNotification('Votre message a été envoyé avec succès ! Nous vous recontacterons bientôt.', 'success');
+
+                    // Réinitialiser le formulaire
+                    contactForm.reset();
+
+                    // Analytics optionnel
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'contact_form_submit', {
+                            event_category: 'engagement',
+                            event_label: 'Contact General',
+                            custom_map: { 'custom_parameter_1': 'contact_general' }
+                        });
+                    }
+                } else {
+                    throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
                 }
-
-                showNotification('Votre message a été envoyé avec succès ! Nous vous recontacterons bientôt.', 'success');
-
-                // Réinitialiser le formulaire
-                contactForm.reset();
-
-                // Analytics optionnel
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'contact_form_submit', {
-                        event_category: 'engagement',
-                        event_label: 'Contact General',
-                        custom_map: { 'custom_parameter_1': 'contact_general' }
-                    });
-                }
-
             } else {
-                console.error('Erreur FormSubmit:', responseData);
-                throw new Error(`Erreur FormSubmit: ${responseData.message || 'Envoi échoué'}`);
+                throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
             }
+
         } catch (err) {
+            clearTimeout(timeoutId);
             console.error('Erreur formulaire contact:', err);
 
             // État d'erreur
@@ -474,9 +512,17 @@ function initContactForm() {
             if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
             if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
 
-            showNotification('Une erreur est survenue lors de l\'envoi. Veuillez réessayer.', 'error');
+            // Message d'erreur plus spécifique
+            let errorMessage = 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer.';
+            if (err.message.includes('Délai')) {
+                errorMessage = 'Le délai d\'attente a été dépassé. Vérifiez votre connexion et réessayez.';
+            } else if (err.message.includes('Failed to fetch')) {
+                errorMessage = 'Problème de connexion. Vérifiez votre réseau et réessayez.';
+            }
+
+            showNotification(errorMessage, 'error');
         } finally {
-            // Réinitialisation après 3 secondes
+            // Réinitialisation après délai
             setTimeout(() => {
                 if (submitSpan) submitSpan.textContent = originalSpanText;
                 if (submitIcon) submitIcon.className = originalIconClass;
@@ -485,37 +531,97 @@ function initContactForm() {
                     submitBtn.style.opacity = '';
                     submitBtn.disabled = false;
                 }
-            }, 3000);
+            }, RESET_TIMEOUT);
         }
     };
 
-    contactForm.addEventListener('submit', submitHandler);
-
-    // Validation en temps réel pour l'email
-    const emailInput = contactForm.querySelector('#email');
-    let emailInputHandler = null;
-    if (emailInput) {
-        emailInputHandler = function () {
-            const email = emailInput.value.trim();
-            if (email && !emailRegex.test(email)) {
-                emailInput.style.borderColor = '#dc2626';
-                emailInput.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
-            } else {
-                emailInput.style.borderColor = '';
-                emailInput.style.boxShadow = '';
+    // Fonction de retry pour les requêtes
+    async function fetchWithRetry(url, options, maxRetries = 2) {
+        let lastError;
+        
+        for (let i = 0; i <= maxRetries; i++) {
+            try {
+                const response = await fetch(url, options);
+                return response;
+            } catch (error) {
+                lastError = error;
+                if (i < maxRetries) {
+                    // Attendre avant de réessayer (exponential backoff)
+                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                }
             }
-        };
-        emailInput.addEventListener('input', emailInputHandler);
+        }
+        
+        throw lastError;
     }
 
-    // Retourner fonction de cleanup
+    // Validation en temps réel améliorée
+    function setupRealTimeValidation() {
+        const emailInput = contactForm.querySelector('#email');
+        const nomInput = contactForm.querySelector('#nom');
+        const prenomInput = contactForm.querySelector('#prenom');
+        const messageInput = contactForm.querySelector('#message');
+
+        const validators = {
+            email: {
+                element: emailInput,
+                validate: (value) => emailRegex.test(value),
+                message: 'Format d\'email invalide'
+            },
+            nom: {
+                element: nomInput,
+                validate: (value) => value.trim().length >= 2,
+                message: 'Le nom doit contenir au moins 2 caractères'
+            },
+            prenom: {
+                element: prenomInput,
+                validate: (value) => value.trim().length >= 2,
+                message: 'Le prénom doit contenir au moins 2 caractères'
+            },
+            message: {
+                element: messageInput,
+                validate: (value) => value.trim().length >= 10,
+                message: 'Le message doit contenir au moins 10 caractères'
+            }
+        };
+
+        Object.values(validators).forEach(({ element, validate, message }) => {
+            if (element) {
+                element.addEventListener('blur', function() {
+                    const value = this.value.trim();
+                    if (value && !validate(value)) {
+                        this.style.borderColor = '#dc2626';
+                        this.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+                        this.setAttribute('aria-invalid', 'true');
+                        this.setAttribute('title', message);
+                    } else {
+                        this.style.borderColor = '';
+                        this.style.boxShadow = '';
+                        this.removeAttribute('aria-invalid');
+                        this.removeAttribute('title');
+                    }
+                });
+            }
+        });
+
+        return validators;
+    }
+
+    contactForm.addEventListener('submit', submitHandler);
+    const validators = setupRealTimeValidation();
+
+    // Retourner fonction de cleanup améliorée
     return function cleanupContactForm() {
         if (contactForm && submitHandler) {
             contactForm.removeEventListener('submit', submitHandler);
         }
-        if (emailInput && emailInputHandler) {
-            emailInput.removeEventListener('input', emailInputHandler);
-        }
+        
+        // Nettoyer les validateurs
+        Object.values(validators).forEach(({ element }) => {
+            if (element) {
+                element.removeEventListener('blur', element.validationHandler);
+            }
+        });
     };
 }
 

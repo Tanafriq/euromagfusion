@@ -106,105 +106,189 @@ function initLegalAndServices() {
 
     const legalData = {
         mentions: `
-            <h2>Mentions Légales</h2>
-            <div class="legal-section">
-                <h3>Éditeur du site</h3>
-                <p><strong>Euromag Fusion</strong><br>
-                Association loi 1901<br>
-                Siège social : Paris, France<br>
-                SIRET : 123 456 789 00012<br>
-                Email : contact@euromagfusion.com<br>
-                Téléphone : +33 6 12 34 56 78</p>
-            </div>
-            <div class="legal-section">
-                <h3>Directeur de la publication</h3>
-                <p>Président de l'association Euromag Fusion</p>
-            </div>
-            <div class="legal-section">
-                <h3>Hébergement</h3>
-                <p>Ce site est hébergé par OVH<br>
-                Adresse : France</p>
-            </div>
-            <div class="legal-section">
-                <h3>Propriété intellectuelle</h3>
-                <p>L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés.</p>
-            </div>
-        `,
+        <h2>Mentions Légales</h2><br>
+        <div class="legal-section">
+            <h3>Éditeur du site</h3>
+            <p><strong>Euromag Fusion</strong><br>
+            Association loi 1901<br>
+            Siège social : 151 avenue de la République, 92320 Châtillon, France<br>
+            Email : contact@euromagfusion.com<br>
+            Téléphone : +33 6 12 34 56 78</p>
+            <p><strong>Objet de l'association :</strong> Promotion de la culture algérienne à travers l'organisation de spectacles, concerts, événements culturels et expositions en France et en Europe.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Directeur de la publication</h3>
+            <p>Président de l'association Euromag Fusion</p>
+        </div>
+        <div class="legal-section">
+            <h3>Hébergement</h3>
+            <p>Ce site est hébergé par :<br>
+            <strong>OVH SAS</strong><br>
+            2 rue Kellermann<br>
+            59100 Roubaix, France<br>
+            Téléphone : 1007</p>
+        </div>
+        <div class="legal-section">
+            <h3>Conception et développement</h3>
+            <p>Site web développé par SL<br>
+            Contact : shakbaz@gmail.com</p>
+        </div>
+        <div class="legal-section">
+            <h3>Propriété intellectuelle</h3>
+            <p>L'ensemble du contenu de ce site web (textes, images, vidéos, logos, éléments graphiques, mise en page, structure) relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle.</p>
+            <p>Tous les droits de reproduction sont réservés, y compris pour les documents iconographiques et photographiques. La reproduction de tout ou partie de ce site sur quelque support que ce soit est formellement interdite sauf autorisation expresse d'Euromag Fusion.</p>
+            <p>Le nom "Euromag Fusion" ainsi que le logo de l'association sont des marques déposées. Toute reproduction ou utilisation de ces éléments sans autorisation préalable constitue une contrefaçon.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Responsabilité</h3>
+            <p>Euromag Fusion s'efforce de fournir des informations exactes et régulièrement mises à jour. Cependant, l'association ne peut garantir l'exactitude, la complétude ou l'actualité de toutes les informations présentes sur le site.</p>
+            <p>L'association ne peut être tenue responsable des interruptions de service, qu'elles soient dues à la maintenance, à des pannes techniques ou à des causes externes.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Droit applicable</h3>
+            <p>Les présentes mentions légales sont régies par le droit français. En cas de litige, et après tentative de résolution amiable, les tribunaux français seront seuls compétents.</p>
+        </div>
+    `,
         conditions: `
-            <h2>Conditions Générales d'Utilisation</h2>
-            <div class="legal-section">
-                <h3>Article 1 - Objet</h3>
-                <p>Les présentes conditions générales ont pour objet de définir les modalités et conditions d'utilisation du site web de l'association Euromag Fusion.</p>
-            </div>
-            <div class="legal-section">
-                <h3>Article 2 - Acceptation</h3>
-                <p>L'utilisation du site implique l'acceptation pleine et entière des conditions générales d'utilisation décrites ci-après.</p>
-            </div>
-            <div class="legal-section">
-                <h3>Article 3 - Services</h3>
-                <p>L'association Euromag Fusion propose des services d'organisation d'événements culturels et de spectacles mettant en valeur la culture algérienne.</p>
-            </div>
-            <div class="legal-section">
-                <h3>Article 4 - Responsabilité</h3>
-                <p>L'association s'efforce de fournir des informations exactes mais ne peut garantir l'exactitude de toutes les informations présentes sur le site.</p>
-            </div>
-        `,
+        <h2>Conditions Générales d'Utilisation</h2><br>
+        <div class="legal-section">
+            <h3>Article 1 - Objet</h3>
+            <p>Les présentes conditions générales ont pour objet de définir les modalités et conditions d'utilisation du site web de l'association Euromag Fusion, accessible à l'adresse www.euromagfusion.com.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Article 2 - Acceptation</h3>
+            <p>L'utilisation du site implique l'acceptation pleine et entière des présentes conditions générales d'utilisation. Ces conditions s'appliquent à tous les utilisateurs du site.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Article 3 - Services proposés</h3>
+            <p>L'association Euromag Fusion propose :</p>
+            <ul>
+                <li>L'organisation d'événements culturels et de spectacles mettant en valeur la culture algérienne</li>
+                <li>L'organisation d'expositions et salons culturels</li>
+            </ul>
+        </div>
+        <div class="legal-section">
+            <h3>Article 4 - Utilisation du site</h3>
+            <p>L'utilisateur s'engage à utiliser le site de manière loyale et conforme à sa destination. Il est interdit de :</p>
+            <ul>
+                <li>Porter atteinte aux droits de propriété intellectuelle de l'association</li>
+                <li>Utiliser le site à des fins commerciales sans autorisation</li>
+                <li>Diffuser des contenus illicites, diffamatoires ou contraires aux bonnes mœurs</li>
+                <li>Perturber le bon fonctionnement du site</li>
+            </ul>
+        </div>
+        <div class="legal-section">
+            <h3>Article 5 - Responsabilité</h3>
+            <p>L'association s'efforce de fournir des informations exactes mais ne peut garantir l'exactitude de toutes les informations présentes sur le site. L'utilisateur reconnaît utiliser ces informations sous sa seule responsabilité.</p>
+            <p>L'association ne peut être tenue responsable des dommages directs ou indirects résultant de l'utilisation du site.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Article 6 - Modification des conditions</h3>
+            <p>L'association se réserve le droit de modifier les présentes conditions à tout moment. Les modifications prennent effet dès leur publication sur le site.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Article 7 - Droit applicable</h3>
+            <p>Les présentes conditions sont régies par le droit français. Tout litige sera soumis aux tribunaux compétents français après tentative de résolution amiable.</p>
+        </div>
+    `,
         confidentialite: `
-            <h2>Politique de Confidentialité</h2>
-            <div class="legal-section">
-                <h3>Collecte des données</h3>
-                <p>Nous collectons uniquement les données nécessaires au fonctionnement de nos services et à la communication avec nos membres et visiteurs.</p>
-            </div>
-            <div class="legal-section">
-                <h3>Utilisation des données</h3>
-                <p>Vos données personnelles sont utilisées exclusivement pour :</p>
-                <ul>
-                    <li>La gestion de votre adhésion à l'association</li>
-                    <li>L'information sur nos événements et activités</li>
-                    <li>La réponse à vos demandes et messages</li>
-                    <li>L'amélioration de nos services</li>
-                </ul>
-            </div>
-            <div class="legal-section">
-                <h3>Protection des données</h3>
-                <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles appropriées pour protéger vos données personnelles contre tout accès, modification, divulgation ou destruction non autorisés.</p>
-            </div>
-            <div class="legal-section">
-                <h3>Vos droits</h3>
-                <p>Conformément à la réglementation en vigueur, vous disposez des droits suivants :</p>
-                <ul>
-                    <li>Droit d'accès à vos données personnelles</li>
-                    <li>Droit de rectification et de mise à jour</li>
-                    <li>Droit à l'effacement (droit à l'oubli)</li>
-                    <li>Droit à la portabilité des données</li>
-                </ul>
-            </div>
-        `,
+        <h2>Politique de Confidentialité</h2><br>
+        <div class="legal-section">
+            <h3>Responsable du traitement</h3>
+            <p>Euromag Fusion, association loi 1901, domiciliée au 151 avenue de la République, 92320 Châtillon.<br>
+            Contact : contact@euromagfusion.com</p>
+        </div>
+        <div class="legal-section">
+            <h3>Données collectées</h3>
+            <p>Nous collectons uniquement les données nécessaires au fonctionnement de nos services :</p>
+            <ul>
+                <li>Nom et prénom</li>
+                <li>Adresse email</li>
+                <li>Numéro de téléphone (facultatif)</li>
+                <li>Adresse postale (pour certains services)</li>
+                <li>Message ou demande spécifique</li>
+            </ul>
+        </div>
+        <div class="legal-section">
+            <h3>Finalités du traitement</h3>
+            <p>Vos données personnelles sont utilisées exclusivement pour :</p>
+            <ul>
+                <li>La gestion des demandes de contact et d'information</li>
+                <li>L'envoi de notre newsletter (avec consentement préalable)</li>
+                <li>La gestion des inscriptions aux événements</li>
+                <li>L'information sur nos événements et activités</li>
+                <li>L'amélioration de nos services</li>
+            </ul>
+        </div>
+        <div class="legal-section">
+            <h3>Base légale</h3>
+            <p>Le traitement de vos données personnelles repose sur :</p>
+            <ul>
+                <li>Votre consentement (newsletter)</li>
+                <li>L'intérêt légitime de l'association (réponse aux demandes de contact)</li>
+                <li>L'exécution d'un contrat (inscription aux événements)</li>
+            </ul>
+        </div>
+        <div class="legal-section">
+            <h3>Conservation des données</h3>
+            <p>Les données sont conservées pendant une durée n'excédant pas celle nécessaire aux finalités :</p>
+            <ul>
+                <li>Demandes de contact : 3 ans à compter du dernier contact</li>
+                <li>Newsletter : jusqu'à la désinscription</li>
+                <li>Gestion des événements : 3 ans après la fin de l'événement</li>
+            </ul>
+        </div>
+        <div class="legal-section">
+            <h3>Protection des données</h3>
+            <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles appropriées pour protéger vos données personnelles contre tout accès, modification, divulgation ou destruction non autorisés.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Vos droits RGPD</h3>
+            <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
+            <ul>
+                <li>Droit d'accès à vos données personnelles</li>
+                <li>Droit de rectification et de mise à jour</li>
+                <li>Droit à l'effacement ("droit à l'oubli")</li>
+                <li>Droit à la limitation du traitement</li>
+                <li>Droit à la portabilité des données</li>
+                <li>Droit d'opposition au traitement</li>
+                <li>Droit de retirer votre consentement à tout moment</li>
+            </ul>
+            <p>Pour exercer vos droits, contactez-nous à : contact@euromagfusion.com</p>
+            <p>Vous disposez également du droit d'introduire une réclamation auprès de la CNIL : www.cnil.fr</p>
+        </div>
+    `,
         cookies: `
-            <h2>Gestion des Cookies</h2>
-            <div class="legal-section">
-                <h3>Qu'est-ce qu'un cookie ?</h3>
-                <p>Un cookie est un petit fichier texte déposé sur votre ordinateur lors de la visite d'un site web. Il permet de reconnaître votre navigateur et de mémoriser certaines informations.</p>
-            </div>
-            <div class="legal-section">
-                <h3>Types de cookies utilisés</h3>
-                <p>Notre site utilise différents types de cookies :</p>
-                <ul>
-                    <li><strong>Cookies techniques :</strong> Nécessaires au fonctionnement du site</li>
-                    <li><strong>Cookies de mesure d'audience :</strong> Pour analyser l'utilisation du site</li>
-                    <li><strong>Cookies de personnalisation :</strong> Pour améliorer votre expérience utilisateur</li>
-                </ul>
-            </div>
-            <div class="legal-section">
-                <h3>Gestion des cookies</h3>
-                <p>Vous pouvez à tout moment modifier vos préférences de cookies :</p>
-                <ul>
-                    <li>Via les paramètres de votre navigateur</li>
-                    <li>En utilisant notre outil de gestion des cookies</li>
-                    <li>En nous contactant directement</li>
-                </ul>
-            </div>
-        `
+        <h2>Politique relative aux Cookies</h2><br>
+        <div class="legal-section">
+            <h3>Notre engagement pour votre vie privée</h3>
+            <p><strong>Euromag Fusion respecte votre vie privée.</strong> Notre site web ne dépose aucun cookie de suivi, de mesure d'audience ou de publicité sur votre navigateur.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Qu'est-ce qu'un cookie ?</h3>
+            <p>Un cookie est un petit fichier texte déposé sur votre ordinateur lors de la visite d'un site web. Il permet de reconnaître votre navigateur et de mémoriser certaines informations.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Cookies utilisés sur notre site</h3>
+            <p><strong>Aucun cookie n'est déposé par notre site.</strong> Nous avons fait le choix de ne pas utiliser :</p>
+            <ul>
+                <li>Cookies de mesure d'audience (Google Analytics, etc.)</li>
+                <li>Cookies de publicité ou de marketing</li>
+                <li>Cookies de réseaux sociaux</li>
+                <li>Cookies de personnalisation</li>
+            </ul>
+            <p>Seuls les cookies techniques strictement nécessaires au fonctionnement de votre navigateur peuvent être utilisés (session de navigation, sécurité HTTPS).</p>
+        </div>
+        <div class="legal-section">
+            <h3>Services externes</h3>
+            <p>Si vous cliquez sur des liens externes (réseaux sociaux, vidéos YouTube intégrées), ces sites tiers peuvent déposer leurs propres cookies selon leurs politiques respectives. Nous vous invitons à consulter leurs conditions d'utilisation.</p>
+        </div>
+        <div class="legal-section">
+            <h3>Votre navigation</h3>
+            <p>Vous pouvez naviguer sur notre site en toute tranquillité, sans risque de traçage ou de collecte de données via des cookies. Nous privilégions une approche respectueuse de votre vie privée.</p>
+            <p>Pour toute question concernant cette politique, contactez-nous à : contact@euromagfusion.com</p>
+        </div>
+    `
     };
 
     // Bind legal links
@@ -220,50 +304,85 @@ function initLegalAndServices() {
         });
     });
 
-    // Services content in the same modal
+    // Services content - Mis à jour pour Euromag Fusion
     const serviceData = {
-        organisation: `
-            <h2>Organisation d'événements</h2>
+        concerts: `
+            <h2>Organisation de concerts</h2><br>
             <div class="legal-section">
-                <p>Conception, planification et production d'événements culturels clé-en-main : programmation artistique, logistique, scénographie, régie technique et coordination des équipes.</p>
+                <h3>Notre expertise</h3>
+                <p>Euromag Fusion organise des concerts et spectacles musicaux qui célèbrent la richesse de la culture algérienne. Nous nous occupons de tous les aspects de la production, de la conception à la réalisation.</p>
+                
+                <h3>Services inclus</h3>
                 <ul>
-                    <li>Étude des besoins et budget</li>
-                    <li>Gestion des prestataires et lieux</li>
-                    <li>Communication & billetterie</li>
+                    <li><strong>Programmation artistique :</strong> Sélection d'artistes de renom et de talents émergents</li>
+                    <li><strong>Gestion des lieux :</strong> Recherche et réservation de salles prestigieuses (New Morning, Cabaret Sauvage, Salle Pleyel...)</li>
+                    <li><strong>Production technique :</strong> Son, éclairage, scénographie adaptés aux performances</li>
+                    <li><strong>Logistique complète :</strong> Transport des artistes, hébergement, restauration</li>
+                    <li><strong>Communication :</strong> Promotion, relations presse, réseaux sociaux</li>
+                    <li><strong>Billetterie :</strong> Gestion des ventes et accueil du public</li>
                 </ul>
+
+                <h3>Genres musicaux</h3>
+                <p>Nous travaillons avec une grande variété de styles : raï contemporain, musique andalouse, chaâbi, pop-folk algérienne, fusion moderne et musiques traditionnelles.</p>
+
+                <h3>Notre approche</h3>
+                <p>Chaque concert est conçu comme une expérience culturelle authentique, offrant au public une immersion dans la beauté et la diversité de la culture algérienne.</p>
             </div>
         `,
         spectacles: `
-            <h2>Spectacles culturels</h2>
+            <h2>Spectacles culturels</h2><br>
             <div class="legal-section">
-                <p>Création et diffusion de spectacles mettant en valeur la culture algérienne : musique andalouse, chaâbi, danses traditionnelles, poésie populaire et arts visuels.</p>
+                <h3>Créations originales</h3>
+                <p>Euromag Fusion conçoit et produit des spectacles culturels innovants qui mettent en lumière le patrimoine algérien sous toutes ses formes : musique, danse, théâtre, poésie et arts visuels.</p>
+                
+                <h3>Types de spectacles</h3>
                 <ul>
-                    <li>Programmation d'artistes</li>
-                    <li>Direction artistique</li>
-                    <li>Scènes adaptées (intérieur / extérieur)</li>
+                    <li><strong>Spectacles musicaux :</strong> Concerts thématiques, récitals et performances fusion</li>
+                    <li><strong>Danses traditionnelles :</strong> Spectacles de danse populaire et chorégraphies contemporaines</li>
+                    <li><strong>Performances multidisciplinaires :</strong> Mélange de musique, danse, récitation et arts visuels</li>
+                    <li><strong>Soirées à thème :</strong> Événements culturels immersifs avec animations et gastronomie</li>
+                    <li><strong>Spectacles jeune public :</strong> Sensibilisation culturelle adaptée aux enfants</li>
                 </ul>
+
+                <h3>Accompagnement artistique</h3>
+                <ul>
+                    <li>Direction artistique et mise en scène</li>
+                    <li>Coaching et préparation des artistes</li>
+                    <li>Création de costumes et décors authentiques</li>
+                    <li>Adaptation aux différents types de lieux</li>
+                </ul>
+
+                <h3>Impact culturel</h3>
+                <p>Nos spectacles visent à créer des ponts entre les cultures, à transmettre les traditions et à faire découvrir la modernité algérienne à un public large et diversifié.</p>
             </div>
         `,
-        formations: `
-            <h2>Formations artistiques</h2>
+        expositions: `
+            <h2>Expositions et salons</h2><br>
             <div class="legal-section">
-                <p>Ateliers et masterclasses pour tous niveaux : musique, chant, danse, écriture poétique, patrimoine et histoire des arts algériens.</p>
+                <h3>Algérie Expo - Notre projet phare</h3>
+                <p>Euromag Fusion développe "Algérie Expo", le premier grand salon international dédié à l'Algérie en France, prévu pour avril 2026 à Paris.</p>
+                
+                <h3>Concept d'exposition</h3>
                 <ul>
-                    <li>Formations ponctuelles ou cycles longs</li>
-                    <li>Intervenants professionnels</li>
-                    <li>Supports pédagogiques fournis</li>
+                    <li><strong>Vitrine économique :</strong> Présentation des secteurs clés et opportunités d'investissement</li>
+                    <li><strong>Patrimoine culturel :</strong> Expositions d'art, artisanat et traditions millénaires</li>
+                    <li><strong>Destination touristique :</strong> Promotion des merveilles naturelles et sites historiques</li>
+                    <li><strong>Gastronomie :</strong> Découverte des saveurs et spécialités régionales</li>
+                    <li><strong>Innovation :</strong> Présentation des technologies et industries modernes</li>
                 </ul>
-            </div>
-        `,
-        location: `
-            <h2>Location de matériel</h2>
-            <div class="legal-section">
-                <p>Location de sonorisation, éclairage, structures, backline et matériel scénique, avec option livraison, montage et assistance technique.</p>
+
+                <h3>Services d'organisation</h3>
                 <ul>
-                    <li>Packs adaptés à la jauge</li>
-                    <li>Techniciens certifiés</li>
-                    <li>Assurance et maintenance</li>
+                    <li>Conception et aménagement d'espaces d'exposition</li>
+                    <li>Gestion des exposants et partenaires</li>
+                    <li>Programmation d'animations culturelles</li>
+                    <li>Organisation de conférences et tables rondes</li>
+                    <li>Coordination logistique et technique</li>
+                    <li>Communication et relations médias</li>
                 </ul>
+
+                <h3>Impact et rayonnement</h3>
+                <p>Ces événements créent des opportunités de networking, favorisent les échanges économiques et renforcent les liens entre l'Algérie et l'Europe.</p>
             </div>
         `
     };
@@ -273,11 +392,13 @@ function initLegalAndServices() {
     const serviceLinks = servicesSection ? servicesSection.querySelectorAll('a[href="#"]') : [];
 
     const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
+    
+    // Mapping mis à jour pour correspondre aux services d'Euromag Fusion
     const textKeyMap = {
-        'organisationdeconcerts': 'organisation',
+        'organisationdeconcerts': 'concerts',
         'spectaclesculturels': 'spectacles',
-        'formationsartistiques': 'formations',
-        'locationdemateriel': 'location'
+        'expositionsetdelsalons': 'expositions',
+        'expositionsetsalons': 'expositions'
     };
 
     serviceLinks.forEach(a => {
@@ -299,7 +420,7 @@ function initDeveloperSignature() {
     // Gestion du clic sur la signature sans message console
     const developerSignature = document.getElementById('developer-signature');
     if (developerSignature) {
-        developerSignature.addEventListener('click', function(e) {
+        developerSignature.addEventListener('click', function (e) {
             e.preventDefault();
             // Créer un lien temporaire et le supprimer immédiatement pour éviter le message console
             const link = document.createElement('a');
@@ -328,7 +449,7 @@ function debounce(func, wait) {
 }
 
 // ==================== INITIALIZATION ====================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Mise à jour automatique de l'année
     const currentYearElement = document.getElementById('current-year');
     if (currentYearElement) {

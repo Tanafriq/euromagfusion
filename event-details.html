@@ -50,8 +50,8 @@
     }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-    <link rel="stylesheet" href="./assets/css/common.css">
     <link rel="stylesheet" href="./assets/css/styles-event-details.css">
+    <link rel="stylesheet" href="./assets/css/common.css">
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
 </head>
 
@@ -174,14 +174,15 @@
                                 <div class="info-icon">📧</div>
                                 <div>
                                     <strong>Email</strong><br>
-                                    contact@euromagfusion.com
+                                    <p><a href="mailto:contact@euromagfusion.com"
+                                        title="Envoyer un mail">contact@euromagfusion.com</a></p>
                                 </div>
                             </div>
                             <div class="info-item">
                                 <div class="info-icon">📱</div>
                                 <div>
                                     <strong>Téléphone</strong><br>
-                                    +33 6 12 34 56 78
+                                    <p><a href="tel:+33612345678" title="Appeler Euromag Fusion">+33 6 12 34 56 78</a></p>
                                 </div>
                             </div>
                         </div>
@@ -205,11 +206,86 @@
                 </div>
             </div>
 
-            <!-- Gallery Section -->
+            <!-- Gallery Section avec Carrousel -->
             <div class="gallery-section">
                 <h2 style="text-align: center; margin-bottom: var(--space-8);">Galerie photos</h2>
-                <div class="gallery-grid" id="galleryGrid">
-                    <!-- Contenu dynamique -->
+
+                <div class="carousel-container" id="galleryCarousel">
+                    <!-- Navigation dots -->
+                    <div class="carousel-dots" id="carouselDots">
+                        <!-- Dots générés dynamiquement -->
+                    </div>
+
+                    <!-- Carousel wrapper -->
+                    <div class="carousel-wrapper">
+                        <!-- Navigation buttons -->
+                        <button class="carousel-nav carousel-nav--prev" id="prevBtn" aria-label="Image précédente">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+
+                        <button class="carousel-nav carousel-nav--next" id="nextBtn" aria-label="Image suivante">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+
+                        <!-- Carousel track -->
+                        <div class="carousel-track" id="carouselTrack">
+                            <!-- Images générées dynamiquement -->
+                        </div>
+                    </div>
+
+                    <!-- Thumbnail strip -->
+                    <div class="carousel-thumbnails" id="carouselThumbnails">
+                        <!-- Thumbnails générées dynamiquement -->
+                    </div>
+
+                    <!-- Progress bar -->
+                    <div class="carousel-progress">
+                        <div class="carousel-progress-bar" id="progressBar"></div>
+                    </div>
+
+                    <!-- Counter -->
+                    <div class="carousel-counter">
+                        <span id="currentSlide">1</span> / <span id="totalSlides">4</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal pour vue plein écran -->
+            <div class="gallery-modal" id="galleryModal">
+                <div class="gallery-modal-content">
+                    <button class="gallery-modal-close" id="modalCloseBtn">&times;</button>
+
+                    <button class="gallery-modal-nav gallery-modal-nav--prev" id="modalPrevBtn">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
+                    <button class="gallery-modal-nav gallery-modal-nav--next" id="modalNextBtn">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
+                    <div class="gallery-modal-image-container">
+                        <img id="modalImage" src="" alt="" />
+                    </div>
+
+                    <div class="gallery-modal-info">
+                        <div class="gallery-modal-counter">
+                            <span id="modalCurrentSlide">1</span> / <span id="modalTotalSlides">4</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -275,8 +351,7 @@
                     <ul class="footer-links">
                         <li><a href="#">Organisation de concerts</a></li>
                         <li><a href="#">Spectacles culturels</a></li>
-                        <li><a href="#">Formations artistiques</a></li>
-                        <li><a href="#">Location de matériel</a></li>
+                        <li><a href="#">Expositions et salons</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

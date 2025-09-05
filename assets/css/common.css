@@ -375,6 +375,56 @@ h6 {
     margin: 0;
 }
 
+/* Legal modal content styling */
+.legal-section {
+    margin-bottom: var(--space-6);
+}
+
+.legal-section h3 {
+    color: var(--primary);
+    margin-bottom: var(--space-3);
+    font-size: 1.25rem;
+}
+
+.legal-section p,
+.legal-section ul {
+    color: var(--gray-600);
+    line-height: 1.7;
+}
+
+.legal-section ul {
+    margin-left: var(--space-4);
+    margin-top: var(--space-2);
+}
+
+.legal-section li {
+    margin-bottom: var(--space-1);
+}
+
+.close-btn {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    background: var(--white);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
+}
+
+.close-btn:hover {
+    background: var(--danger);
+    color: var(--white);
+}
+
 .developer-credit {
     font-size: 0.9em;
     color: var(--gray-400);

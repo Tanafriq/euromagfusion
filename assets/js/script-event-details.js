@@ -18,7 +18,7 @@ const eventData = {
             <p>Chanteur et compositeur, Chazil Adlene Bahloul incarne une identité musicale profondément enracinée dans l'essence de l'Algérie. Né à Constantine, il grandit au cœur de sa Casbah, où il développe une passion pour la musique en puisant dans l'âme de son quartier populaire. Sa voix grave, à la fois mélancolique et porteuse d'espoir, résonne comme un écho des émotions de l'Algérie profonde.</p><br />
             <p>Chazil puise son inspiration dans les chants traditionnels algériens, du Aïssaoua, Malouf et El Wesfane à l'Est, au Gnaoui au Sud, en passant par le Chaâbi au Nord et le Raï à l'Ouest, dont il tombe profondément amoureux. Animé par une soif de fusion musicale, il explore également des styles internationaux comme le Flamenco, le Fado, le Reggae et la musique turque, créant un son innovant et universel. Ses voyages lui ont permis de constater l'impact de la musique algérienne à l'international et de séduire un public toujours plus large.</p><br />
             <p>En février 2025, il marque un tournant dans sa carrière en se produisant au Palais des Congrès de Paris devant plus de 4000 personnes, lors d'un événement emblématique du Raï Nation. Fort de ce succès, il continue son ascension et sera de retour sur scène à Paris le 25 avril 2025.</p><br />
-            <p>À travers ses performances, Chazil fait rayonner à nouveau le vieux RAI, sur la scène nationale et internationale, en ajoutant sa touche de fraîcheur et de modernité.</p><br />
+            <p>À travers ses performances, Chazil fait rayonner à nouveau le vieux RAI, sur la scène nationale et internationale, en ajoutant sa touche de fraîcheur et de modernité.</p>
         `,
         program: [
             { time: '19h30', title: 'Ouverture des portes', description: 'Entrez dans l\'univers musical et installez-vous confortablement pour une soirée inoubliable.' },
@@ -55,7 +55,7 @@ const eventData = {
             <h3>Babylone - Deuxième concert</h3><br />
             <p>Icône de la scène musicale algérienne depuis 2012, <strong>BABYLONE</strong> séduit avec son style unique "<strong>Dziri</strong>", alliant pop urbaine et sonorités maghrébines. Porté par la voix envoûtante d'Amine, le groupe interprétera ses morceaux emblématiques tels que "<strong>Zina</strong>" (plus de 222 millions de vues sur YouTube), "<strong>Choufou l'amour ma dar fiya</strong>", et bien d'autres pépites.</p><br />
             <p>Un événement musical à ne pas manquer!</p><br />
-            <p>Laissez vous transporter par les rythmes ensorcelants de la musique algérienne pour une soirée mémorable.</p><br />
+            <p>Laissez vous transporter par les rythmes ensorcelants de la musique algérienne pour une soirée mémorable.</p>
         `,
         program: [
             { time: '18h30', title: 'Ouverture des portes', description: 'Accueil du public et installation pour une soirée pleine de musique et de surprises.' },
@@ -123,7 +123,7 @@ class GalleryCarousel {
         this.currentIndex = 0;
         this.isTransitioning = false;
         this.autoplayInterval = null;
-        this.autoplayDelay = 5000;
+        this.autoplayDelay = 4000;
         this.touchStartX = 0;
         this.touchEndX = 0;
         this.isModalOpen = false;

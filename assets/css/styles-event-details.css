@@ -688,6 +688,16 @@
         width: 10px;
         height: 10px;
     }
+    
+    .event-hero {
+        margin-top: 95px;
+        height: 45vh;
+    }
+    
+    .event-hero h1 {
+        font-size: 1.8rem;
+        padding: 0 var(--space-4);
+    }
 }
 
 /* ===== ACCESSIBILITY ===== */
@@ -1029,8 +1039,13 @@
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
+    .event-hero {
+        margin-top: 90px;
+    }
+    
     .event-hero h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        line-height: 1.1;
     }
 
     .event-details-grid {

@@ -887,10 +887,11 @@
     cursor: pointer;
 }
 
-.read-more-btn:hover,
-.read-more-btn:active {
-  background: #e63946;
-  transform: scale(1.05);
+.read-more-btn:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .read-more-btn::after {
@@ -1054,6 +1055,14 @@
         box-shadow: var(--shadow-md);
     }
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .read-more-btn:hover {
+    background: #e63946; /* garde la couleur */
+    transform: none;     /* enlève l’effet */
+  }
+}
+
 
 /* Upcoming Events Styles */
 .upcoming-content {

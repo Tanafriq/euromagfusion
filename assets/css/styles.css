@@ -877,13 +877,14 @@
     transition: all var(--transition-base);
     align-self: flex-start;
     margin-top: auto;
-    /* Corrections pour le comportement mobile */
     touch-action: manipulation;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .read-more-btn:hover {
@@ -1028,6 +1029,30 @@
     .events-grid:has(.event-card:nth-child(4)) {
         /* Si 4+ cartes, utilise toute la largeur disponible */
         justify-content: space-evenly;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .read-more-btn:hover {
+        background: var(--primary);
+        color: var(--white);
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .read-more-btn:active {
+        background: var(--primary);
+        color: var(--white);
+        transform: scale(0.98);
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .read-more-btn:hover {
+        background: var(--primary);
+        color: var(--white);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
     }
 }
 

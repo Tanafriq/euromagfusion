@@ -219,9 +219,9 @@ function initFloatingButton() {
             console.warn('Tentative d\'utilisation d\'un bouton flottant détruit');
             return false;
         }
-        return elements.floatingExhibitorBtn && 
-               elements.exhibitorBtn && 
-               document.body.contains(elements.floatingExhibitorBtn);
+        return elements.floatingExhibitorBtn &&
+            elements.exhibitorBtn &&
+            document.body.contains(elements.floatingExhibitorBtn);
     }
 
     // Initialiser le système de déplacement dynamique
@@ -256,7 +256,7 @@ function initFloatingButton() {
     }
 
     // Créer le listener avec vérification
-    scrollListener = throttle(function() {
+    scrollListener = throttle(function () {
         if (checkValidity()) {
             updateButtonPosition();
         }
@@ -266,7 +266,7 @@ function initFloatingButton() {
     window.addEventListener('scroll', scrollListener, { passive: true });
 
     // Click handler pour ouvrir le modal
-    clickHandler = function() {
+    clickHandler = function () {
         if (checkValidity()) {
             openContactModal();
         }
@@ -281,35 +281,35 @@ function initFloatingButton() {
         try {
             // Marquer comme détruit
             isDestroyed = true;
-            
+
             // Nettoyer les event listeners
             if (scrollListener) {
                 window.removeEventListener('scroll', scrollListener);
                 scrollListener = null;
             }
-            
+
             if (elements.exhibitorBtn && clickHandler) {
                 elements.exhibitorBtn.removeEventListener('click', clickHandler);
                 clickHandler = null;
             }
-            
+
             // Nettoyer le système dynamique
             if (cleanupDynamic && typeof cleanupDynamic === 'function') {
                 cleanupDynamic();
                 cleanupDynamic = null;
             }
-            
+
             // Remettre le bouton à sa position par défaut si nécessaire
-            if (elements.floatingExhibitorBtn && 
+            if (elements.floatingExhibitorBtn &&
                 elements.floatingExhibitorBtn.classList.contains('btn-in-section')) {
-                
+
                 const originalParent = document.querySelector('.floating-exhibitor-btn')?.parentElement;
                 if (originalParent && originalParent !== elements.floatingExhibitorBtn.parentElement) {
                     originalParent.appendChild(elements.floatingExhibitorBtn);
                     elements.floatingExhibitorBtn.classList.remove('btn-in-section');
                 }
             }
-            
+
         } catch (error) {
             console.error('Erreur lors du cleanup du bouton flottant:', error);
         }
@@ -446,7 +446,7 @@ function initExhibitorSection() {
     }
 
     // Écouter les changements de visibilité pour optimiser les performances
-    const visibilityHandler = function() {
+    const visibilityHandler = function () {
         if (document.hidden) {
             // Mettre en pause les animations non critiques
             const floatingBtn = document.getElementById('floatingExhibitorBtn');
@@ -501,7 +501,7 @@ function initContactModal() {
     }
 
     // Click outside to close
-    const clickOutsideHandler = function(e) {
+    const clickOutsideHandler = function (e) {
         if (e.target === elements.contactModal) {
             closeContactModal();
         }
@@ -516,7 +516,7 @@ function initContactModal() {
 
     let typeChangeHandler = null;
     if (typeClientSelect && entrepriseFields) {
-        typeChangeHandler = function() {
+        typeChangeHandler = function () {
             if (this.value === 'entreprise') {
                 entrepriseFields.style.display = 'block';
                 if (nomEntreprise) nomEntreprise.required = true;
@@ -559,7 +559,7 @@ function initContactForm() {
 
     // Regex email plus stricte
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    
+
     // Configuration des timeouts
     const LOADING_TIMEOUT = 30000; // 30 secondes maximum
     const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
@@ -581,6 +581,8 @@ function initContactForm() {
         const typeClient = formData.get('typeClient');
         const email = formData.get('email')?.trim();
         const codePostal = formData.get('codePostal')?.trim();
+        const telephone = formData.get('telephone')?.trim();
+        const countryCode = formData.get('country-code')?.trim();
 
         // Vérifications de base
         if (!nom || !prenom || !typeClient || !email || !codePostal) {
@@ -605,6 +607,16 @@ function initContactForm() {
         if (!codePostalRegex.test(codePostal)) {
             showNotification('Veuillez entrer un code postal valide (5 chiffres).', 'error');
             return;
+        }
+
+        // Vérification téléphone si renseigné
+        if (telephone) {
+            const phoneRegex = /^[0-9\s\-\+\(\)]{10,}$/;
+            const cleanPhone = telephone.replace(/\s/g, '');
+            if (!phoneRegex.test(cleanPhone)) {
+                showNotification('Veuillez entrer un numéro de téléphone valide.', 'error');
+                return;
+            }
         }
 
         // Vérifications spécifiques pour entreprise
@@ -642,19 +654,24 @@ function initContactForm() {
         try {
             // Préparation des données pour FormSubmit
             const cleanFormData = new FormData();
-            
+
             // Champs requis par FormSubmit
             cleanFormData.append('_subject', 'Demande Exposant - Algérie Expo');
             cleanFormData.append('_captcha', 'true');
             cleanFormData.append('_next', window.location.href);
             cleanFormData.append('_template', 'table');
-            
+
             // Données du formulaire avec formatage
             cleanFormData.append('nom', nom);
             cleanFormData.append('prenom', prenom);
             cleanFormData.append('type_client', typeClient);
             cleanFormData.append('email', email);
             cleanFormData.append('code_postal', codePostal);
+
+            // Ajout du téléphone s'il existe
+            if (telephone) {
+                cleanFormData.append('telephone', `${countryCode} ${telephone}`);
+            }
 
             if (typeClient === 'entreprise') {
                 const nomEntreprise = formData.get('nomEntreprise')?.trim();
@@ -682,7 +699,7 @@ function initContactForm() {
             const response = await fetchWithRetry('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
                 method: "POST",
                 body: cleanFormData,
-                headers: { 
+                headers: {
                     "Accept": "application/json"
                 }
             });
@@ -691,7 +708,7 @@ function initContactForm() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                
+
                 if (responseData.success) {
                     // État de succès
                     if (submitSpan) submitSpan.textContent = 'Envoyé !';
@@ -765,7 +782,7 @@ function initContactForm() {
     // Fonction de retry pour les requêtes
     async function fetchWithRetry(url, options, maxRetries = 2) {
         let lastError;
-        
+
         for (let i = 0; i <= maxRetries; i++) {
             try {
                 const response = await fetch(url, options);
@@ -778,7 +795,7 @@ function initContactForm() {
                 }
             }
         }
-        
+
         throw lastError;
     }
 
@@ -788,6 +805,7 @@ function initContactForm() {
         const prenomInput = elements.contactForm.querySelector('#prenom');
         const emailInput = elements.contactForm.querySelector('#email');
         const codePostalInput = elements.contactForm.querySelector('#codePostal');
+        const telephoneInput = elements.contactForm.querySelector('#telephone');
         const nomEntrepriseInput = elements.contactForm.querySelector('#nomEntreprise');
         const secteurActiviteInput = elements.contactForm.querySelector('#secteurActivite');
 
@@ -812,6 +830,11 @@ function initContactForm() {
                 validate: (value) => /^[0-9]{5}$/.test(value),
                 message: 'Code postal invalide (5 chiffres requis)'
             },
+            telephone: {
+                element: telephoneInput,
+                validate: (value) => !value || /^[0-9\s\-\+\(\)]{10,}$/.test(value.replace(/\s/g, '')),
+                message: 'Format de téléphone invalide'
+            },
             nomEntreprise: {
                 element: nomEntrepriseInput,
                 validate: (value) => value.trim().length >= 2,
@@ -826,7 +849,7 @@ function initContactForm() {
 
         Object.values(validators).forEach(({ element, validate, message }) => {
             if (element) {
-                element.addEventListener('blur', function() {
+                element.addEventListener('blur', function () {
                     const value = this.value.trim();
                     if (value && !validate(value)) {
                         this.style.borderColor = '#dc2626';
@@ -854,7 +877,7 @@ function initContactForm() {
         if (elements.contactForm && submitHandler) {
             elements.contactForm.removeEventListener('submit', submitHandler);
         }
-        
+
         // Nettoyer les validateurs
         Object.values(validators).forEach(({ element }) => {
             if (element) {
@@ -1031,7 +1054,7 @@ function initSmoothScrolling() {
     const linkHandlers = [];
 
     links.forEach(link => {
-        const handler = function(e) {
+        const handler = function (e) {
             const href = this.getAttribute('href');
             if (href === '#') return;
 
@@ -1079,7 +1102,7 @@ function initEventListeners() {
 
     // Notification button - scroll to newsletter section
     if (elements.notifyBtn) {
-        notifyHandler = function() {
+        notifyHandler = function () {
             const newsletterSection = document.getElementById('newsletter-section');
             if (newsletterSection) {
                 const offsetTop = newsletterSection.offsetTop - 80; // Account for fixed navbar
@@ -1093,7 +1116,7 @@ function initEventListeners() {
     }
 
     // Close modals with Escape key
-    keydownHandler = function(e) {
+    keydownHandler = function (e) {
         if (e.key === 'Escape') {
             const openModal = document.querySelector('.modal[style*="display: block"]');
             if (openModal) {
@@ -1137,7 +1160,7 @@ function initNewsletterForm() {
 
     // Regex email plus stricte
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    
+
     // Configuration des timeouts
     const LOADING_TIMEOUT = 30000; // 30 secondes maximum
     const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
@@ -1279,7 +1302,7 @@ function initNewsletterForm() {
     // Fonction de retry pour les requêtes
     async function fetchWithRetry(url, options, maxRetries = 2) {
         let lastError;
-        
+
         for (let i = 0; i <= maxRetries; i++) {
             try {
                 const response = await fetch(url, options);
@@ -1292,7 +1315,7 @@ function initNewsletterForm() {
                 }
             }
         }
-        
+
         throw lastError;
     }
 
@@ -1308,7 +1331,7 @@ function initNewsletterForm() {
 
         Object.values(validators).forEach(({ element, validate, message }) => {
             if (element) {
-                element.addEventListener('blur', function() {
+                element.addEventListener('blur', function () {
                     const value = this.value.trim();
                     if (value && !validate(value)) {
                         this.style.borderColor = '#dc2626';
@@ -1324,7 +1347,7 @@ function initNewsletterForm() {
                 });
 
                 // Validation en temps réel pendant la saisie
-                element.addEventListener('input', function() {
+                element.addEventListener('input', function () {
                     const value = this.value.trim();
                     if (value && !validate(value)) {
                         this.style.borderColor = '#dc2626';
@@ -1348,7 +1371,7 @@ function initNewsletterForm() {
         if (newsletterForm && submitHandler) {
             newsletterForm.removeEventListener('submit', submitHandler);
         }
-        
+
         // Nettoyer les validateurs
         Object.values(validators).forEach(({ element }) => {
             if (element) {
@@ -1376,16 +1399,16 @@ function throttle(func, limit) {
 // ===== ÉVÉNEMENTS DE CLEANUP AUTOMATIQUE =====
 function initGlobalCleanup() {
     // 1. Avant fermeture/rechargement de page
-    window.addEventListener('beforeunload', function() {
+    window.addEventListener('beforeunload', function () {
         executeAllCleanup();
     });
 
     // 2. Gestion des erreurs globales
-    window.addEventListener('error', function(event) {
+    window.addEventListener('error', function (event) {
         console.error('Erreur JavaScript détectée:', event.error);
-        
+
         // En cas d'erreur critique, nettoyer pour éviter les fuites
-        if (event.error.message.includes('cleanup') || 
+        if (event.error.message.includes('cleanup') ||
             event.error.message.includes('observer') ||
             event.error.message.includes('memory')) {
             executeAllCleanup();
@@ -1393,11 +1416,11 @@ function initGlobalCleanup() {
     });
 
     // 3. Gestion spécifique pour les erreurs non capturées
-    window.addEventListener('unhandledrejection', function(event) {
+    window.addEventListener('unhandledrejection', function (event) {
         console.error('Promise rejetée non gérée:', event.reason);
-        
+
         // Nettoyer si l'erreur semble liée aux observers
-        if (event.reason?.message?.includes('observer') || 
+        if (event.reason?.message?.includes('observer') ||
             event.reason?.message?.includes('intersection')) {
             executeAllCleanup();
         }
@@ -1408,24 +1431,24 @@ function initGlobalCleanup() {
         const originalPushState = window.history.pushState;
         const originalReplaceState = window.history.replaceState;
 
-        window.history.pushState = function() {
+        window.history.pushState = function () {
             executeAllCleanup();
             return originalPushState.apply(window.history, arguments);
         };
 
-        window.history.replaceState = function() {
+        window.history.replaceState = function () {
             executeAllCleanup();
             return originalReplaceState.apply(window.history, arguments);
         };
 
-        window.addEventListener('popstate', function() {
+        window.addEventListener('popstate', function () {
             executeAllCleanup();
         });
     }
 }
 
 // ===== FONCTION DE CLEANUP MANUELLE (pour debug) =====
-window.debugCleanup = function() {
+window.debugCleanup = function () {
     executeAllCleanup();
 };
 

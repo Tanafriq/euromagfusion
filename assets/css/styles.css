@@ -1418,9 +1418,9 @@
 /* Responsive pour le champ téléphone */
 @media (max-width: 768px) {
     .country-code-select {
-        width: 80px;
-        min-width: 80px;
-        max-width: 80px;
+        width: 90px;
+        min-width: 90px;
+        max-width: 90px;
         font-size: 0.85rem;
         padding-right: 20px;
         background-size: 10px;

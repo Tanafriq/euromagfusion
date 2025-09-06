@@ -99,6 +99,10 @@
     color: var(--gray-900);
 }
 
+.event-description h3 {
+    color: var(--primary);
+}
+
 .event-sidebar {
     display: flex;
     flex-direction: column;

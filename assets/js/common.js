@@ -131,7 +131,7 @@ function initLegalAndServices() {
         <div class="legal-section">
             <h3>Conception et développement</h3>
             <p>Site web développé par SL<br>
-            Contact : shakbaz@gmail.com</p>
+            Contact : slimanelami@proton.me</p>
         </div>
         <div class="legal-section">
             <h3>Propriété intellectuelle</h3>
@@ -424,7 +424,7 @@ function initDeveloperSignature() {
             e.preventDefault();
             // Créer un lien temporaire et le supprimer immédiatement pour éviter le message console
             const link = document.createElement('a');
-            link.href = 'mailto:shakbaz@gmail.com';
+            link.href = 'mailto:slimanelami@proton.me';
             link.style.display = 'none';
             document.body.appendChild(link);
             link.click();

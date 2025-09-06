@@ -611,9 +611,9 @@ function initContactForm() {
 
         // Vérification téléphone si renseigné
         if (telephone) {
-            const phoneRegex = /^[0-9\s\-\+\(\)]{10,}$/;
+            const phoneRegex = /^[0-9\s\-\+\(\)]+$/;
             const cleanPhone = telephone.replace(/\s/g, '');
-            if (!phoneRegex.test(cleanPhone)) {
+            if (!phoneRegex.test(telephone)) {
                 showNotification('Veuillez entrer un numéro de téléphone valide.', 'error');
                 return;
             }

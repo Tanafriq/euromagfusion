@@ -887,11 +887,10 @@
     cursor: pointer;
 }
 
-.read-more-btn:hover {
-    background: var(--primary);
-    color: var(--white);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+.read-more-btn:hover,
+.read-more-btn:active {
+  background: #e63946;
+  transform: scale(1.05);
 }
 
 .read-more-btn::after {

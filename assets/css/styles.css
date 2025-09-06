@@ -1056,14 +1056,6 @@
     }
 }
 
-@media (hover: none) and (pointer: coarse) {
-  .read-more-btn:hover {
-    background: #e63946; /* garde la couleur */
-    transform: none;     /* enlève l’effet */
-  }
-}
-
-
 /* Upcoming Events Styles */
 .upcoming-content {
     display: flex;

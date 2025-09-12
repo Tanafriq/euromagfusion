@@ -177,7 +177,7 @@
     position: relative;
     overflow: hidden;
     aspect-ratio: 16/9;
-    background: var(--gray-100);
+    background: var(--black);
 }
 
 /* ===== CAROUSEL TRACK ===== */
@@ -196,9 +196,10 @@
 .carousel-slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     cursor: pointer;
     transition: transform 0.3s ease;
+    background: var(--black);
 }
 
 .carousel-slide:hover img {

@@ -29,10 +29,16 @@ const eventData = {
             { time: '23h00', title: 'Clôture de la soirée', description: 'Une fin en beauté pour une soirée mémorable, remplie de musique, de joie et de souvenirs.' }
         ],
         gallery: [
-            './assets/img/event-1-1.webp',
-            './assets/img/event-1-2.webp',
-            './assets/img/event-1-3.webp',
-            './assets/img/event-1-4.webp'
+            './assets/img/event-3-1.webp',
+            './assets/img/event-3-2.webp',
+            './assets/img/event-3-3.webp',
+            './assets/img/event-3-4.webp',
+            './assets/img/event-3-5.webp',
+            './assets/img/event-3-6.webp',
+            './assets/img/event-3-7.webp',
+            './assets/img/event-3-8.webp',
+            './assets/img/event-3-9.webp',
+            './assets/img/event-3-10.webp'
         ]
     },
     babylonedjamtimoh: {
@@ -110,7 +116,18 @@ const eventData = {
             './assets/img/event-1-1.webp',
             './assets/img/event-1-2.webp',
             './assets/img/event-1-3.webp',
-            './assets/img/event-1-4.webp'
+            './assets/img/event-1-4.webp',
+            './assets/img/event-1-5.webp',
+            './assets/img/event-1-6.webp',
+            './assets/img/event-1-7.webp',
+            './assets/img/event-1-8.webp',
+            './assets/img/event-1-9.webp',
+            './assets/img/event-1-10.webp',
+            './assets/img/event-1-11.webp',
+            './assets/img/event-1-12.webp',
+            './assets/img/event-1-13.webp',
+            './assets/img/event-1-14.webp',
+            './assets/img/event-1-15.webp'
         ]
     }
 };

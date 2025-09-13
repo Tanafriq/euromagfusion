@@ -1109,3 +1109,7 @@
         padding: var(--space-3);
     }
 }
+
+.video-section {
+    display: none !important;
+}

@@ -463,7 +463,7 @@ function initContactForm() {
             cleanFormData.append('date_envoi', new Date().toLocaleString('fr-FR'));
 
             // Envoi via FormSubmit avec retry logic
-            const response = await fetchWithRetry('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
+            const response = await fetchWithRetry('https://formsubmit.co/ajax/euromag.fusion@gmail.com', {
                 method: "POST",
                 body: cleanFormData,
                 headers: {
@@ -704,7 +704,7 @@ function initNewsletterForm() {
             cleanFormData.append('date_inscription', new Date().toLocaleString('fr-FR'));
 
             // Envoi via FormSubmit avec retry logic
-            const response = await fetchWithRetry('https://formsubmit.co/ajax/fusioneuromag@gmail.com', {
+            const response = await fetchWithRetry('https://formsubmit.co/ajax/euromag.fusion@gmail.com', {
                 method: "POST",
                 body: cleanFormData,
                 headers: {

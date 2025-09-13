@@ -57,7 +57,7 @@ const eventData = {
         time: '18h30 - 22h30',
         price: '35€ / 38€',
         image: './assets/img/banner-babylone-djam-timoh.webp',
-        video: 'sEyDABFlDUI',
+        video: 'ng6WRvuHRxM',
         description: `
             <br />
             <h3>Djam x TiMoh - Premier concert </h3><br />

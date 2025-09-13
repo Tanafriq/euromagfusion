@@ -22,6 +22,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 let videoId = '';
                 if (videoUrl.includes('youtube.com/watch?v=')) {
                     videoId = videoUrl.split('watch?v=')[1].split('&')[0];
+                } else if (videoUrl.includes('youtube.com/shorts/')) {
+                    videoId = videoUrl.split('shorts/')[1].split('?')[0];
                 } else if (videoUrl.includes('youtu.be/')) {
                     videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
                 } else videoId = videoUrl;
@@ -371,7 +373,7 @@ function initContactForm() {
 
     // Regex email plus stricte
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    
+
     // Configuration des timeouts
     const LOADING_TIMEOUT = 30000; // 30 secondes maximum
     const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
@@ -449,14 +451,14 @@ function initContactForm() {
             cleanFormData.append('email', email);
             cleanFormData.append('sujet', sujet);
             cleanFormData.append('message', message);
-            
+
             // Ajout du téléphone s'il existe
             const telephone = formData.get('telephone')?.trim();
             const countryCode = formData.get('country-code')?.trim();
             if (telephone) {
                 cleanFormData.append('telephone', `${countryCode} ${telephone}`);
             }
-            
+
             cleanFormData.append('type_formulaire', 'contact_general');
             cleanFormData.append('date_envoi', new Date().toLocaleString('fr-FR'));
 
@@ -473,7 +475,7 @@ function initContactForm() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                
+
                 if (responseData.success) {
                     // État de succès
                     if (submitSpan) submitSpan.textContent = 'Envoyé !';
@@ -538,7 +540,7 @@ function initContactForm() {
     // Fonction de retry pour les requêtes
     async function fetchWithRetry(url, options, maxRetries = 2) {
         let lastError;
-        
+
         for (let i = 0; i <= maxRetries; i++) {
             try {
                 const response = await fetch(url, options);
@@ -551,7 +553,7 @@ function initContactForm() {
                 }
             }
         }
-        
+
         throw lastError;
     }
 
@@ -587,7 +589,7 @@ function initContactForm() {
 
         Object.values(validators).forEach(({ element, validate, message }) => {
             if (element) {
-                element.addEventListener('blur', function() {
+                element.addEventListener('blur', function () {
                     const value = this.value.trim();
                     if (value && !validate(value)) {
                         this.style.borderColor = '#dc2626';
@@ -615,7 +617,7 @@ function initContactForm() {
         if (contactForm && submitHandler) {
             contactForm.removeEventListener('submit', submitHandler);
         }
-        
+
         // Nettoyer les validateurs
         Object.values(validators).forEach(({ element }) => {
             if (element) {
@@ -636,7 +638,7 @@ function initNewsletterForm() {
 
     // Regex email plus stricte
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    
+
     // Configuration des timeouts
     const LOADING_TIMEOUT = 30000; // 30 secondes maximum
     const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
@@ -714,7 +716,7 @@ function initNewsletterForm() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                
+
                 if (responseData.success) {
                     // État de succès
                     if (submitSpan) submitSpan.textContent = 'Inscrit !';
@@ -787,7 +789,7 @@ function initNewsletterForm() {
     // Fonction de retry pour les requêtes
     async function fetchWithRetry(url, options, maxRetries = 2) {
         let lastError;
-        
+
         for (let i = 0; i <= maxRetries; i++) {
             try {
                 const response = await fetch(url, options);
@@ -800,7 +802,7 @@ function initNewsletterForm() {
                 }
             }
         }
-        
+
         throw lastError;
     }
 
@@ -816,7 +818,7 @@ function initNewsletterForm() {
 
         Object.values(validators).forEach(({ element, validate, message }) => {
             if (element) {
-                element.addEventListener('blur', function() {
+                element.addEventListener('blur', function () {
                     const value = this.value.trim();
                     if (value && !validate(value)) {
                         this.style.borderColor = '#dc2626';
@@ -832,7 +834,7 @@ function initNewsletterForm() {
                 });
 
                 // Validation en temps réel pendant la saisie
-                element.addEventListener('input', function() {
+                element.addEventListener('input', function () {
                     const value = this.value.trim();
                     if (value && !validate(value)) {
                         this.style.borderColor = '#dc2626';
@@ -856,7 +858,7 @@ function initNewsletterForm() {
         if (newsletterForm && submitHandler) {
             newsletterForm.removeEventListener('submit', submitHandler);
         }
-        
+
         // Nettoyer les validateurs
         Object.values(validators).forEach(({ element }) => {
             if (element) {

@@ -38,7 +38,15 @@ const eventData = {
             './assets/img/event-3-7.webp',
             './assets/img/event-3-8.webp',
             './assets/img/event-3-9.webp',
-            './assets/img/event-3-10.webp'
+            './assets/img/event-3-10.webp',
+            './assets/img/event-3-11.webp',
+            './assets/img/event-3-12.webp',
+            './assets/img/event-3-13.webp',
+            './assets/img/event-3-14.webp',
+            './assets/img/event-3-15.webp',
+            './assets/img/event-3-16.webp',
+            './assets/img/event-3-17.webp',
+            './assets/img/event-3-18.webp'
         ]
     },
     babylonedjamtimoh: {

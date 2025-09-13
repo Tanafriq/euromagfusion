@@ -113,7 +113,7 @@ function initLegalAndServices() {
             Association loi 1901<br>
             Siège social : 151 avenue de la République, 92320 Châtillon, France<br>
             Email : contact@euromagfusion.com<br>
-            Téléphone : +33 6 12 34 56 78</p>
+            Téléphone : +33 7 83 22 85 94</p>
             <p><strong>Objet de l'association :</strong> Promotion de la culture algérienne à travers l'organisation de spectacles, concerts, événements culturels et expositions en France et en Europe.</p>
         </div>
         <div class="legal-section">

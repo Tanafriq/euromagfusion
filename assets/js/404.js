@@ -1,6 +1,5 @@
 // ===== 404 PAGE JAVASCRIPT - VERSION AMÉLIORÉE =====
 
-// DOM Elements
 const elements = {
     glitchOverlay: document.getElementById('glitchOverlay'),
     randomFact: document.getElementById('randomFact'),
@@ -9,16 +8,14 @@ const elements = {
     contactBtn: document.getElementById('contactBtn')
 };
 
-// Configuration
 const CONFIG = {
-    glitchInterval: 6000,     // 6 secondes
-    glitchDuration: 250,      // 0.25 secondes
-    factChangeInterval: 8000, // 8 secondes
-    particleCount: 25,        // Nombre de particules
-    interactionRadius: 100    // Rayon d'interaction souris
+    glitchInterval: 6000,
+    glitchDuration: 250,
+    factChangeInterval: 8000,
+    particleCount: 25,
+    interactionRadius: 100
 };
 
-// Fun facts array - Plus de faits intéressants
 const funFacts = [
     "L'erreur 404 tire son nom du bureau 404 au CERN où était hébergé le premier serveur web !",
     "Le premier site web a été créé en 1990 par Tim Berners-Lee au CERN.",
@@ -45,7 +42,7 @@ class Enhanced404Page {
         this.mouseY = 0;
         this.particles = [];
         this.animationId = null;
-        
+
         this.init();
     }
 
@@ -63,29 +60,23 @@ class Enhanced404Page {
 
     // ===== ÉVÉNEMENTS =====
     setupEventListeners() {
-        // Suivi de la souris pour les effets interactifs
         document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        
-        // Gestion des touches clavier
+
         document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
-        
-        // Effets de clic sur les boutons
+
         this.setupButtonEffects();
-        
-        // Gestion du redimensionnement
+
         window.addEventListener('resize', () => this.handleResize());
-        
-        // Gestion de la visibilité de la page
+
         document.addEventListener('visibilitychange', () => this.handleVisibilityChange());
-        
-        // Préchargement des images au survol
+
         this.setupImagePreloading();
     }
 
     handleMouseMove(e) {
         this.mouseX = e.clientX / window.innerWidth;
         this.mouseY = e.clientY / window.innerHeight;
-        
+
         this.updateFloatingShapes();
         this.updateInteractiveIcons(e.clientX, e.clientY);
     }
@@ -95,20 +86,17 @@ class Enhanced404Page {
         if (!elements.glitchOverlay) return;
 
         const triggerGlitch = () => {
-            // Effet glitch aléatoire
             if (Math.random() > 0.7) {
                 elements.glitchOverlay.style.opacity = '1';
-                
+
                 setTimeout(() => {
                     elements.glitchOverlay.style.opacity = '0';
                 }, CONFIG.glitchDuration);
             }
         };
 
-        // Déclenchement initial
         setTimeout(triggerGlitch, 3000);
 
-        // Effet récurrent avec timing variable
         const scheduleNextGlitch = () => {
             const nextInterval = CONFIG.glitchInterval + (Math.random() * 4000 - 2000);
             this.glitchTimeout = setTimeout(() => {
@@ -128,21 +116,20 @@ class Enhanced404Page {
 
         const changeFact = () => {
             const nextIndex = (currentFactIndex + 1) % funFacts.length;
-            
-            // Animation de sortie
+
             elements.randomFact.style.transform = 'translateX(-20px)';
             elements.randomFact.style.opacity = '0';
-            
+
             setTimeout(() => {
                 elements.randomFact.textContent = funFacts[nextIndex];
                 elements.randomFact.style.transform = 'translateX(20px)';
-                
+
                 requestAnimationFrame(() => {
                     elements.randomFact.style.transform = 'translateX(0)';
                     elements.randomFact.style.opacity = '1';
                 });
             }, 400);
-            
+
             currentFactIndex = nextIndex;
         };
 
@@ -161,52 +148,49 @@ class Enhanced404Page {
         canvas.style.pointerEvents = 'none';
         canvas.style.zIndex = '3';
         canvas.style.opacity = '0.6';
-        
+
         document.body.appendChild(canvas);
-        
+
         const ctx = canvas.getContext('2d');
-        
+
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         };
-        
+
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
-        
-        // Création des particules
+
         for (let i = 0; i < CONFIG.particleCount; i++) {
             this.particles.push(new Particle(canvas.width, canvas.height));
         }
-        
+
         this.animateParticles(ctx, canvas);
     }
 
     animateParticles(ctx, canvas) {
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             this.particles.forEach(particle => {
                 particle.update(this.mouseX * canvas.width, this.mouseY * canvas.height);
                 particle.draw(ctx);
             });
-            
+
             this.animationId = requestAnimationFrame(animate);
         };
-        
+
         animate();
     }
 
     // ===== ÉLÉMENTS INTERACTIFS =====
     setupInteractiveElements() {
-        // Animation des liens rapides au survol
         const quickLinks = document.querySelectorAll('.quick-link');
         quickLinks.forEach((link, index) => {
             link.addEventListener('mouseenter', () => {
                 link.style.transform = 'translateY(-8px) scale(1.02)';
                 link.style.filter = 'brightness(1.1)';
-                
-                // Effet de propagation
+
                 quickLinks.forEach((otherLink, otherIndex) => {
                     if (otherIndex !== index) {
                         otherLink.style.transform = 'scale(0.98)';
@@ -214,11 +198,11 @@ class Enhanced404Page {
                     }
                 });
             });
-            
+
             link.addEventListener('mouseleave', () => {
                 link.style.transform = '';
                 link.style.filter = '';
-                
+
                 quickLinks.forEach(otherLink => {
                     otherLink.style.transform = '';
                     otherLink.style.opacity = '';
@@ -233,7 +217,7 @@ class Enhanced404Page {
             const speed = (index + 1) * 0.03;
             const x = (this.mouseX - 0.5) * speed * 50;
             const y = (this.mouseY - 0.5) * speed * 50;
-            
+
             shape.style.transform = `translate(${x}px, ${y}px)`;
         });
     }
@@ -244,11 +228,11 @@ class Enhanced404Page {
             const rect = icon.getBoundingClientRect();
             const iconCenterX = rect.left + rect.width / 2;
             const iconCenterY = rect.top + rect.height / 2;
-            
+
             const distance = Math.sqrt(
                 Math.pow(mouseX - iconCenterX, 2) + Math.pow(mouseY - iconCenterY, 2)
             );
-            
+
             if (distance < CONFIG.interactionRadius) {
                 const scale = 1.3 - (distance / CONFIG.interactionRadius) * 0.3;
                 const rotation = (distance / CONFIG.interactionRadius) * 15;
@@ -264,21 +248,19 @@ class Enhanced404Page {
     // ===== EFFETS SUR LES BOUTONS =====
     setupButtonEffects() {
         const buttons = document.querySelectorAll('.btn');
-        
+
         buttons.forEach(button => {
-            // Effet de loading au clic
             button.addEventListener('click', (e) => {
                 if (button.href && !button.href.includes('#')) {
                     this.createLoadingEffect(button);
                 }
                 this.createRippleEffect(e, button);
             });
-            
-            // Effet de survol avancé
+
             button.addEventListener('mouseenter', () => {
                 button.style.transform = 'translateY(-4px) scale(1.02)';
             });
-            
+
             button.addEventListener('mouseleave', () => {
                 if (!button.classList.contains('loading')) {
                     button.style.transform = '';
@@ -291,13 +273,12 @@ class Enhanced404Page {
         const originalContent = button.innerHTML;
         button.classList.add('loading');
         button.style.pointerEvents = 'none';
-        
+
         button.innerHTML = `
             <i class="fas fa-spinner fa-spin"></i>
             <span>Chargement...</span>
         `;
-        
-        // Simuler un délai de chargement
+
         setTimeout(() => {
             button.innerHTML = originalContent;
             button.classList.remove('loading');
@@ -311,7 +292,7 @@ class Enhanced404Page {
         const size = Math.max(rect.width, rect.height);
         const x = event.clientX - rect.left - size / 2;
         const y = event.clientY - rect.top - size / 2;
-        
+
         ripple.style.cssText = `
             position: absolute;
             width: ${size}px;
@@ -325,56 +306,51 @@ class Enhanced404Page {
             pointer-events: none;
             z-index: 1;
         `;
-        
+
         button.style.position = 'relative';
         button.style.overflow = 'hidden';
         button.appendChild(ripple);
-        
+
         setTimeout(() => ripple.remove(), 800);
     }
 
     // ===== RACCOURCIS CLAVIER =====
     handleKeyboardShortcuts(e) {
-        // Echap - Retour en haut
         if (e.key === 'Escape') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
-        // H - Accueil
+
         if (e.key === 'h' && !this.isTyping(e)) {
             window.location.href = 'index.html';
         }
-        
-        // C - Contact
+
         if (e.key === 'c' && !this.isTyping(e)) {
             window.location.href = 'index.html#contact';
         }
-        
-        // R - Actualiser les faits
+
         if (e.key === 'r' && !this.isTyping(e)) {
             this.rotateFact();
         }
-        
-        // G - Déclencher l'effet glitch
+
         if (e.key === 'g' && !this.isTyping(e)) {
             this.triggerManualGlitch();
         }
     }
 
     isTyping(e) {
-        return e.target.tagName === 'INPUT' || 
-               e.target.tagName === 'TEXTAREA' || 
-               e.target.isContentEditable;
+        return e.target.tagName === 'INPUT' ||
+            e.target.tagName === 'TEXTAREA' ||
+            e.target.isContentEditable;
     }
 
     rotateFact() {
         if (elements.randomFact) {
             const currentIndex = funFacts.indexOf(elements.randomFact.textContent);
             const nextIndex = (currentIndex + 1) % funFacts.length;
-            
+
             elements.randomFact.style.transform = 'scale(0.9)';
             elements.randomFact.style.opacity = '0.5';
-            
+
             setTimeout(() => {
                 elements.randomFact.textContent = funFacts[nextIndex];
                 elements.randomFact.style.transform = 'scale(1)';
@@ -446,14 +422,13 @@ class Enhanced404Page {
             'renamed': 'Cette page a été renommée.',
             'maintenance': 'Cette page est temporairement indisponible pour maintenance.'
         };
-        
+
         const message = reasons[reason] || 'Raison inconnue.';
         this.showNotification(message, 'info');
     }
 
     trackReferrer(referrer) {
         console.log(`404 Error - Referrer: ${referrer}`);
-        // Intégration analytique possible ici
     }
 
     // ===== OBSERVATEUR D'INTERSECTION =====
@@ -472,7 +447,6 @@ class Enhanced404Page {
             });
         }, observerOptions);
 
-        // Observer les éléments qui doivent apparaître au scroll
         const elementsToObserve = document.querySelectorAll('.quick-link, .fun-fact');
         elementsToObserve.forEach(el => {
             el.style.transform = 'translateY(20px) scale(0.95)';
@@ -491,7 +465,6 @@ class Enhanced404Page {
             link.addEventListener('mouseenter', () => {
                 const href = link.getAttribute('href');
                 if (href && !preloadedImages.has(href) && !href.startsWith('#')) {
-                    // Précharger les ressources de la page de destination
                     const prefetchLink = document.createElement('link');
                     prefetchLink.rel = 'prefetch';
                     prefetchLink.href = href;
@@ -505,12 +478,10 @@ class Enhanced404Page {
     // ===== GESTION DE LA VISIBILITÉ =====
     handleVisibilityChange() {
         if (document.hidden) {
-            // Pause des animations coûteuses
             if (this.animationId) {
                 cancelAnimationFrame(this.animationId);
             }
         } else {
-            // Reprise des animations
             const canvas = document.getElementById('particle-canvas');
             if (canvas) {
                 const ctx = canvas.getContext('2d');
@@ -521,33 +492,28 @@ class Enhanced404Page {
 
     // ===== REDIMENSIONNEMENT =====
     handleResize() {
-        // Recalculer les positions des particules
         const canvas = document.getElementById('particle-canvas');
         if (canvas) {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            
-            // Repositionner les particules
+
             this.particles.forEach(particle => {
                 particle.x = Math.random() * canvas.width;
                 particle.y = Math.random() * canvas.height;
             });
         }
 
-        // Optimisation pour mobile
         if (window.innerWidth < 768) {
             this.optimizeForMobile();
         }
     }
 
     optimizeForMobile() {
-        // Réduire le nombre de particules sur mobile
         const canvas = document.getElementById('particle-canvas');
         if (canvas && this.particles.length > 15) {
             this.particles = this.particles.slice(0, 15);
         }
 
-        // Désactiver certains effets sur mobile
         const floatingIcons = document.querySelectorAll('.floating-icon');
         floatingIcons.forEach(icon => {
             icon.style.display = window.innerWidth < 768 ? 'none' : 'flex';
@@ -556,18 +522,16 @@ class Enhanced404Page {
 
     // ===== MONITORING DES PERFORMANCES =====
     setupPerformanceMonitoring() {
-        // Mesure du temps de chargement
         window.addEventListener('load', () => {
             const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
             console.log(`Page 404 chargée en ${loadTime}ms`);
-            
+
             if (loadTime > 3000) {
                 console.warn('Temps de chargement lent détecté');
                 this.optimizePerformance();
             }
         });
 
-        // Surveillance de la mémoire (si disponible)
         if ('memory' in performance) {
             setInterval(() => {
                 const memInfo = performance.memory;
@@ -580,20 +544,16 @@ class Enhanced404Page {
     }
 
     optimizePerformance() {
-        // Réduire les particules
         this.particles = this.particles.slice(0, Math.floor(this.particles.length / 2));
-        
-        // Réduire la fréquence des animations
+
         CONFIG.glitchInterval *= 1.5;
         CONFIG.factChangeInterval *= 1.2;
     }
 
     cleanupMemory() {
-        // Nettoyer les références inutiles
         const unusedElements = document.querySelectorAll('.particle-debris');
         unusedElements.forEach(el => el.remove());
-        
-        // Forcer le garbage collection (si possible)
+
         if (window.gc) {
             window.gc();
         }
@@ -610,7 +570,6 @@ class Enhanced404Page {
             </div>
         `;
 
-        // Styles pour les notifications
         if (!document.querySelector('#notification-styles')) {
             const styles = document.createElement('style');
             styles.id = 'notification-styles';
@@ -649,12 +608,10 @@ class Enhanced404Page {
 
         document.body.appendChild(notification);
 
-        // Animation d'entrée
         requestAnimationFrame(() => {
             notification.classList.add('show');
         });
 
-        // Suppression automatique
         setTimeout(() => {
             notification.classList.remove('show');
             setTimeout(() => notification.remove(), 300);
@@ -670,16 +627,13 @@ class Enhanced404Page {
 
     // ===== NETTOYAGE =====
     destroy() {
-        // Nettoyage des timeouts et intervals
         if (this.glitchTimeout) clearTimeout(this.glitchTimeout);
         if (this.factInterval) clearInterval(this.factInterval);
         if (this.animationId) cancelAnimationFrame(this.animationId);
 
-        // Suppression du canvas des particules
         const canvas = document.getElementById('particle-canvas');
         if (canvas) canvas.remove();
 
-        // Suppression des event listeners
         document.removeEventListener('mousemove', this.handleMouseMove);
         document.removeEventListener('keydown', this.handleKeyboardShortcuts);
         window.removeEventListener('resize', this.handleResize);
@@ -713,11 +667,9 @@ class Particle {
     }
 
     update(mouseX, mouseY) {
-        // Mouvement de base
         this.x += this.vx;
         this.y += this.vy;
 
-        // Interaction avec la souris
         const dx = mouseX - this.x;
         const dy = mouseY - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -728,20 +680,16 @@ class Particle {
             this.vy -= dy * force * 0.01;
         }
 
-        // Rebond sur les bords
         if (this.x < 0 || this.x > this.canvasWidth) this.vx *= -1;
         if (this.y < 0 || this.y > this.canvasHeight) this.vy *= -1;
 
-        // Maintenir dans les limites
         this.x = Math.max(0, Math.min(this.canvasWidth, this.x));
         this.y = Math.max(0, Math.min(this.canvasHeight, this.y));
 
-        // Limiter la vitesse
         const maxSpeed = 2;
         if (Math.abs(this.vx) > maxSpeed) this.vx = this.vx > 0 ? maxSpeed : -maxSpeed;
         if (Math.abs(this.vy) > maxSpeed) this.vy = this.vy > 0 ? maxSpeed : -maxSpeed;
 
-        // Friction
         this.vx *= 0.99;
         this.vy *= 0.99;
     }
@@ -753,12 +701,11 @@ class Particle {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-        
-        // Effet de lueur
+
         ctx.shadowBlur = 10;
         ctx.shadowColor = this.color + '0.5)';
         ctx.fill();
-        
+
         ctx.restore();
     }
 }
@@ -789,12 +736,11 @@ function createSparkleEffect(x, y) {
         z-index: 9999;
         animation: sparkleAnimation 0.6s ease-out forwards;
     `;
-    
+
     document.body.appendChild(sparkle);
     setTimeout(() => sparkle.remove(), 600);
 }
 
-// Animation CSS pour les étincelles
 if (!document.querySelector('#sparkle-animation')) {
     const sparkleStyles = document.createElement('style');
     sparkleStyles.id = 'sparkle-animation';
@@ -825,51 +771,35 @@ if (!document.querySelector('#sparkle-animation')) {
 
 // ===== INITIALISATION =====
 document.addEventListener('DOMContentLoaded', () => {
-    // Vérification du support des fonctionnalités modernes
-    const supportsModernFeatures = 'IntersectionObserver' in window && 
-                                   'requestAnimationFrame' in window &&
-                                   'addEventListener' in document;
+    const supportsModernFeatures = 'IntersectionObserver' in window &&
+        'requestAnimationFrame' in window &&
+        'addEventListener' in document;
 
     if (!supportsModernFeatures) {
         console.warn('Certaines fonctionnalités modernes ne sont pas supportées');
     }
 
-    // Initialisation de la page 404 améliorée
     const errorPage = new Enhanced404Page();
 
-    // Ajout d'effets supplémentaires
     document.addEventListener('click', (e) => {
         if (Math.random() > 0.7) {
             createSparkleEffect(e.clientX, e.clientY);
         }
     });
 
-    // Gestion des erreurs JavaScript
     window.addEventListener('error', (e) => {
         console.error('Erreur JavaScript sur la page 404:', e.error);
     });
 
-    // Nettoyage lors de la fermeture
     window.addEventListener('beforeunload', () => {
         errorPage.destroy();
     });
 
-    // Message de développeur dans la console
-    console.log(`
-    🎨 Page 404 améliorée chargée !
-    
-    Raccourcis clavier disponibles :
-    • H : Retour à l'accueil
-    • C : Page de contact  
-    • R : Changer le fait aléatoire
-    • G : Déclencher l'effet glitch
-    • Échap : Retour en haut
-    
-    Développé avec ❤️ pour Euromag Fusion
-    `);
+    console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
+    console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
+
 });
 
-// Export pour les tests (si nécessaire)
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { Enhanced404Page, Particle, createSparkleEffect };
 }

@@ -1,5 +1,3 @@
-// ==================== MAIN FEATURES ====================
-
 // Variables globales
 let particleTimers = [];
 
@@ -13,7 +11,6 @@ window.addEventListener('DOMContentLoaded', () => {
     initNewsletterForm();
     initAdvancedEffects();
 
-    // Init modals via a modal manager
     ModalManager.register('videoModal', {
         onOpen: (modal, trigger) => {
             const videoFrame = modal.querySelector('#videoFrame');
@@ -36,18 +33,15 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Init navigation, footer and legal content handlers
     if (window.NavigationFooter) {
         NavigationFooter.initNavigation();
         NavigationFooter.initMobileMenu();
         NavigationFooter.initScrollToTop();
         NavigationFooter.initLegalAndServices();
 
-        // Global scroll handler
         window.addEventListener('scroll', NavigationFooter.debounce(() => requestAnimationFrame(NavigationFooter.handleScroll), 10));
     }
 
-    // Console message
     console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
     console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
 });
@@ -56,8 +50,6 @@ window.addEventListener('DOMContentLoaded', () => {
 function initHeroAnimations() {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        // Choisissez l'animation que vous préférez en décommentant une des lignes ci-dessous :
-
         // Option 1: Animation lettre par lettre avec effet 3D (recommandée)
         animateTitle3DLetters(heroTitle);
 
@@ -72,7 +64,6 @@ function initHeroAnimations() {
     }
 }
 
-// Option 1: Animation 3D lettre par lettre sophistiquée
 function animateTitle3DLetters(heroTitle) {
     const text = heroTitle.textContent;
     heroTitle.innerHTML = '';
@@ -111,14 +102,12 @@ function animateTitle3DLetters(heroTitle) {
             letter.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
         });
 
-        // Effet de brillance après l'animation
         setTimeout(() => {
             heroTitle.classList.add('shimmer-effect');
         }, 1500);
     }, 300);
 }
 
-// Option 2: Animation de révélation par masque
 function animateTitleReveal(heroTitle) {
     const text = heroTitle.textContent;
     heroTitle.innerHTML = `<span class="title-reveal">${text}</span>`;
@@ -138,7 +127,6 @@ function animateTitleReveal(heroTitle) {
     `;
 }
 
-// Option 3: Animation de typing moderne
 function animateModernTyping(heroTitle) {
     const text = heroTitle.textContent;
     heroTitle.textContent = '';
@@ -164,13 +152,11 @@ function animateModernTyping(heroTitle) {
     setTimeout(typeCharacter, 500);
 }
 
-// Option 4: Animation de morphing géométrique
 function animateTitleMorph(heroTitle) {
     const text = heroTitle.textContent;
     heroTitle.innerHTML = '';
     heroTitle.style.opacity = '1';
 
-    // Créer un conteneur pour l'effet de morphing
     const morphContainer = document.createElement('div');
     morphContainer.className = 'morph-container';
     morphContainer.style.cssText = `
@@ -192,14 +178,12 @@ function animateTitleMorph(heroTitle) {
     morphContainer.appendChild(textSpan);
     heroTitle.appendChild(morphContainer);
 
-    // Ajouter l'effet de particules autour du texte
     setTimeout(() => {
         createTitleParticles(morphContainer);
         textSpan.style.animation += ', shimmer 3s ease-in-out infinite 2s';
     }, 2000);
 }
 
-// Fonction pour créer des particules autour du titre
 function createTitleParticles(container) {
     for (let i = 0; i < 20; i++) {
         const particle = document.createElement('div');
@@ -296,30 +280,22 @@ function initEventTabs() {
 
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Retirer la classe active de tous les boutons et contenus
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
 
-            // Activer le bouton cliqué
             button.classList.add('active');
 
-            // Trouver et activer le contenu correspondant
             const targetContent = document.getElementById(button.dataset.tab);
             if (targetContent) {
                 targetContent.classList.add('active');
 
-                // Réinitialiser et animer les cartes d'événements
                 const eventCards = targetContent.querySelectorAll('.event-card');
                 eventCards.forEach((card, index) => {
-                    // Retirer toutes les animations précédentes
                     card.style.animation = 'none';
                     card.style.opacity = '0';
                     card.style.transform = 'translateY(30px)';
-
-                    // Force reflow pour s'assurer que les styles sont appliqués
                     card.offsetHeight;
 
-                    // Appliquer la nouvelle animation avec un délai
                     setTimeout(() => {
                         card.style.animation = `slideUp 0.6s ease ${index * 0.15}s forwards`;
                     }, 50);
@@ -371,38 +347,32 @@ function initContactForm() {
     const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
 
-    // Regex email plus stricte
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // Configuration des timeouts
-    const LOADING_TIMEOUT = 30000; // 30 secondes maximum
-    const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
+    const LOADING_TIMEOUT = 30000;
+    const RESET_TIMEOUT = 3000;
 
     const submitHandler = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(contactForm);
 
-        // Vérification honeypot (anti-bot)
         if (formData.get('_gotcha')) {
             console.warn("Bot détecté, soumission ignorée");
             return;
         }
 
-        // Validation des champs obligatoires avec trim
         const nom = formData.get('nom')?.trim();
-        const prenom = formData.get('prenom')?.trim(); // Ajout du prénom
+        const prenom = formData.get('prenom')?.trim();
         const email = formData.get('email')?.trim();
         const sujet = formData.get('sujet')?.trim();
         const message = formData.get('message')?.trim();
 
-        // Vérifications de base
         if (!nom || !prenom || !email || !sujet || !message) {
             showNotification('Veuillez remplir tous les champs obligatoires.', 'error');
             return;
         }
 
-        // Validation longueur minimale
         if (nom.length < 2 || prenom.length < 2) {
             showNotification('Le nom et prénom doivent contenir au moins 2 caractères.', 'error');
             return;
@@ -413,13 +383,11 @@ function initContactForm() {
             return;
         }
 
-        // Vérification email
         if (!emailRegex.test(email)) {
             showNotification('Veuillez entrer une adresse email valide.', 'error');
             return;
         }
 
-        // État de chargement
         const originalSpanText = submitSpan?.textContent || 'Envoyer';
         const originalIconClass = submitIcon?.className || 'arrow';
 
@@ -430,29 +398,23 @@ function initContactForm() {
             submitBtn.style.opacity = '0.7';
         }
 
-        // Timeout de sécurité
         const timeoutId = setTimeout(() => {
             throw new Error('Délai d\'attente dépassé');
         }, LOADING_TIMEOUT);
 
         try {
-            // Préparation des données pour FormSubmit
             const cleanFormData = new FormData();
 
-            // Champs requis par FormSubmit
             cleanFormData.append('_subject', `Contact Euromag Fusion - ${sujet}`);
             cleanFormData.append('_captcha', 'true');
             cleanFormData.append('_next', window.location.href);
             cleanFormData.append('_template', 'table');
-
-            // Données du formulaire avec formatage
             cleanFormData.append('nom', nom);
             cleanFormData.append('prenom', prenom);
             cleanFormData.append('email', email);
             cleanFormData.append('sujet', sujet);
             cleanFormData.append('message', message);
 
-            // Ajout du téléphone s'il existe
             const telephone = formData.get('telephone')?.trim();
             const countryCode = formData.get('country-code')?.trim();
             if (telephone) {
@@ -462,7 +424,6 @@ function initContactForm() {
             cleanFormData.append('type_formulaire', 'contact_general');
             cleanFormData.append('date_envoi', new Date().toLocaleString('fr-FR'));
 
-            // Envoi via FormSubmit avec retry logic
             const response = await fetchWithRetry('https://formsubmit.co/ajax/euromag.fusion@gmail.com', {
                 method: "POST",
                 body: cleanFormData,
@@ -477,7 +438,6 @@ function initContactForm() {
                 const responseData = await response.json();
 
                 if (responseData.success) {
-                    // État de succès
                     if (submitSpan) submitSpan.textContent = 'Envoyé !';
                     if (submitIcon) submitIcon.className = 'fas fa-check';
                     if (submitBtn) {
@@ -487,10 +447,8 @@ function initContactForm() {
 
                     showNotification('Votre message a été envoyé avec succès ! Nous vous recontacterons bientôt.', 'success');
 
-                    // Réinitialiser le formulaire
                     contactForm.reset();
 
-                    // Analytics optionnel
                     if (typeof gtag !== 'undefined') {
                         gtag('event', 'contact_form_submit', {
                             event_category: 'engagement',
@@ -509,12 +467,10 @@ function initContactForm() {
             clearTimeout(timeoutId);
             console.error('Erreur formulaire contact:', err);
 
-            // État d'erreur
             if (submitSpan) submitSpan.textContent = 'Erreur';
             if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
             if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
 
-            // Message d'erreur plus spécifique
             let errorMessage = 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer.';
             if (err.message.includes('Délai')) {
                 errorMessage = 'Le délai d\'attente a été dépassé. Vérifiez votre connexion et réessayez.';
@@ -524,7 +480,6 @@ function initContactForm() {
 
             showNotification(errorMessage, 'error');
         } finally {
-            // Réinitialisation après délai
             setTimeout(() => {
                 if (submitSpan) submitSpan.textContent = originalSpanText;
                 if (submitIcon) submitIcon.className = originalIconClass;
@@ -537,7 +492,6 @@ function initContactForm() {
         }
     };
 
-    // Fonction de retry pour les requêtes
     async function fetchWithRetry(url, options, maxRetries = 2) {
         let lastError;
 
@@ -548,7 +502,6 @@ function initContactForm() {
             } catch (error) {
                 lastError = error;
                 if (i < maxRetries) {
-                    // Attendre avant de réessayer (exponential backoff)
                     await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
                 }
             }
@@ -557,7 +510,6 @@ function initContactForm() {
         throw lastError;
     }
 
-    // Validation en temps réel améliorée
     function setupRealTimeValidation() {
         const emailInput = contactForm.querySelector('#email');
         const nomInput = contactForm.querySelector('#nom');
@@ -612,13 +564,11 @@ function initContactForm() {
     contactForm.addEventListener('submit', submitHandler);
     const validators = setupRealTimeValidation();
 
-    // Retourner fonction de cleanup améliorée
     return function cleanupContactForm() {
         if (contactForm && submitHandler) {
             contactForm.removeEventListener('submit', submitHandler);
         }
 
-        // Nettoyer les validateurs
         Object.values(validators).forEach(({ element }) => {
             if (element) {
                 element.removeEventListener('blur', element.validationHandler);
@@ -636,25 +586,21 @@ function initNewsletterForm() {
     const submitSpan = submitBtn?.querySelector('span');
     const submitIcon = submitBtn?.querySelector('i');
 
-    // Regex email plus stricte
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // Configuration des timeouts
-    const LOADING_TIMEOUT = 30000; // 30 secondes maximum
-    const RESET_TIMEOUT = 3000; // 3 secondes pour reset visuel
+    const LOADING_TIMEOUT = 30000;
+    const RESET_TIMEOUT = 3000;
 
     const submitHandler = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(newsletterForm);
 
-        // Vérification honeypot (anti-bot)
         if (formData.get('_gotcha')) {
             console.warn("Bot détecté, soumission ignorée");
             return;
         }
 
-        // Validation de l'email avec trim
         const email = formData.get('email')?.trim() || emailInput?.value.trim();
 
         if (!email) {
@@ -663,14 +609,12 @@ function initNewsletterForm() {
             return;
         }
 
-        // Vérification email
         if (!emailRegex.test(email)) {
             showNotification('Veuillez entrer une adresse email valide.', 'error');
             if (emailInput) emailInput.focus();
             return;
         }
 
-        // État de chargement
         const originalSpanText = submitSpan?.textContent || 'S\'inscrire';
         const originalIconClass = submitIcon?.className || 'fas fa-paper-plane';
 
@@ -681,29 +625,23 @@ function initNewsletterForm() {
             submitBtn.style.opacity = '0.7';
         }
 
-        // Timeout de sécurité
         const timeoutId = setTimeout(() => {
             throw new Error('Délai d\'attente dépassé');
         }, LOADING_TIMEOUT);
 
         try {
-            // Préparation des données pour FormSubmit
             const cleanFormData = new FormData();
 
-            // Champs requis par FormSubmit
             cleanFormData.append('_subject', 'Newsletter - Concerts Euromag Fusion');
             cleanFormData.append('_captcha', 'true');
             cleanFormData.append('_next', window.location.href);
             cleanFormData.append('_template', 'table');
-
-            // Données du formulaire avec formatage
             cleanFormData.append('email', email);
             cleanFormData.append('type_formulaire', 'newsletter_concerts');
             cleanFormData.append('type_inscription', 'newsletter_concerts');
             cleanFormData.append('interet', 'Concerts et spectacles');
             cleanFormData.append('date_inscription', new Date().toLocaleString('fr-FR'));
 
-            // Envoi via FormSubmit avec retry logic
             const response = await fetchWithRetry('https://formsubmit.co/ajax/euromag.fusion@gmail.com', {
                 method: "POST",
                 body: cleanFormData,
@@ -718,7 +656,6 @@ function initNewsletterForm() {
                 const responseData = await response.json();
 
                 if (responseData.success) {
-                    // État de succès
                     if (submitSpan) submitSpan.textContent = 'Inscrit !';
                     if (submitIcon) submitIcon.className = 'fas fa-check';
                     if (submitBtn) {
@@ -728,10 +665,8 @@ function initNewsletterForm() {
 
                     showNotification('Inscription réussie ! Vous recevrez toutes les actualités de nos concerts.', 'success');
 
-                    // Réinitialiser le formulaire
                     newsletterForm.reset();
 
-                    // Analytics optionnel
                     if (typeof gtag !== 'undefined') {
                         gtag('event', 'newsletter_signup', {
                             event_category: 'engagement',
@@ -740,7 +675,6 @@ function initNewsletterForm() {
                         });
                     }
 
-                    // Facebook Pixel optionnel
                     if (typeof fbq !== 'undefined') {
                         fbq('track', 'Lead', {
                             content_name: 'Newsletter Concerts',
@@ -758,12 +692,10 @@ function initNewsletterForm() {
             clearTimeout(timeoutId);
             console.error('Erreur formulaire newsletter:', err);
 
-            // État d'erreur
             if (submitSpan) submitSpan.textContent = 'Erreur';
             if (submitIcon) submitIcon.className = 'fas fa-exclamation-triangle';
             if (submitBtn) submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
 
-            // Message d'erreur plus spécifique
             let errorMessage = 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.';
             if (err.message.includes('Délai')) {
                 errorMessage = 'Le délai d\'attente a été dépassé. Vérifiez votre connexion et réessayez.';
@@ -773,7 +705,6 @@ function initNewsletterForm() {
 
             showNotification(errorMessage, 'error');
         } finally {
-            // Réinitialisation après délai
             setTimeout(() => {
                 if (submitSpan) submitSpan.textContent = originalSpanText;
                 if (submitIcon) submitIcon.className = originalIconClass;
@@ -786,7 +717,6 @@ function initNewsletterForm() {
         }
     };
 
-    // Fonction de retry pour les requêtes
     async function fetchWithRetry(url, options, maxRetries = 2) {
         let lastError;
 
@@ -797,7 +727,6 @@ function initNewsletterForm() {
             } catch (error) {
                 lastError = error;
                 if (i < maxRetries) {
-                    // Attendre avant de réessayer (exponential backoff)
                     await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
                 }
             }
@@ -806,7 +735,6 @@ function initNewsletterForm() {
         throw lastError;
     }
 
-    // Validation en temps réel améliorée
     function setupRealTimeValidation() {
         const validators = {
             email: {
@@ -833,7 +761,6 @@ function initNewsletterForm() {
                     }
                 });
 
-                // Validation en temps réel pendant la saisie
                 element.addEventListener('input', function () {
                     const value = this.value.trim();
                     if (value && !validate(value)) {
@@ -853,13 +780,11 @@ function initNewsletterForm() {
     newsletterForm.addEventListener('submit', submitHandler);
     const validators = setupRealTimeValidation();
 
-    // Retourner fonction de cleanup améliorée
     return function cleanupNewsletterForm() {
         if (newsletterForm && submitHandler) {
             newsletterForm.removeEventListener('submit', submitHandler);
         }
 
-        // Nettoyer les validateurs
         Object.values(validators).forEach(({ element }) => {
             if (element) {
                 element.removeEventListener('blur', element.validationHandler);
@@ -907,5 +832,4 @@ function initAdvancedEffects() {
     });
 }
 
-// Exposition du ModalManager pour utilisation globale
 window.ModalManager = ModalManager;

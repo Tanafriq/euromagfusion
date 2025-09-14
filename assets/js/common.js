@@ -1,6 +1,5 @@
 // ==================== NAVIGATION & FOOTER ====================
 
-// Variables globales
 let navbar;
 let scrollTopBtn;
 
@@ -18,7 +17,6 @@ function initNavigation() {
             const targetPosition = targetElement.offsetTop - navHeight;
             window.scrollTo({ top: targetPosition, behavior: 'smooth' });
 
-            // Close mobile menu if open
             const navLinks = document.querySelector('.nav-links');
             const mobileMenu = document.getElementById('mobileMenu');
             navLinks.classList.remove('active');
@@ -101,7 +99,6 @@ function initLegalAndServices() {
     const legalContent = document.getElementById('legalContent');
     if (!legalModal || !legalContent) return;
 
-    // Register the legal modal
     LegalModalManager.register('legalModal');
 
     const legalData = {
@@ -291,7 +288,6 @@ function initLegalAndServices() {
     `
     };
 
-    // Bind legal links
     document.querySelectorAll('.legal-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -304,7 +300,6 @@ function initLegalAndServices() {
         });
     });
 
-    // Services content - Mis à jour pour Euromag Fusion
     const serviceData = {
         concerts: `
             <h2>Organisation de concerts</h2><br>
@@ -386,14 +381,12 @@ function initLegalAndServices() {
             </div>
         `
     };
-
-    // Find the Services footer section and bind links
+    
     const servicesSection = Array.from(document.querySelectorAll('.footer-section')).find(sec => sec.querySelector('h3')?.textContent?.toLowerCase().includes('services'));
     const serviceLinks = servicesSection ? servicesSection.querySelectorAll('a[href="#"]') : [];
 
     const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
     
-    // Mapping mis à jour pour correspondre aux services d'Euromag Fusion
     const textKeyMap = {
         'organisationdeconcerts': 'concerts',
         'spectaclesculturels': 'spectacles',
@@ -417,12 +410,10 @@ function initLegalAndServices() {
 
 // ==================== DEVELOPER SIGNATURE ====================
 function initDeveloperSignature() {
-    // Gestion du clic sur la signature sans message console
     const developerSignature = document.getElementById('developer-signature');
     if (developerSignature) {
         developerSignature.addEventListener('click', function (e) {
             e.preventDefault();
-            // Créer un lien temporaire et le supprimer immédiatement pour éviter le message console
             const link = document.createElement('a');
             link.href = 'mailto:slimanelami@proton.me';
             link.style.display = 'none';
@@ -450,17 +441,14 @@ function debounce(func, wait) {
 
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function () {
-    // Mise à jour automatique de l'année
     const currentYearElement = document.getElementById('current-year');
     if (currentYearElement) {
         currentYearElement.textContent = new Date().getFullYear();
     }
 
-    // Initialiser toutes les fonctionnalités
     initDeveloperSignature();
 });
 
-// Export des fonctions pour utilisation dans le fichier principal
 window.NavigationFooter = {
     initNavigation,
     initMobileMenu,
@@ -471,5 +459,4 @@ window.NavigationFooter = {
     debounce
 };
 
-// Exposition pour utilisation globale
 window.LegalModalManager = LegalModalManager;

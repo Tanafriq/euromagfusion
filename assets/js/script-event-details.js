@@ -168,7 +168,6 @@ class GalleryCarousel {
         this.bindEvents();
         this.updateDisplay();
         
-        // Only start autoplay if more than 1 image
         if (this.images.length > 1) {
             this.startAutoplay();
         }
@@ -177,7 +176,6 @@ class GalleryCarousel {
     }
     
     createElements() {
-        // Get carousel elements
         this.track = this.container.querySelector('#carouselTrack');
         this.dotsContainer = this.container.querySelector('#carouselDots');
         this.thumbnailsContainer = this.container.querySelector('#carouselThumbnails');
@@ -186,13 +184,10 @@ class GalleryCarousel {
         this.progressBar = this.container.querySelector('#progressBar');
         this.currentSlideSpan = this.container.querySelector('#currentSlide');
         this.totalSlidesSpan = this.container.querySelector('#totalSlides');
-        
-        // Clear existing content
         this.track.innerHTML = '';
         this.dotsContainer.innerHTML = '';
         this.thumbnailsContainer.innerHTML = '';
         
-        // Create slides
         this.images.forEach((image, index) => {
             const slide = document.createElement('div');
             slide.className = 'carousel-slide';
@@ -202,7 +197,6 @@ class GalleryCarousel {
             this.track.appendChild(slide);
         });
         
-        // Create dots
         this.images.forEach((_, index) => {
             const dot = document.createElement('button');
             dot.className = 'carousel-dot';
@@ -211,7 +205,6 @@ class GalleryCarousel {
             this.dotsContainer.appendChild(dot);
         });
         
-        // Create thumbnails
         this.images.forEach((image, index) => {
             const thumbnail = document.createElement('div');
             thumbnail.className = 'carousel-thumbnail';
@@ -220,10 +213,7 @@ class GalleryCarousel {
             this.thumbnailsContainer.appendChild(thumbnail);
         });
         
-        // Update total slides counter
         this.totalSlidesSpan.textContent = this.images.length;
-        
-        // Get modal elements
         this.modal = document.getElementById('galleryModal');
         this.modalImage = document.getElementById('modalImage');
         this.modalCurrentSlide = document.getElementById('modalCurrentSlide');
@@ -238,30 +228,24 @@ class GalleryCarousel {
     }
     
     bindEvents() {
-        // Navigation buttons
         this.prevBtn?.addEventListener('click', () => this.previousSlide());
         this.nextBtn?.addEventListener('click', () => this.nextSlide());
         
-        // Touch events for mobile
         this.track.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
         this.track.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
         
-        // Keyboard navigation
         this.container.addEventListener('keydown', (e) => this.handleKeyDown(e));
         
-        // Modal events
         this.track.addEventListener('click', (e) => {
             if (e.target.tagName === 'IMG') {
                 this.openModal();
             }
         });
         
-        // Modal navigation
         this.modalCloseBtn?.addEventListener('click', () => this.closeModal());
         this.modalPrevBtn?.addEventListener('click', () => this.modalPreviousSlide());
         this.modalNextBtn?.addEventListener('click', () => this.modalNextSlide());
         
-        // Close modal events
         this.modal?.addEventListener('click', (e) => {
             if (e.target === this.modal) {
                 this.closeModal();
@@ -274,11 +258,9 @@ class GalleryCarousel {
             }
         });
         
-        // Autoplay control
         this.container.addEventListener('mouseenter', () => this.stopAutoplay());
         this.container.addEventListener('mouseleave', () => this.startAutoplay());
         
-        // Visibility change handling
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.stopAutoplay();
@@ -341,7 +323,6 @@ class GalleryCarousel {
         this.isTransitioning = true;
         this.currentIndex = index;
         
-        // Ensure index is within bounds (infinite loop)
         if (this.currentIndex < 0) {
             this.currentIndex = this.images.length - 1;
         } else if (this.currentIndex >= this.images.length) {
@@ -350,7 +331,6 @@ class GalleryCarousel {
         
         this.updateDisplay();
         
-        // Reset transition flag
         setTimeout(() => {
             this.isTransitioning = false;
         }, 600);
@@ -365,39 +345,32 @@ class GalleryCarousel {
     }
     
     updateDisplay() {
-        // Update track position
         const translateX = -this.currentIndex * 100;
         this.track.style.transform = `translateX(${translateX}%)`;
-        
-        // Update dots
+    
         const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === this.currentIndex);
         });
         
-        // Update thumbnails
         const thumbnails = this.thumbnailsContainer.querySelectorAll('.carousel-thumbnail');
         thumbnails.forEach((thumbnail, index) => {
             thumbnail.classList.toggle('active', index === this.currentIndex);
         });
         
-        // Scroll active thumbnail into view - ONLY if gallery section is visible
         const activeThumbnail = thumbnails[this.currentIndex];
         if (activeThumbnail && this.thumbnailsContainer) {
-            // Check if the gallery section is visible in viewport
             const gallerySection = document.querySelector('.gallery-section');
             if (gallerySection) {
                 const galleryRect = gallerySection.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
                 
-                // Only scroll thumbnail if gallery section is at least partially visible
                 const isGalleryVisible = galleryRect.top < viewportHeight && galleryRect.bottom > 0;
                 
                 if (isGalleryVisible) {
                     const containerRect = this.thumbnailsContainer.getBoundingClientRect();
                     const thumbnailRect = activeThumbnail.getBoundingClientRect();
                     
-                    // Only scroll thumbnail if it's outside the visible area of its container
                     if (thumbnailRect.left < containerRect.left || thumbnailRect.right > containerRect.right) {
                         activeThumbnail.scrollIntoView({
                             behavior: 'smooth',
@@ -409,22 +382,17 @@ class GalleryCarousel {
             }
         }
         
-        // Update progress bar
         const progressWidth = ((this.currentIndex + 1) / this.images.length) * 100;
         this.progressBar.style.width = `${progressWidth}%`;
         
-        // Update counter
         this.currentSlideSpan.textContent = this.currentIndex + 1;
         
-        // Update navigation state
         this.updateNavigationState();
         
-        // Announce to screen readers
         this.announceSlideChange();
     }
     
     updateNavigationState() {
-        // Handle single image case
         if (this.images.length <= 1) {
             if (this.prevBtn) this.prevBtn.style.display = 'none';
             if (this.nextBtn) this.nextBtn.style.display = 'none';
@@ -433,7 +401,6 @@ class GalleryCarousel {
             return;
         }
         
-        // Show navigation for multiple images
         if (this.prevBtn) this.prevBtn.style.display = 'flex';
         if (this.nextBtn) this.nextBtn.style.display = 'flex';
         if (this.dotsContainer) this.dotsContainer.style.display = 'flex';
@@ -485,7 +452,6 @@ class GalleryCarousel {
         });
     }
     
-    // Modal methods
     openModal() {
         this.isModalOpen = true;
         if (this.modal) {
@@ -537,7 +503,6 @@ class GalleryCarousel {
         }
     }
     
-    // Public methods
     destroy() {
         this.stopAutoplay();
         
@@ -563,19 +528,16 @@ const elements = {
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function () {
-    // Add missing CSS variable if needed
     if (!document.documentElement.style.getPropertyValue('--gray-50')) {
         document.documentElement.style.setProperty('--gray-50', '#f9fafb');
     }
 
-    // Initialize navigation and legal functionalities from common.js
     if (window.NavigationFooter) {
         NavigationFooter.initNavigation();
         NavigationFooter.initMobileMenu();
         NavigationFooter.initScrollToTop();
         NavigationFooter.initLegalAndServices();
 
-        // Global scroll handler
         window.addEventListener('scroll', NavigationFooter.debounce(() => {
             requestAnimationFrame(() => {
                 NavigationFooter.handleScroll();
@@ -584,7 +546,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 10));
     }
 
-    // Get event ID from URL and populate content
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('event') || 'chazil';
     const event = eventData[eventId];
@@ -595,10 +556,7 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = 'index.html#evenements';
     }
 
-    // Initialize event listeners
     initEventListeners();
-
-    // Enhanced initialization
     enhanceKeyboardNavigation();
     addAdvancedTouchSupport();
     handleResponsiveImages();
@@ -606,14 +564,12 @@ document.addEventListener('DOMContentLoaded', function () {
     
     document.documentElement.classList.add('js-enabled');
 
-    // Console message
     console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
     console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
 });
 
 // ===== POPULATE EVENT CONTENT =====
 function populateEventContent(event) {
-    // Basic info
     document.getElementById('eventTitle').textContent = event.title;
     document.getElementById('eventDate').textContent = event.date;
     document.getElementById('eventLocation').textContent = event.location;
@@ -621,26 +577,18 @@ function populateEventContent(event) {
     document.getElementById('breadcrumbTitle').textContent = event.title;
     document.getElementById('eventHeroBg').src = event.image;
     document.getElementById('eventHeroBg').alt = event.title;
-
-    // Sidebar info
     document.getElementById('sidebarDate').textContent = event.date;
     document.getElementById('sidebarLocation').textContent = event.location;
     document.getElementById('sidebarTime').textContent = event.time;
     document.getElementById('sidebarPrice').textContent = event.price;
-
-    // Full description
     document.getElementById('eventFullDescription').innerHTML = event.description;
 
-    // Program
     populateProgram(event.program);
 
-    // Video
     populateVideo(event.video);
 
-    // Gallery - now using the new carousel
     populateGallery(event.gallery);
 
-    // Update page meta information
     document.title = `${event.title} - Euromag Fusion`;
 }
 
@@ -676,15 +624,12 @@ function populateVideo(videoId) {
 
 // ===== POPULATE GALLERY WITH NEW CAROUSEL =====
 function populateGallery(gallery) {
-    // Destroy existing carousel if it exists and has the destroy method
     if (window.galleryCarousel && typeof window.galleryCarousel.destroy === 'function') {
         window.galleryCarousel.destroy();
     }
     
-    // Clear any existing carousel reference
     window.galleryCarousel = null;
     
-    // Create new carousel with the gallery images
     if (gallery && gallery.length > 0) {
         window.galleryCarousel = new GalleryCarousel('galleryCarousel', gallery);
     }
@@ -694,7 +639,6 @@ function populateGallery(gallery) {
 function handleScroll() {
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Scroll-to-top button
     if (elements.scrollTop) {
         if (scrollY > 300) {
             elements.scrollTop.classList.add('show');
@@ -713,15 +657,12 @@ function scrollToTop() {
 
 // ===== EVENT LISTENERS =====
 function initEventListeners() {
-    // Scroll events
     window.addEventListener('scroll', throttle(handleScroll, 16), { passive: true });
 
-    // Scroll to top button
     if (elements.scrollTop) {
         elements.scrollTop.addEventListener('click', scrollToTop);
     }
 
-    // Close modals with Escape key (legacy support)
     window.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
             const imageModal = document.querySelector('.image-modal');
@@ -1115,7 +1056,6 @@ function throttle(func, limit) {
     }
 }
 
-// ===== MAKE FUNCTIONS GLOBAL FOR HTML ONCLICK =====
 window.shareOnFacebook = shareOnFacebook;
 window.shareOnTwitter = shareOnTwitter;
 window.shareOnLinkedIn = shareOnLinkedIn;

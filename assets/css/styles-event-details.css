@@ -1113,3 +1113,208 @@
 .video-section {
     display: none !important;
 }
+
+/* ===== RESERVATION CARD ===== */
+.reservation-card {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    color: var(--white);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.6s ease;
+}
+
+.reservation-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.reservation-card h3 {
+    color: var(--white) !important;
+    font-size: 1.4rem;
+    margin-bottom: var(--space-3);
+}
+
+.reservation-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-5);
+    line-height: 1.6;
+}
+
+/* ===== RESERVATION BUTTON ===== */
+.reservation-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: var(--white);
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-xl);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto !important;
+}
+
+.reservation-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+    transition: left 0.6s;
+    z-index: -1;
+}
+
+.reservation-btn:hover::before {
+    left: 100%;
+}
+
+.reservation-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    background: #f0f0ff;
+}
+
+.reservation-btn:active {
+    transform: translateY(-1px);
+}
+
+.btn-text {
+    flex: 1;
+}
+
+.btn-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    margin-left: var(--space-2);
+}
+
+.reservation-btn:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+/* ===== RESERVATION FEATURES ===== */
+.reservation-features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.9rem;
+}
+
+.feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Effet de badge "Nouveau" optionnel */
+.reservation-card::after {
+    content: 'Disponible';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(16, 185, 129, 0.9);
+    color: var(--white);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: bounceIn 0.8s ease 0.5s both;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .reservation-card {
+        margin-top: var(--space-6);
+    }
+    
+    .reservation-btn {
+        font-size: 1rem;
+        padding: var(--space-3) var(--space-4);
+    }
+}
+
+@media (max-width: 480px) {
+    .reservation-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .reservation-description {
+        font-size: 0.9rem;
+    }
+}

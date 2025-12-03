@@ -66,6 +66,19 @@
     --radius-xl: 1.5rem;
     --radius-2xl: 2rem;
     --radius-full: 9999px;
+
+    /* Couleurs principales SAPIMMO - Vert foncé et Or */
+    --sapimmo-green: #1a3a32;
+    --sapimmo-green-dark: #0f2620;
+    --sapimmo-green-light: #2a5a4a;
+    --sapimmo-gold: #c9a74e;
+    --sapimmo-gold-light: #dfc77a;
+    --sapimmo-gold-dark: #a88a3a;
+    
+    /* Gradients */
+    --sapimmo-gradient-primary: linear-gradient(135deg, var(--sapimmo-green) 0%, var(--sapimmo-green-dark) 50%, #0a1a14 100%);
+    --sapimmo-gradient-gold: linear-gradient(135deg, var(--sapimmo-gold) 0%, var(--sapimmo-gold-light) 50%, var(--sapimmo-gold-dark) 100%);
+    --sapimmo-gradient-premium: linear-gradient(135deg, var(--sapimmo-green) 0%, var(--sapimmo-gold) 100%);
 }
 
 html {
@@ -236,6 +249,23 @@ h6 {
     border: 1px solid rgba(255, 255, 255, 0.2);
     white-space: nowrap;
     flex-shrink: 0;
+}
+
+.sapimmo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.premium-tag {
+    background: var(--sapimmo-gradient-gold);
+    color: var(--sapimmo-green-dark);
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 @keyframes pulse-glow {

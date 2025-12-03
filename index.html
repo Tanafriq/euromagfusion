@@ -68,8 +68,10 @@
                 <li><a href="#accueil">Accueil</a></li>
                 <li><a href="#apropos">À Propos</a></li>
                 <li><a href="#evenements">Concerts</a></li>
-                <li><a href="algerie-expo.html" class="expo-link"><span>Algérie Expo</span><span
-                            class="coming-soon-tag">Bientôt</span></a></li>
+                <li><a href="algerie-expo.html" class="sapimmo-link active">
+                    <span>SAPIMMO</span>
+                    <span class="premium-tag">Premium</span>
+                </a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="mobile-menu" id="mobileMenu">
@@ -164,10 +166,100 @@
                 <h2 class="section-title"><span class="title-accent">Nos</span> <span class="title-main">concerts</span>
                 </h2>
                 <div class="events-tabs">
-                    <button class="tab-btn active" data-tab="passes">Concerts Passés</button>
-                    <button class="tab-btn" data-tab="avenir">Prochainement</button>
+                    <button class="tab-btn active" data-tab="avenir">Prochainement</button>
+                    <button class="tab-btn" data-tab="passes">Concerts Passés</button>
                 </div>
-                <div class="tab-content active" id="passes">
+                <div class="tab-content active" id="avenir">
+                    <div class="events-grid">
+                        <article class="event-card" itemscope itemtype="https://schema.org/Event">
+                            <div class="event-image">
+                                <img src="./assets/img/event-tarhanine-cameleon.webp"
+                                    alt="Concert Kader Tarhanine & Cameleon à Paris, rock, reggae, gnaoua" width="400"
+                                    height="280" loading="lazy" itemprop="image">
+                                <div class="event-overlay">
+                                    <button class="play-btn" data-video="https://youtube.com/shorts/QUUCUWYxgXE"
+                                        data-modal="videoModal">▶</button>
+                                </div>
+                            </div>
+                            <div class="event-content">
+                                <div class="event-meta">
+                                    <span class="event-date" itemprop="startDate" content="2026-01-16">16 Janvier
+                                        2026</span>
+                                    <span class="event-location" itemprop="location" itemscope
+                                        itemtype="https://schema.org/Place">
+                                        <span itemprop="name">Cabaret Sauvage, Paris</span>
+                                    </span>
+                                </div>
+                                <h3 class="event-title" itemprop="name">CAMELEON & KADER TARHANINE</h3>
+                                <p class="event-description" itemprop="description">
+    Du désert à la ville : <strong>Kader Tarhanine</strong> et <strong>Cameleon</strong> 
+    célèbrent l'Algérie dans un voyage musical puissant et hypnotique.
+</p>
+                                <div class="event-actions">
+                                    <a href="event-details.html?event=tarhaninecameleon" class="read-more-btn"
+                                        title="Lire plus sur Kader Tarhanine & Cameleon">Lire plus</a>
+                                    <a href="https://www.helloasso.com/associations/euromag-fusion/evenements/cameleon-kader-tarhanine-1"
+                                        class="reserve-btn" target="_blank" rel="noopener noreferrer"
+                                        title="Réserver vos billets pour le concert">
+                                        <span>Réserver</span>
+                                        <span class="arrow-icon">→</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <div class="upcoming-content">
+                            <div class="upcoming-message">
+                                <div class="upcoming-icon"><i class="fas fa-calendar-plus"></i></div>
+                                <h3>De nouveaux concerts arrivent bientôt !</h3>
+                                <p>Nous préparons actuellement de magnifiques concerts culturels qui célèbreront la
+                                    richesse de la culture algérienne. Restez connectés pour découvrir nos prochaines
+                                    programmations.</p>
+                                <div class="newsletter--signup">
+                                    <h4>Ne manquez rien de nos concerts</h4>
+                                    <form class="newsletter--form" id="newsletterForm">
+                                        <div class="newsletter--input--group">
+                                            <input type="text" name="_gotcha" style="display:none">
+                                            <input type="email" placeholder="Votre adresse email" required>
+                                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="follow-us">
+                                    <h4>Suivez-nous</h4>
+                                    <div class="social-links">
+                                        <a href="https://www.facebook.com/euromagevent"
+                                            class="social-link event-facebook" aria-label="Facebook Euromag Fusion"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                        <a href="https://www.instagram.com/euromagfusion/"
+                                            class="social-link event-instagram" aria-label="Instagram Euromag Fusion"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                        <a href="https://www.tiktok.com/@euromagfusion" class="social-link event-tiktok"
+                                            aria-label="TikTok Euromag Fusion" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <i class="fab fa-tiktok"></i>
+                                        </a>
+                                        <a href="https://www.youtube.com/@EUROMAGFUSION"
+                                            class="social-link event-youtube" aria-label="Youtube Euromag Fusion"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <i class="fab fa-youtube"></i>
+                                        </a>
+                                        <a href="#" class="social-link event-linkedin"
+                                            aria-label="LinkedIn Euromag Fusion" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="passes">
                     <div class="events-grid">
                         <article class="event-card" itemscope itemtype="https://schema.org/Event">
                             <div class="event-image">
@@ -259,52 +351,6 @@
                                     title="Lire plus sur Kader Tarhanine & Freeklane">Lire plus</a>
                             </div>
                         </article>
-                    </div>
-                </div>
-                <div class="tab-content" id="avenir">
-                    <div class="upcoming-content">
-                        <div class="upcoming-message">
-                            <div class="upcoming-icon"><i class="fas fa-calendar-plus"></i></div>
-                            <h3>De nouveaux concerts arrivent bientôt !</h3>
-                            <p>Nous préparons actuellement de magnifiques concerts culturels qui célèbreront la
-                                richesse de la culture algérienne. Restez connectés pour découvrir nos prochaines
-                                programmations.</p>
-                            <div class="newsletter--signup">
-                                <h4>Ne manquez rien de nos concerts</h4>
-                                <form class="newsletter--form" id="newsletterForm">
-                                    <div class="newsletter--input--group">
-                                        <input type="text" name="_gotcha" style="display:none">
-                                        <input type="email" placeholder="Votre adresse email" required>
-                                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="follow-us">
-                                <h4>Suivez-nous</h4>
-                                <div class="social-links">
-                        <a href="https://www.facebook.com/euromagevent" class="social-link event-facebook"
-                            aria-label="Facebook Euromag Fusion" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.instagram.com/euromagfusion/" class="social-link event-instagram"
-                            aria-label="Instagram Euromag Fusion" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://www.tiktok.com/@euromagfusion" class="social-link event-tiktok" aria-label="TikTok Euromag Fusion" target="_blank"
-                            rel="noopener noreferrer">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@EUROMAGFUSION" class="social-link event-youtube"
-                            aria-label="Youtube Euromag Fusion" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="#" class="social-link event-linkedin" aria-label="LinkedIn Euromag Fusion" target="_blank"
-                            rel="noopener noreferrer">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -611,8 +657,8 @@
                             aria-label="Instagram Euromag Fusion" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://www.tiktok.com/@euromagfusion" class="social-link tiktok" aria-label="TikTok Euromag Fusion" target="_blank"
-                            rel="noopener noreferrer">
+                        <a href="https://www.tiktok.com/@euromagfusion" class="social-link tiktok"
+                            aria-label="TikTok Euromag Fusion" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-tiktok"></i>
                         </a>
                         <a href="https://www.youtube.com/@EUROMAGFUSION" class="social-link youtube"

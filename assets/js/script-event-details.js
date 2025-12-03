@@ -9,6 +9,7 @@ const eventData = {
         price: '25€ / 29€',
         image: './assets/img/banner-chazil.webp',
         video: '8hH7f3WKHyY',
+        reservation: '',
         description: `
             <br />       
             <h3>1ère partie : Rabie Houti</h3>
@@ -58,6 +59,7 @@ const eventData = {
         price: '35€ / 38€',
         image: './assets/img/banner-babylone-djam-timoh.webp',
         video: 'ng6WRvuHRxM',
+        reservation: '',
         description: `
             <br />
             <h3>Djam x TiMoh - Premier concert </h3><br />
@@ -98,8 +100,9 @@ const eventData = {
         type: 'Concert',
         time: '16h00 - 20h00',
         price: '25€ / 33€',
-        image: './assets/img/banner-tarhaninel-freeklane.webp',
+        image: './assets/img/banner-tarhanine-freeklane.webp',
         video: 'c7UwD-7BBt0',
+        reservation: '',
         description: `
             <br />
             <h3>Kader Tarhanine - Premier concert </h3><br />
@@ -137,6 +140,50 @@ const eventData = {
             './assets/img/event-1-14.webp',
             './assets/img/event-1-15.webp'
         ]
+    },
+    tarhaninecameleon: {
+        title: 'CAMELEON & KADER TARHANINE',
+        date: '16 Janvier 2026',
+        location: 'Cabaret Sauvage, Paris',
+        type: 'Concert',
+        time: '18h30 - 22h30',
+        price: '29€ / 35€',
+        image: './assets/img/banner-tarhanine-cameleon.webp',
+        video: 'c7UwD-7BBt0',
+        reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/cameleon-kader-tarhanine-1',
+        description: `
+            <br />
+            <h3>Kader Tarhanine - Premier concert </h3><br />
+            <p>Artiste emblématique de la musique touarègue contemporaine, <strong>Kader Tarhanine</strong> s’est imposé comme l’une des voix les plus marquantes du Sahara. Sa musique, à la croisée des rythmes traditionnels touaregs et des sonorités rock modernes, transporte le public dans un voyage envoûtant entre désert et émotions universelles. Chantant en <strong>tamacheq</strong> (Berbère) et en <strong>arabe</strong>, Kader séduit par la profondeur poétique de ses textes, sa voix chaleureuse et sa virtuosité à la guitare. Véritable <strong>ambassadeur de la culture touarègue</strong>, il incarne une jeunesse saharienne ouverte sur le monde, tout en restant fidèle à ses racines.</p><br />
+            <p>Habitué des grandes scènes internationales et festivales, <strong>Kader Tarhanine</strong> a déjà conquis les publics du <strong>Mali</strong>, du <strong>Maroc</strong>, de la <strong>Tunisie</strong>, du <strong>Japon</strong>, de l’<strong>Inde</strong>, de l’<strong>Espagne</strong>, du <strong>Danemark</strong>, de la <strong>Lituanie</strong>, de la <strong>Pologne</strong>, de la <strong>Suisse</strong>, de la <strong>France</strong>, de l’<strong>Allemagne</strong> et bien d’autres encore.</p><br />
+            <p>Après avoir envoûté le public du Cabaret Sauvage lors de son concert mémorable du <strong>15 septembre 2024, Kader Tarhanine</strong> revient sur cette scène mythique le <strong>16 janvier 2026</strong>, pour un nouveau voyage musical attendu avec impatience par ses fans.<p/><br /><br />
+            
+            <h3>Cameleon - Deuxième concert</h3><br />
+            <p>Fondé à Alger par <strong>Hcen et Hocine Agrane</strong>, deux frères animés par la même passion, Cameleon est né du désir de créer une musique sincère, libre et ouverte sur le monde.</p><br />
+            <p>Entre <strong>rock, chaâbi, raï, reggae</strong> et <strong>sonorités modernes</strong>, Cameleon trace sa propre route, sans étiquette ni frontière. Chaque chanson raconte une histoire, une émotion, un regard sur la vie d’ici et d’ailleurs.</p><br />
+            <p>Avec une énergie contagieuse et des textes qui touchent droit au cœur, <strong>Cameleon</strong> fait vibrer le public à travers une musique qui change de couleur, mais garde toujours la même âme : celle de l’<strong>Algérie</strong>, belle, jeune et pleine d’espoir.</p><br />
+            <p>Le groupe sera au <strong>Cabaret Sauvage le 16 janvier 2026</strong>, pour <strong>rencontrer son public parisien</strong> et partager sur scène toute la force et la chaleur de sa musique.</p><br />
+        `,
+        program: [
+            { time: '18h30', title: 'Ouverture des portes', description: 'Accueil du public et installation pour une soirée pleine de musique et de surprises.' },
+            { time: '19h30', title: 'Concert 1 : Kader Tarhanine', description: 'Kader nous fera voyager dans le désert algérien avec ses rythmes sahariens et sa voix envoûtante.' },
+            { time: '', title: 'Des invités surprises', description: 'Pour un moment unique et chaleureux.' },
+            { time: '21h00', title: 'Concert 2 : Cameleon', description: 'Cameleon nous transportera avec ses mélodies captivantes et son univers musical riche en émotions.' },
+            { time: '', title: 'Accompagné d’invités surprises', description: '' },
+            { time: '22h30', title: 'Clôture de la soirée', description: 'Une fin en beauté pour une soirée mémorable, remplie de musique, de joie et de souvenir.' }
+        ],
+        gallery: [
+            './assets/img/event-4-1.webp',
+            './assets/img/event-4-7.webp',
+            './assets/img/event-1-6.webp',
+            './assets/img/event-4-6.webp',
+            './assets/img/event-4-3.webp',
+            './assets/img/event-1-10.webp',
+            './assets/img/event-4-5.webp',
+            './assets/img/event-1-12.webp',
+            './assets/img/event-4-2.webp',
+            './assets/img/event-4-4.webp'
+        ]
     }
 };
 
@@ -152,29 +199,29 @@ class GalleryCarousel {
         this.touchStartX = 0;
         this.touchEndX = 0;
         this.isModalOpen = false;
-        
+
         if (this.images.length > 0) {
             this.init();
         }
     }
-    
+
     init() {
         if (!this.container) {
             console.error('Carousel container not found');
             return;
         }
-        
+
         this.createElements();
         this.bindEvents();
         this.updateDisplay();
-        
+
         if (this.images.length > 1) {
             this.startAutoplay();
         }
-        
+
         this.preloadImages();
     }
-    
+
     createElements() {
         this.track = this.container.querySelector('#carouselTrack');
         this.dotsContainer = this.container.querySelector('#carouselDots');
@@ -187,7 +234,7 @@ class GalleryCarousel {
         this.track.innerHTML = '';
         this.dotsContainer.innerHTML = '';
         this.thumbnailsContainer.innerHTML = '';
-        
+
         this.images.forEach((image, index) => {
             const slide = document.createElement('div');
             slide.className = 'carousel-slide';
@@ -196,7 +243,7 @@ class GalleryCarousel {
             `;
             this.track.appendChild(slide);
         });
-        
+
         this.images.forEach((_, index) => {
             const dot = document.createElement('button');
             dot.className = 'carousel-dot';
@@ -204,7 +251,7 @@ class GalleryCarousel {
             dot.addEventListener('click', () => this.goToSlide(index));
             this.dotsContainer.appendChild(dot);
         });
-        
+
         this.images.forEach((image, index) => {
             const thumbnail = document.createElement('div');
             thumbnail.className = 'carousel-thumbnail';
@@ -212,7 +259,7 @@ class GalleryCarousel {
             thumbnail.addEventListener('click', () => this.goToSlide(index));
             this.thumbnailsContainer.appendChild(thumbnail);
         });
-        
+
         this.totalSlidesSpan.textContent = this.images.length;
         this.modal = document.getElementById('galleryModal');
         this.modalImage = document.getElementById('modalImage');
@@ -221,46 +268,46 @@ class GalleryCarousel {
         this.modalCloseBtn = document.getElementById('modalCloseBtn');
         this.modalPrevBtn = document.getElementById('modalPrevBtn');
         this.modalNextBtn = document.getElementById('modalNextBtn');
-        
+
         if (this.modalTotalSlides) {
             this.modalTotalSlides.textContent = this.images.length;
         }
     }
-    
+
     bindEvents() {
         this.prevBtn?.addEventListener('click', () => this.previousSlide());
         this.nextBtn?.addEventListener('click', () => this.nextSlide());
-        
+
         this.track.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
         this.track.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
-        
+
         this.container.addEventListener('keydown', (e) => this.handleKeyDown(e));
-        
+
         this.track.addEventListener('click', (e) => {
             if (e.target.tagName === 'IMG') {
                 this.openModal();
             }
         });
-        
+
         this.modalCloseBtn?.addEventListener('click', () => this.closeModal());
         this.modalPrevBtn?.addEventListener('click', () => this.modalPreviousSlide());
         this.modalNextBtn?.addEventListener('click', () => this.modalNextSlide());
-        
+
         this.modal?.addEventListener('click', (e) => {
             if (e.target === this.modal) {
                 this.closeModal();
             }
         });
-        
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.isModalOpen) {
                 this.closeModal();
             }
         });
-        
+
         this.container.addEventListener('mouseenter', () => this.stopAutoplay());
         this.container.addEventListener('mouseleave', () => this.startAutoplay());
-        
+
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.stopAutoplay();
@@ -269,12 +316,12 @@ class GalleryCarousel {
             }
         });
     }
-    
+
     handleTouchStart(e) {
         this.touchStartX = e.touches[0].clientX;
         this.stopAutoplay();
     }
-    
+
     handleTouchEnd(e) {
         this.touchEndX = e.changedTouches[0].clientX;
         this.handleSwipe();
@@ -282,11 +329,11 @@ class GalleryCarousel {
             this.startAutoplay();
         }
     }
-    
+
     handleSwipe() {
         const swipeThreshold = 50;
         const diff = this.touchStartX - this.touchEndX;
-        
+
         if (Math.abs(diff) > swipeThreshold) {
             if (diff > 0) {
                 this.nextSlide();
@@ -295,7 +342,7 @@ class GalleryCarousel {
             }
         }
     }
-    
+
     handleKeyDown(e) {
         switch (e.key) {
             case 'ArrowLeft':
@@ -316,61 +363,61 @@ class GalleryCarousel {
                 break;
         }
     }
-    
+
     goToSlide(index) {
         if (this.isTransitioning || index === this.currentIndex || this.images.length <= 1) return;
-        
+
         this.isTransitioning = true;
         this.currentIndex = index;
-        
+
         if (this.currentIndex < 0) {
             this.currentIndex = this.images.length - 1;
         } else if (this.currentIndex >= this.images.length) {
             this.currentIndex = 0;
         }
-        
+
         this.updateDisplay();
-        
+
         setTimeout(() => {
             this.isTransitioning = false;
         }, 600);
     }
-    
+
     nextSlide() {
         this.goToSlide(this.currentIndex + 1);
     }
-    
+
     previousSlide() {
         this.goToSlide(this.currentIndex - 1);
     }
-    
+
     updateDisplay() {
         const translateX = -this.currentIndex * 100;
         this.track.style.transform = `translateX(${translateX}%)`;
-    
+
         const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === this.currentIndex);
         });
-        
+
         const thumbnails = this.thumbnailsContainer.querySelectorAll('.carousel-thumbnail');
         thumbnails.forEach((thumbnail, index) => {
             thumbnail.classList.toggle('active', index === this.currentIndex);
         });
-        
+
         const activeThumbnail = thumbnails[this.currentIndex];
         if (activeThumbnail && this.thumbnailsContainer) {
             const gallerySection = document.querySelector('.gallery-section');
             if (gallerySection) {
                 const galleryRect = gallerySection.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
-                
+
                 const isGalleryVisible = galleryRect.top < viewportHeight && galleryRect.bottom > 0;
-                
+
                 if (isGalleryVisible) {
                     const containerRect = this.thumbnailsContainer.getBoundingClientRect();
                     const thumbnailRect = activeThumbnail.getBoundingClientRect();
-                    
+
                     if (thumbnailRect.left < containerRect.left || thumbnailRect.right > containerRect.right) {
                         activeThumbnail.scrollIntoView({
                             behavior: 'smooth',
@@ -381,17 +428,17 @@ class GalleryCarousel {
                 }
             }
         }
-        
+
         const progressWidth = ((this.currentIndex + 1) / this.images.length) * 100;
         this.progressBar.style.width = `${progressWidth}%`;
-        
+
         this.currentSlideSpan.textContent = this.currentIndex + 1;
-        
+
         this.updateNavigationState();
-        
+
         this.announceSlideChange();
     }
-    
+
     updateNavigationState() {
         if (this.images.length <= 1) {
             if (this.prevBtn) this.prevBtn.style.display = 'none';
@@ -400,12 +447,12 @@ class GalleryCarousel {
             this.stopAutoplay();
             return;
         }
-        
+
         if (this.prevBtn) this.prevBtn.style.display = 'flex';
         if (this.nextBtn) this.nextBtn.style.display = 'flex';
         if (this.dotsContainer) this.dotsContainer.style.display = 'flex';
     }
-    
+
     announceSlideChange() {
         let announcement = document.getElementById('carousel-announcement');
         if (!announcement) {
@@ -422,27 +469,27 @@ class GalleryCarousel {
             `;
             document.body.appendChild(announcement);
         }
-        
+
         announcement.textContent = `Image ${this.currentIndex + 1} sur ${this.images.length}`;
     }
-    
+
     startAutoplay() {
         if (this.autoplayInterval || this.images.length <= 1) return;
-        
+
         this.autoplayInterval = setInterval(() => {
             if (!this.isModalOpen && !this.isTransitioning) {
                 this.nextSlide();
             }
         }, this.autoplayDelay);
     }
-    
+
     stopAutoplay() {
         if (this.autoplayInterval) {
             clearInterval(this.autoplayInterval);
             this.autoplayInterval = null;
         }
     }
-    
+
     preloadImages() {
         this.images.forEach((src, index) => {
             if (index <= 2) {
@@ -451,7 +498,7 @@ class GalleryCarousel {
             }
         });
     }
-    
+
     openModal() {
         this.isModalOpen = true;
         if (this.modal) {
@@ -459,63 +506,63 @@ class GalleryCarousel {
             this.updateModalDisplay();
         }
         this.stopAutoplay();
-        
+
         document.body.style.overflow = 'hidden';
-        
+
         if (this.modal) {
             this.modal.focus();
         }
     }
-    
+
     closeModal() {
         this.isModalOpen = false;
         if (this.modal) {
             this.modal.classList.remove('active');
         }
-        
+
         document.body.style.overflow = '';
-        
+
         if (this.images.length > 1) {
             this.startAutoplay();
         }
-        
+
         this.container.focus();
     }
-    
+
     modalNextSlide() {
         this.goToSlide(this.currentIndex + 1);
         this.updateModalDisplay();
     }
-    
+
     modalPreviousSlide() {
         this.goToSlide(this.currentIndex - 1);
         this.updateModalDisplay();
     }
-    
+
     updateModalDisplay() {
         if (this.modalImage && this.images[this.currentIndex]) {
             this.modalImage.src = this.images[this.currentIndex];
             this.modalImage.alt = `Photo ${this.currentIndex + 1}`;
         }
-        
+
         if (this.modalCurrentSlide) {
             this.modalCurrentSlide.textContent = this.currentIndex + 1;
         }
     }
-    
+
     destroy() {
         this.stopAutoplay();
-        
+
         const announcement = document.getElementById('carousel-announcement');
         if (announcement) {
             announcement.remove();
         }
     }
-    
+
     getCurrentIndex() {
         return this.currentIndex;
     }
-    
+
     getTotalSlides() {
         return this.images.length;
     }
@@ -561,7 +608,7 @@ document.addEventListener('DOMContentLoaded', function () {
     addAdvancedTouchSupport();
     handleResponsiveImages();
     setupLazyLoading();
-    
+
     document.documentElement.classList.add('js-enabled');
 
     console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
@@ -583,10 +630,31 @@ function populateEventContent(event) {
     document.getElementById('sidebarPrice').textContent = event.price;
     document.getElementById('eventFullDescription').innerHTML = event.description;
 
+    // GESTION BOUTON RÉSERVATION
+    const reservationCard = document.getElementById('reservationCard');
+    const reservationButton = document.getElementById('reservationButton');
+    
+    if (reservationCard && reservationButton) {
+        if (event.reservation && event.reservation.trim() !== '') {
+            reservationCard.style.display = 'block';
+            reservationButton.href = event.reservation;
+            
+            // FORCER L'OUVERTURE DU LIEN AU CLIC
+            reservationButton.onclick = function(e) {
+                e.stopPropagation();
+                window.open(event.reservation, '_blank', 'noopener,noreferrer');
+                return false;
+            };
+            
+            console.log('✅ Réservation activée:', event.reservation);
+        } else {
+            reservationCard.style.display = 'none';
+            console.log('❌ Pas de réservation');
+        }
+    }
+
     populateProgram(event.program);
-
     populateVideo(event.video);
-
     populateGallery(event.gallery);
 
     document.title = `${event.title} - Euromag Fusion`;
@@ -627,9 +695,9 @@ function populateGallery(gallery) {
     if (window.galleryCarousel && typeof window.galleryCarousel.destroy === 'function') {
         window.galleryCarousel.destroy();
     }
-    
+
     window.galleryCarousel = null;
-    
+
     if (gallery && gallery.length > 0) {
         window.galleryCarousel = new GalleryCarousel('galleryCarousel', gallery);
     }
@@ -871,10 +939,10 @@ function closeImageModal(modal) {
 function loadImageWithRetry(src, maxRetries = 3) {
     return new Promise((resolve, reject) => {
         let retries = 0;
-        
+
         function attemptLoad() {
             const img = new Image();
-            
+
             img.onload = () => resolve(img);
             img.onerror = () => {
                 retries++;
@@ -884,10 +952,10 @@ function loadImageWithRetry(src, maxRetries = 3) {
                     reject(new Error(`Failed to load image after ${maxRetries} retries`));
                 }
             };
-            
+
             img.src = src;
         }
-        
+
         attemptLoad();
     });
 }
@@ -899,7 +967,7 @@ function setupLazyLoading() {
                 if (entry.isIntersecting) {
                     const img = entry.target;
                     const src = img.dataset.src;
-                    
+
                     if (src) {
                         loadImageWithRetry(src)
                             .then(() => {
@@ -912,7 +980,7 @@ function setupLazyLoading() {
                                 console.error('Failed to load image:', src);
                             });
                     }
-                    
+
                     observer.unobserve(img);
                 }
             });
@@ -920,7 +988,7 @@ function setupLazyLoading() {
             rootMargin: '50px 0px',
             threshold: 0.01
         });
-        
+
         document.querySelectorAll('img[data-src]').forEach(img => {
             imageObserver.observe(img);
         });
@@ -933,7 +1001,7 @@ function enhanceKeyboardNavigation() {
         carousel.setAttribute('tabindex', '0');
         carousel.setAttribute('role', 'region');
         carousel.setAttribute('aria-label', 'Galerie photos avec navigation au clavier');
-        
+
         const instructions = document.createElement('div');
         instructions.className = 'sr-only';
         instructions.textContent = 'Utilisez les flèches gauche et droite pour naviguer, Entrée pour ouvrir en plein écran';
@@ -946,40 +1014,40 @@ function addAdvancedTouchSupport() {
     let startX = 0;
     let currentX = 0;
     let diff = 0;
-    
+
     const carousel = document.getElementById('galleryCarousel');
     if (!carousel) return;
-    
+
     const track = carousel.querySelector('.carousel-track');
     if (!track) return;
-    
+
     track.addEventListener('pointerdown', (e) => {
         isPointerDown = true;
         startX = e.clientX;
         track.style.cursor = 'grabbing';
         e.preventDefault();
     });
-    
+
     track.addEventListener('pointermove', (e) => {
         if (!isPointerDown) return;
-        
+
         currentX = e.clientX;
         diff = currentX - startX;
-        
+
         if (window.galleryCarousel) {
             track.style.transform = `translateX(calc(-${window.galleryCarousel.currentIndex * 100}% + ${diff * 0.3}px))`;
         }
     });
-    
+
     track.addEventListener('pointerup', () => {
         if (!isPointerDown) return;
-        
+
         isPointerDown = false;
         track.style.cursor = 'grab';
-        
+
         if (window.galleryCarousel) {
             track.style.transform = `translateX(-${window.galleryCarousel.currentIndex * 100}%)`;
-            
+
             const threshold = 50;
             if (Math.abs(diff) > threshold) {
                 if (diff > 0) {
@@ -989,10 +1057,10 @@ function addAdvancedTouchSupport() {
                 }
             }
         }
-        
+
         diff = 0;
     });
-    
+
     track.addEventListener('pointerleave', () => {
         if (isPointerDown) {
             isPointerDown = false;
@@ -1007,17 +1075,17 @@ function addAdvancedTouchSupport() {
 function handleResponsiveImages() {
     const carousel = document.getElementById('galleryCarousel');
     if (!carousel) return;
-    
+
     function updateImageSources() {
         const images = carousel.querySelectorAll('img');
         const isLargeScreen = window.innerWidth > 1024;
         const isMediumScreen = window.innerWidth > 768;
-        
+
         images.forEach(img => {
             const baseSrc = img.src || img.dataset.src;
             if (baseSrc) {
                 let newSrc = baseSrc;
-                
+
                 if (isLargeScreen) {
                     newSrc = baseSrc.replace(/w=\d+/, 'w=1200').replace(/h=\d+/, 'h=800');
                 } else if (isMediumScreen) {
@@ -1025,20 +1093,20 @@ function handleResponsiveImages() {
                 } else {
                     newSrc = baseSrc.replace(/w=\d+/, 'w=600').replace(/h=\d+/, 'h=400');
                 }
-                
+
                 if (img.src !== newSrc) {
                     img.src = newSrc;
                 }
             }
         });
     }
-    
+
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(updateImageSources, 250);
     });
-    
+
     updateImageSources();
 }
 

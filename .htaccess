@@ -1,12 +1,22 @@
-# Gestion des erreurs 404
+# ------------------------------
+# Gestion des erreurs
+# ------------------------------
 ErrorDocument 404 /404.html
 
+# ------------------------------
 # Forcer le HTTPS
+# ------------------------------
 RewriteEngine On
+
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# ------------------------------
 # Cacher l'extension .html
+# ------------------------------
+# Si la ressource n'est pas un dossier
 RewriteCond %{REQUEST_FILENAME} !-d
+# Si un fichier .html correspondant existe
 RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^([^\.]+)$ $1.html [NC,L]
+# Réécrit l'URL sans l'extension vers le fichier .html réel
+RewriteRule ^(.+)$ $1.html [L,QSA]

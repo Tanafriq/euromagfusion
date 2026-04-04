@@ -140,8 +140,7 @@ const eventData = {
             './assets/img/event-1-14.webp',
             './assets/img/event-1-15.webp'
         ]
-    },
-    tarhaninecameleon: {
+    }, tarhaninecameleon: {
         title: 'CAMELEON & KADER TARHANINE',
         date: '16 Janvier 2026',
         location: 'Cabaret Sauvage, Paris',
@@ -150,7 +149,7 @@ const eventData = {
         price: '29€ / 35€',
         image: './assets/img/banner-tarhanine-cameleon.webp',
         video: 'c7UwD-7BBt0',
-        reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/cameleon-kader-tarhanine-1',
+        reservation: '',
         description: `
             <br />
             <h3>Kader Tarhanine - Premier concert </h3><br />
@@ -183,6 +182,82 @@ const eventData = {
             './assets/img/event-1-12.webp',
             './assets/img/event-4-2.webp',
             './assets/img/event-4-4.webp'
+        ]
+    },
+    'kamel-aziz-tarik-ayad': {
+        title: 'KAMEL AZIZ & TARIK AYAD',
+        date: '10 Avril 2026',
+        location: 'Cabaret Sauvage, Paris',
+        type: 'Concert',
+        time: '18h30 - 22h30',
+        price: '35€',
+        image: './assets/img/banner-kamel-aziz-tarik-ayad.webp',
+        video: 'c7UwD-7BBt0',
+        reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/kamel-aziz-tarik-ayad-les-nuits-de-la-casbah',
+        description: `
+            <br />
+            <p>Les Nuits de la Casbah vous invitent à une soirée exceptionnelle dédiée au chaâbi algérien, portée par deux concerts complets de Tarik Ayad et Kamel Aziz, sous la présentation du comédien Hicham Mesbah.</p>
+            <p>Une immersion musicale entre tradition, émotion et authenticité, au cœur de l’âme algéroise.</p><br />
+            <h3>Tarik Ayad - Premier concert</h3><br />
+            <p>Originaire de Béjaïa, <strong>Tarik Ayad</strong> est un artiste chanteur profondément ancré dans la tradition du chaâbi algérien, héritier de l’école du maître <strong>El Hachemi Guerouabi</strong>.</p><br />
+            <p>Lauréat du 1er prix du concours El Hachemi Guerouabi et 3ᵉ prix au Concours National de Chaâbi, il s’est illustré à travers de nombreux spectacles hommages et festivals, en Algérie comme à l’international.</p><br />
+            <p>Doté d’une voix expressive et d’une présence scénique élégante, Tarik Ayad propose une interprétation fidèle, sensible et profondément respectueuse du répertoire classique. À travers son engagement artistique, il participe activement à la transmission, à la préservation et au rayonnement du patrimoine chaâbi algérien auprès des nouvelles générations.</p><br />
+            <h3>Kamel Aziz - Deuxième concert</h3><br />
+            <p>Issu d’une famille d’artistes, <strong>Kamel Aziz</strong> s’impose comme l’une des figures majeures du néo-chaâbi algérois. Son parcours artistique prend racine au sein des prestigieuses associations de musique arabo-andalouse d’Alger, notamment celles des Beaux-Arts et d’Essendoussia, où il affine très tôt sa sensibilité et sa rigueur musicale.</p><br />
+            <p>Initialement attiré par le blues-rock et le flamenco — interprétant à la guitare des œuvres d’Eric Clapton et de Paco de Lucía — il se tourne progressivement vers la musique classique algérienne. Passionné et curieux, il apprend à maîtriser un large éventail d’instruments : violon, mandole, oud, piano, qanoûn, rbab et derbouka.</p><br />
+            <p>Grâce à un travail exigeant et constant, il développe une virtuosité exceptionnelle au mandole, instrument emblématique du chaâbi, tout en cultivant un chant profond et vibrant. Les connaisseurs reconnaissent en lui un digne héritier du légendaire <strong>Amar Ezzahi</strong>, dont il perpétue l’esprit avec élégance et fidélité.</p><br />
+        `,
+        program: [
+            { time: '18h30', title: 'Ouverture des portes', description: 'Le public s’installe, les retrouvailles commencent, l’atmosphère se charge déjà de nostalgie et de fête.' },
+            { time: '19h20', title: 'Entrée du Maître de Cérémonie : Hicham Mesbah', description: 'Présentation officielle Des Nuits de la Casbah, mise en lumière des artistes et lancement de la soirée. Un moment de partage pour plonger le public dans l’univers du chaâbi.' },
+            { time: '19h30', title: 'Concert 1 : Tarik AYAD', description: 'Héritier du maître El Hachemi Guerouabi, Tarik AYAD nous fera voyager au cœur d’Alger et de ses traditions, porté par une voix envoûtante et des rythmes.' },
+            { time: '21h00', title: 'Retour de Hicham Mesbah', description: 'Présentation de la seconde partie de la soirée et introduction de l’artiste' },
+            { time: '21h05', title: 'Concert 2 : Kamel Aziz', description: 'Héritier du légendaire Amar Ezzahi, Kamel Aziz nous transporte avec ses mélodies profondes et son univers riche en émotions, fidèle à la grande tradition du chaâbi algérois.' },
+            { time: '22h30', title: 'Clôture de la soirée', description: 'Une fin en beauté, entre communion, nostalgie et fête. Une nuit qui restera gravée dans les mémoires.' }
+        ],
+        gallery: [
+            './assets/img/event-6-1.webp',
+            './assets/img/event-6-2.webp',
+            './assets/img/event-6-3.webp',
+            './assets/img/event-6-4.webp',
+            './assets/img/event-6-5.webp',
+            './assets/img/event-6-6.webp',
+            './assets/img/event-6-7.webp',
+            './assets/img/event-6-8.webp',
+            './assets/img/event-6-9.webp',
+            './assets/img/event-6-10.webp',
+            './assets/img/event-6-11.webp',
+            './assets/img/event-6-12.webp',
+            './assets/img/event-6-13.webp'
+        ]
+    },
+    'cheb-bilal': {
+        title: 'CHEB BILAL',
+        date: '16 Mai 2026',
+        location: 'Cabaret Sauvage, Paris',
+        type: 'Concert',
+        time: '19h00 - 22h30',
+        price: '35€ / 39€',
+        image: './assets/img/banner-bilal.webp',
+        video: 'c7UwD-7BBt0',
+        reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/cheb-bilal',
+        description: `
+            <br />
+            <p>Référence incontestée du raï, <strong>Cheb Bilal</strong> s’impose depuis plus de trois décennies comme l’une des voix les plus marquantes de la musique algérienne. Il rejoint aujourd’hui Cheb Khaled et Cheb Mami dans le club très fermé des grandes vedettes du raï, grâce à une carrière exceptionnelle jalonnée de succès et de tournées à travers le monde.</p><br />
+            <p>Son style unique, reconnaissable entre tous, mêle puissance vocale, mélodies profondes et textes sincères qui parlent d’amour, de nostalgie, d’exil et de réalités sociales. Cheb Bilal a su toucher plusieurs générations de fans et inscrire durablement ses chansons dans le patrimoine musical du raï à l'international.</p><br />
+            <p>Auteur de tubes incontournables tels que <strong>Vida Loca</strong>, <strong>Romantique</strong>, <strong>Chriki</strong>, <strong>Ouled Horma</strong>, <strong>Dardja Dardja</strong> et bien d’autres encore, il enflamme la scène avec des performances intenses, authentiques et généreuses. Chaque concert est une véritable immersion dans l’âme du raï, entre émotions fortes et énergie festive.</p><br />
+            <p><strong>Rendez-vous le 16 mai 2026 au Cabaret Sauvage Paris</strong> pour un concert événement exceptionnel à ne surtout pas manquer.</p><br />
+        `,
+        program: [
+            { time: '19h00', title: 'Ouverture des portes', description: 'Accueil du public et mise en ambiance au Cabaret Sauvage.' },
+            { time: '20h00', title: 'Ouverture de la soirée', description: 'Première partie avec un <strong>Guest Surprise</strong> pour lancer les festivités.' },
+            { time: '20h45', title: 'Cheb Bilal', description: 'Le grand retour sur scène de la star du raï pour un concert exceptionnel.' },
+            { time: '22h30', title: 'Clôture de la soirée', description: 'Fin de l’événement et remerciements après une soirée mémorable.' }
+        ],
+        gallery: [
+            './assets/img/event-5-1.webp',
+            './assets/img/event-5-2.webp',
+            './assets/img/event-5-3.webp'
         ]
     }
 };
@@ -633,19 +708,19 @@ function populateEventContent(event) {
     // GESTION BOUTON RÉSERVATION
     const reservationCard = document.getElementById('reservationCard');
     const reservationButton = document.getElementById('reservationButton');
-    
+
     if (reservationCard && reservationButton) {
         if (event.reservation && event.reservation.trim() !== '') {
             reservationCard.style.display = 'block';
             reservationButton.href = event.reservation;
-            
+
             // FORCER L'OUVERTURE DU LIEN AU CLIC
-            reservationButton.onclick = function(e) {
+            reservationButton.onclick = function (e) {
                 e.stopPropagation();
                 window.open(event.reservation, '_blank', 'noopener,noreferrer');
                 return false;
             };
-            
+
             console.log('✅ Réservation activée:', event.reservation);
         } else {
             reservationCard.style.display = 'none';

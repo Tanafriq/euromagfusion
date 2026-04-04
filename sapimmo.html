@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAPIMMO - Salon Algérien de la Promotion Immobilière | Paris 2026</title>
+    <meta name="description"
+        content="SAPIMMO - Le premier salon premium dédié à la promotion immobilière algérienne à Paris. 3-5 avril 2026, Hôtel Mona Bismarck.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="robots" content="index, follow">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "SAPIMMO Paris 2026",
+      "description": "Le premier salon premium dédié à la promotion immobilière algérienne à Paris.",
+      "startDate": "2026-04-03",
+      "endDate": "2026-04-05",
+      "location": {
+        "@type": "Place",
+        "name": "Hôtel Particulier Mona Bismarck",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "34 Avenue de New York",
+          "addressLocality": "Paris",
+          "postalCode": "75016",
+          "addressCountry": "FR"
+        }
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "Euromag Fusion",
+        "url": "https://www.euromagfusion.com"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <link rel="stylesheet" href="./assets/css/styles-sapimmo.css">
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
+</head>
+
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo" title="Euromag Fusion, accueil">
+                <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" alt="Logo Euromag Fusion"
+                        width="45" height="45" loading="lazy" /></span>
+                <span class="logo-text">Euromag Fusion</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#accueil">Accueil</a></li>
+                <li><a href="index.html#apropos">À Propos</a></li>
+                <li><a href="index.html#evenements">Concerts</a></li>
+                <li><a href="sapimmo.html" class="sapimmo-link active">
+                    <span>SAPIMMO</span>
+                    <span class="premium-tag">Premium</span>
+                </a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-menu" id="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="floating-exhibitor-btn" id="floatingExhibitorBtn">
+        <button class="exhibitor-btn" id="exhibitorBtn">
+            <i class="fas fa-building"></i>
+            <span>RÉSERVER UN STAND</span>
+        </button>
+    </div>
+
+    <section class="coming-soon-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <div class="floating-elements">
+                <div class="float-element element-1"></div>
+                <div class="float-element element-2"></div>
+                <div class="float-element element-3"></div>
+                <div class="float-element element-4"></div>
+                <div class="float-element element-5"></div>
+                <div class="float-element element-6"></div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <div class="coming-soon-badge">
+                <span>1<sup>ère</sup> Édition Premium</span>
+            </div>
+
+            <div class="hero-logo">
+                <img src="./assets/img/sapimmo_logo11.png" alt="SAPIMMO Logo" class="sapimmo-logo">
+            </div>
+
+            <h1 class="main-title">
+                <span class="title-line">Salon Algérien de la</span>
+                <span class="title-line gradient-text">Promotion Immobilière</span>
+                <span class="title-line paris-2026">Paris 2026</span>
+            </h1>
+            
+            <p class="hero-subtitle">Le premier salon premium dédié à la promotion immobilière algérienne, conçu pour connecter les promoteurs aux investisseurs de la diaspora dans un cadre exclusif et élégant.</p>
+
+            <div class="event-info-badge">
+                <div class="event-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>04 - 06 Avril 2026</span>
+                </div>
+                <div class="event-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Hôtel Mona Bismarck, Paris 16<sup>e</sup></span>
+                </div>
+            </div>
+
+            <div class="countdown-container">
+                <div class="countdown-title">L'événement débute dans :</div>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Jours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Heures</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Secondes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <button class="notify-btn" id="notifyBtn">
+                    <i class="fas fa-bell"></i>
+                    <span>Me notifier</span>
+                </button>
+                <a href="#lieu-section" class="explore-btn">
+                    <span>Découvrir le lieu</span>
+                    <i class="fas fa-arrow-down"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator" id="scrollIndicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- SECTION CHIFFRES CLÉS -->
+    <section class="salon-details" id="salon-details">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Un salon</span>
+                <span class="title-main">premium</span>
+            </h2>
+
+            <div class="key-numbers">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">3 jours</h3>
+                            <p class="stat-label">d'événement premium</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">2000 - 4000</h3>
+                            <p class="stat-label">Visiteurs qualifiés/jour</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">1 400<span> m²</span></h3>
+                            <p class="stat-label">d'espace premium</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">22</h3>
+                            <p class="stat-label">Exposants exclusifs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PUBLIC CIBLÉ -->
+            <div class="audience-section">
+                <h3 class="subsection-title">Public ciblé & qualifié</h3>
+                <div class="audience-grid">
+                    <div class="audience-category">
+                        <div class="audience-card diaspora">
+                            <div class="audience-header">
+                                <div class="audience-icon">
+                                    <i class="fas fa-globe-europe"></i>
+                                </div>
+                                <h4>Diaspora algérienne</h4>
+                            </div>
+                            <ul class="audience-list">
+                                <li>Classes moyennes & cadres</li>
+                                <li>Entrepreneurs & familles</li>
+                                <li>+5 millions en Europe</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="audience-category">
+                        <div class="audience-card investors">
+                            <div class="audience-header">
+                                <div class="audience-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h4>Investisseurs</h4>
+                            </div>
+                            <ul class="audience-list">
+                                <li>Acheteurs potentiels</li>
+                                <li>Investisseurs immobiliers</li>
+                                <li>Pouvoir d'achat croissant</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="audience-category">
+                        <div class="audience-card professionals">
+                            <div class="audience-header">
+                                <div class="audience-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <h4>Professionnels</h4>
+                            </div>
+                            <ul class="audience-list">
+                                <li>Promoteurs immobiliers</li>
+                                <li>Partenaires institutionnels</li>
+                                <li>Médias & influenceurs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="free-entry-badge">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Entrée gratuite pour maximiser l'affluence et les rencontres</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION LIEU PRESTIGIEUX -->
+    <section class="venue-section" id="lieu-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Un lieu</span>
+                <span class="title-main">prestigieux et rare</span>
+            </h2>
+
+            <div class="venue-content">
+                <div class="venue-info">
+                    <div class="venue-header">
+                        <h3>Hôtel Particulier Mona Bismarck</h3>
+                        <p class="venue-tagline">Un écrin parisien de 1 400 m² offrant un confort exceptionnel</p>
+                    </div>
+
+                    <div class="venue-features">
+                        <div class="feature-item">
+                            <i class="fas fa-door-open"></i>
+                            <span>Entrée cochère privative</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-couch"></i>
+                            <span>4 salons d'époque (450 m²) au RDC</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Galerie de 4 pièces (450 m²) au 1er étage</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-elevator"></i>
+                            <span>Ascenseur privatif</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-tree"></i>
+                            <span>Terrasse extérieure & jardin (500 m²)</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-monument"></i>
+                            <span>Vue imprenable sur la Tour Eiffel</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-wifi"></i>
+                            <span>Wifi & Fibre professionnelle</span>
+                        </div>
+                    </div>
+
+                    <div class="venue-access">
+                        <h4><i class="fas fa-map-signs"></i> Accès idéal</h4>
+                        <p>Métro Iéna / Trocadéro / Alma Marceau – RER Pont de l'Alma – Parking George V</p>
+                        <p class="venue-address"><i class="fas fa-map-marker-alt"></i> 34 Avenue de New York, Paris 75016</p>
+                    </div>
+                </div>
+
+                <div class="venue-positioning">
+                    <div class="positioning-card">
+                        <h4>Un positionnement unique</h4>
+                        <div class="positioning-tags">
+                            <span class="tag">Élégant</span>
+                            <span class="tag">Convivial</span>
+                            <span class="tag">Chaleureux</span>
+                            <span class="tag">Intimiste</span>
+                        </div>
+                        <p>Loin des salons traditionnels standardisés et cloisonnés</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION ESPACES EXPOSANTS -->
+    <section class="spaces-section" id="spaces-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Répartition des</span>
+                <span class="title-main">espaces exposants</span>
+            </h2>
+
+            <div class="spaces-grid">
+                <div class="space-card niveau-1">
+                    <div class="space-header">
+                        <div class="level-badge">Niveau 1</div>
+                        <h3>Rez-de-chaussée</h3>
+                    </div>
+                    <div class="space-details">
+                        <div class="space-stat">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">espaces d'exposition</span>
+                        </div>
+                        <div class="space-stat">
+                            <span class="stat-value">15 - 30 m²</span>
+                            <span class="stat-label">superficie par stand</span>
+                        </div>
+                    </div>
+                    <div class="stands-list">
+                        <span class="stand">STD 1 - 30m²</span>
+                        <span class="stand">STD 2 - 30m²</span>
+                        <span class="stand">STD 3 - 22m²</span>
+                        <span class="stand">STD 4 - 22m²</span>
+                        <span class="stand">STD 5 - 22m²</span>
+                        <span class="stand">STD 6 - 22m²</span>
+                        <span class="stand">STD 7 - 15m²</span>
+                        <span class="stand">STD 8 - 15m²</span>
+                        <span class="stand">STD 9 - 15m²</span>
+                        <span class="stand">STD 10 - 15m²</span>
+                        <span class="stand">STD 11 - 24m²</span>
+                        <span class="stand">STD 12 - 24m²</span>
+                    </div>
+                </div>
+
+                <div class="space-card niveau-2">
+                    <div class="space-header">
+                        <div class="level-badge">Niveau 2</div>
+                        <h3>Premier étage</h3>
+                    </div>
+                    <div class="space-details">
+                        <div class="space-stat">
+                            <span class="stat-value">10</span>
+                            <span class="stat-label">espaces d'exposition</span>
+                        </div>
+                        <div class="space-stat">
+                            <span class="stat-value">20 - 30 m²</span>
+                            <span class="stat-label">superficie par stand</span>
+                        </div>
+                    </div>
+                    <div class="stands-list">
+                        <span class="stand">STD 13 - 20m²</span>
+                        <span class="stand">STD 14 - 20m²</span>
+                        <span class="stand">STD 15 - 20m²</span>
+                        <span class="stand">STD 16 - 20m²</span>
+                        <span class="stand">STD 17 - 22m²</span>
+                        <span class="stand">STD 18 - 20m²</span>
+                        <span class="stand">STD 19 - 30m²</span>
+                        <span class="stand">STD 20 - 30m²</span>
+                        <span class="stand">STD 21 - 30m²</span>
+                        <span class="stand">STD 22 - 30m²</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESPACES COMPLÉMENTAIRES -->
+            <div class="complementary-spaces">
+                <div class="comp-space business-center">
+                    <div class="comp-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h4>Business Center</h4>
+                    <p>Réservé aux exposants</p>
+                    <ul>
+                        <li>Impression & copies</li>
+                        <li>Boissons chaudes/froides</li>
+                        <li>Espace calme pour finaliser contrats</li>
+                    </ul>
+                </div>
+                <div class="comp-space snacking">
+                    <div class="comp-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <h4>Espace Snacking</h4>
+                    <p>Convivialité assurée</p>
+                    <ul>
+                        <li>Vue sur le jardin</li>
+                        <li>Prolonger les discussions</li>
+                        <li>Favoriser les ventes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION SERVICES -->
+    <section class="services-section" id="services-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Services inclus</span>
+                <span class="title-main">& options premium</span>
+            </h2>
+
+            <div class="services-content">
+                <div class="services-included">
+                    <h3><i class="fas fa-check-circle"></i> Services inclus</h3>
+                    <div class="services-grid">
+                        <div class="service-item">
+                            <i class="fas fa-wifi"></i>
+                            <span>Connexion Wifi haut débit</span>
+                        </div>
+                        <div class="service-item">
+                            <i class="fas fa-plug"></i>
+                            <span>Consommation électrique incluse</span>
+                        </div>
+                        <div class="service-item">
+                            <i class="fas fa-tools"></i>
+                            <span>Assistance technique sur place</span>
+                        </div>
+                        <div class="service-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Hôtesses & accueil visiteurs</span>
+                        </div>
+                        <div class="service-item">
+                            <i class="fas fa-directions"></i>
+                            <span>Signalétique & gestion des flux</span>
+                        </div>
+                        <div class="service-item">
+                            <i class="fas fa-camera"></i>
+                            <span>Photographes et vidéastes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="services-options">
+                    <h3><i class="fas fa-star"></i> Options premium</h3>
+                    <div class="services-grid">
+                        <div class="service-item option">
+                            <i class="fas fa-couch"></i>
+                            <span>Mobilier premium personnalisé</span>
+                        </div>
+                        <div class="service-item option">
+                            <i class="fas fa-palette"></i>
+                            <span>Personnalisation selon votre identité</span>
+                        </div>
+                        <div class="service-item option">
+                            <i class="fas fa-car"></i>
+                            <span>Service voiturier dédié</span>
+                        </div>
+                        <div class="service-item option">
+                            <i class="fas fa-qrcode"></i>
+                            <span>Système QR code appel véhicule</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aesthetic-note">
+                    <i class="fas fa-gem"></i>
+                    <p>Respect d'une esthétique homogène : cosy, raffinée, décor élégant, aucune structure métallique apparente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION SOIRÉE RP -->
+    <section class="gala-section" id="gala-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Une soirée RP</span>
+                <span class="title-main">premium</span>
+            </h2>
+
+            <div class="gala-content">
+                <div class="gala-intro">
+                    <p>SAPIMMO organisera une soirée de relations publiques pour l'ouverture du salon.</p>
+                </div>
+
+                <div class="gala-participants">
+                    <h3>Participants attendus</h3>
+                    <div class="participants-grid">
+                        <div class="participant-card">
+                            <i class="fas fa-building"></i>
+                            <span>Les exposants</span>
+                        </div>
+                        <div class="participant-card">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Médias</span>
+                        </div>
+                        <div class="participant-card">
+                            <i class="fas fa-star"></i>
+                            <span>Influenceurs & personnalités</span>
+                        </div>
+                        <div class="participant-card">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Leaders d'opinion</span>
+                        </div>
+                        <div class="participant-card">
+                            <i class="fas fa-landmark"></i>
+                            <span>Partenaires institutionnels</span>
+                        </div>
+                        <div class="participant-card">
+                            <i class="fas fa-network-wired"></i>
+                            <span>Réseaux économiques</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gala-objectives">
+                    <h3>Objectifs de la soirée</h3>
+                    <div class="objectives-list">
+                        <div class="objective">
+                            <i class="fas fa-eye"></i>
+                            <span>Présenter le salon en avant-première</span>
+                        </div>
+                        <div class="objective">
+                            <i class="fas fa-handshake"></i>
+                            <span>Créer des synergies entre promoteurs</span>
+                        </div>
+                        <div class="objective">
+                            <i class="fas fa-broadcast-tower"></i>
+                            <span>Générer une couverture médiatique</span>
+                        </div>
+                        <div class="objective">
+                            <i class="fas fa-bullhorn"></i>
+                            <span>Assurer une visibilité immédiate auprès de la diaspora</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION COMMUNICATION -->
+    <section class="communication-section" id="communication-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Communication</span>
+                <span class="title-main">& Visibilité</span>
+            </h2>
+
+            <div class="communication-grid">
+                <div class="comm-card">
+                    <div class="comm-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h4>Médias & Presse</h4>
+                    <p>Presse algérienne et internationale</p>
+                </div>
+                <div class="comm-card">
+                    <div class="comm-icon">
+                        <i class="fab fa-facebook"></i>
+                    </div>
+                    <h4>Réseaux sociaux</h4>
+                    <p>Facebook, Instagram, TikTok, LinkedIn, YouTube</p>
+                </div>
+                <div class="comm-card">
+                    <div class="comm-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h4>Influenceurs</h4>
+                    <p>Personnalités suivies par la diaspora</p>
+                </div>
+                <div class="comm-card">
+                    <div class="comm-icon">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <h4>Affichage</h4>
+                    <p>Partenariats communautaires</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION DEVENIR EXPOSANT -->
+    <section class="become-exhibitor-section" id="become-exhibitor-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <i class="fas fa-building"></i>
+                    <span>Places limitées</span>
+                </div>
+                <h2 class="section-title">
+                    <span class="title-accent">Réservez votre</span>
+                    <span class="title-main">espace exposant</span>
+                </h2>
+                <p class="section-description">
+                    Soyez parmi les 22 promoteurs pionniers de cette première édition premium
+                </p>
+            </div>
+
+            <div class="exhibitor-content">
+                <div class="exhibitor-benefits">
+                    <h3 class="benefits-title">Pourquoi participer ?</h3>
+
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h4>Cadre prestigieux</h4>
+                                <p>Un lieu premium avec vue sur la Tour Eiffel</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h4>Public qualifié</h4>
+                                <p>2 000 à 4 000 visiteurs qualifiés par jour</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h4>Rencontre directe</h4>
+                                <p>Connectez directement avec les investisseurs de la diaspora</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exhibitor-cta-area">
+                    <div class="cta-card">
+                        <div class="cta-header">
+                            <div class="cta-icon">
+                                <i class="fas fa-file-signature"></i>
+                            </div>
+                            <h3>Processus de réservation</h3>
+                        </div>
+
+                        <div class="cta-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <span class="step-text">Dossier complet</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <span class="step-text">Paiement de réservation</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <span class="step-text">Attribution du stand</span>
+                            </div>
+                        </div>
+
+                        <div class="what-you-receive">
+                            <h4>Vous recevrez :</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Le plan 2D des deux niveaux</li>
+                                <li><i class="fas fa-check"></i> La grille tarifaire au m²</li>
+                                <li><i class="fas fa-check"></i> Le contrat d'exposant</li>
+                            </ul>
+                        </div>
+
+                        <div class="floating-btn-container" id="floating-btn-container"></div>
+
+                        <div class="urgency-indicator">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Places limitées à 22 exposants uniquement</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION NEWSLETTER -->
+    <section class="newsletter-section" id="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>Restez informé</h2>
+                    <p>Inscrivez-vous pour recevoir toutes les actualités sur SAPIMMO Paris 2026.</p>
+                </div>
+
+                <form class="newsletter-form" id="newsletterForm" method="POST"
+                    action="https://formsubmit.co/ajax/contact@euromagfusion.com">
+                    <input type="text" name="_gotcha" style="display:none">
+                    <input type="hidden" name="_captcha" value="true">
+                    <input type="hidden" name="_next" value="https://www.euromagfusion.com/sapimmo.html">
+
+                    <div class="form-group">
+                        <input type="email" name="email" id="newsletter-email" placeholder="Votre adresse email" required>
+                        <button type="submit" class="newsletter-btn">
+                            <span>S'inscrire</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="form-note">
+                        <small>En vous inscrivant, vous acceptez de recevoir nos communications.</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION CONTACT -->
+    <section class="contact-section" id="contact-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-accent">Contact</span>
+                <span class="title-main">& Réservation</span>
+            </h2>
+
+            <div class="contact-card">
+                <div class="contact-info">
+                    <h3>SAPIMMO – Salon Algérien de la Promotion Immobilière</h3>
+                    <div class="contact-person">
+                        <p class="name">Fondateur</p>
+                    </div>
+                    <div class="contact-details">
+                        <a href="tel:+33783228594" class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+33 7 83 22 85 94</span>
+                        </a>
+                        <a href="mailto:contact@euromagfusion.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@euromagfusion.com</span>
+                        </a>
+                        <a href="https://www.euromagfusion.com" target="_blank" class="contact-item">
+                            <i class="fas fa-globe"></i>
+                            <span>www.euromagfusion.com</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL CONTACT -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content contact-modal-content">
+            <span class="close-btn" id="closeContactModal">&times;</span>
+            <div class="contact-form-container">
+                <h2>Demande d'espace exposant - SAPIMMO 2026</h2>
+                <p class="modal-subtitle">Réservez votre stand parmi les 22 places disponibles pour cette première édition premium.</p>
+
+                <form class="contact-form" id="contactForm" method="POST"
+                    action="https://formsubmit.co/ajax/contact@euromagfusion.com">
+                    <input type="text" name="_gotcha" style="display:none">
+                    <input type="hidden" name="_captcha" value="true">
+                    <input type="hidden" name="subject" value="Demande Exposant - SAPIMMO Paris 2026">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nom">Nom *</label>
+                            <input type="text" id="nom" name="nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom">Prénom *</label>
+                            <input type="text" id="prenom" name="prenom" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="entreprise">Nom de l'entreprise / Promoteur *</label>
+                        <input type="text" id="entreprise" name="entreprise" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fonction">Fonction *</label>
+                        <input type="text" id="fonction" name="fonction" placeholder="Directeur, Gérant, Commercial..." required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telephone">Téléphone *</label>
+                            <input type="tel" id="telephone" name="telephone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="surface">Surface souhaitée</label>
+                        <select id="surface" name="surface">
+                            <option value="">Sélectionnez une surface</option>
+                            <option value="15m2">15 m²</option>
+                            <option value="20m2">20 m²</option>
+                            <option value="22m2">22 m²</option>
+                            <option value="24m2">24 m²</option>
+                            <option value="30m2">30 m²</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message / Projets à présenter</label>
+                        <textarea id="message" name="message" rows="4"
+                            placeholder="Décrivez brièvement vos projets immobiliers et vos attentes..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span>Envoyer ma demande</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+
+                    <div class="form-note">
+                        <small>En soumettant ce formulaire, vous acceptez d'être contacté par notre équipe concernant votre participation à SAPIMMO Paris 2026.</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" alt="Euromag Fusion" /></span>
+                        <span class="logo-text">Euromag Fusion</span>
+                    </div>
+                    <p>La promotion de la culture algérienne à travers des spectacles, concerts et salons premium.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/euromagevent" class="social-link facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/euromagfusion/" class="social-link instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@euromagfusion" class="social-link tiktok" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@EUROMAGFUSION" class="social-link youtube" aria-label="Youtube" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="social-link linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="index.html#apropos">À Propos</a></li>
+                        <li><a href="index.html#evenements">Concerts</a></li>
+                        <li><a href="sapimmo.html">SAPIMMO</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Organisation de concerts</a></li>
+                        <li><a href="#">Spectacles culturels</a></li>
+                        <li><a href="#">Expositions et salons</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Informations Légales</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="legal-link" data-legal="mentions">Mentions légales</a></li>
+                        <li><a href="#" class="legal-link" data-legal="conditions">Conditions générales</a></li>
+                        <li><a href="#" class="legal-link" data-legal="confidentialite">Politique de confidentialité</a>
+                        </li>
+                        <li><a href="#" class="legal-link" data-legal="cookies">Gestion des cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Euromag Fusion. Tous droits réservés.</p>
+                <p class="developer-credit">Développé par <a href="mailto:slimanelami@proton.me" class="developer-link" title="Contacter le développeur">SL</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="legalModal" class="modal">
+        <div class="modal-content legal-modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="legalContent"></div>
+        </div>
+    </div>
+
+    <button class="scroll-top" id="scrollTop">↑</button>
+
+    <script src="./assets/js/script-sapimmo.js"></script>
+    <script src="./assets/js/common.js"></script>
+</body>
+
+</html>

@@ -354,39 +354,40 @@ function initLegalAndServices() {
         expositions: `
             <h2>Expositions et salons</h2><br>
             <div class="legal-section">
-                <h3>Algérie Expo - Notre projet phare</h3>
-                <p>Euromag Fusion développe "Algérie Expo", le premier grand salon international dédié à l'Algérie en France, prévu pour avril 2026 à Paris.</p>
-                
+                <h3>SAPIMMO - Salon de la Promotion Immobilière</h3>
+                <p>SAPIMMO est un salon dédié à la promotion immobilière et à l’investissement, réunissant promoteurs, investisseurs, institutions financières et particuliers autour des opportunités du marché immobilier.</p>
+
                 <h3>Concept d'exposition</h3>
                 <ul>
-                    <li><strong>Vitrine économique :</strong> Présentation des secteurs clés et opportunités d'investissement</li>
-                    <li><strong>Patrimoine culturel :</strong> Expositions d'art, artisanat et traditions millénaires</li>
-                    <li><strong>Destination touristique :</strong> Promotion des merveilles naturelles et sites historiques</li>
-                    <li><strong>Gastronomie :</strong> Découverte des saveurs et spécialités régionales</li>
-                    <li><strong>Innovation :</strong> Présentation des technologies et industries modernes</li>
+                    <li><strong>Projets immobiliers :</strong> Présentation de programmes résidentiels, tertiaires et mixtes</li>
+                    <li><strong>Investissement et financement :</strong> Mise en relation avec banques, organismes de crédit et experts</li>
+                    <li><strong>Conseil et accompagnement :</strong> Information juridique, fiscale et patrimoniale pour les acquéreurs et investisseurs</li>
+                    <li><strong>Aménagement et architecture :</strong> Mise en avant des nouvelles tendances en design, urbanisme et construction</li>
+                    <li><strong>Innovation :</strong> Solutions digitales, smart buildings et technologies pour l’immobilier</li>
                 </ul>
 
                 <h3>Services d'organisation</h3>
                 <ul>
-                    <li>Conception et aménagement d'espaces d'exposition</li>
-                    <li>Gestion des exposants et partenaires</li>
-                    <li>Programmation d'animations culturelles</li>
-                    <li>Organisation de conférences et tables rondes</li>
-                    <li>Coordination logistique et technique</li>
-                    <li>Communication et relations médias</li>
+                    <li>Conception et aménagement des stands et espaces thématiques</li>
+                    <li>Gestion des exposants, sponsors et partenaires institutionnels</li>
+                    <li>Organisation de conférences, ateliers et présentations de projets</li>
+                    <li>Création de parcours dédiés aux investisseurs et aux particuliers</li>
+                    <li>Coordination logistique, technique et accueil des visiteurs</li>
+                    <li>Stratégie de communication et promotion de l’événement</li>
                 </ul>
 
                 <h3>Impact et rayonnement</h3>
-                <p>Ces événements créent des opportunités de networking, favorisent les échanges économiques et renforcent les liens entre l'Algérie et l'Europe.</p>
+                <p>SAPIMMO favorise la rencontre entre l’offre et la demande, dynamise le secteur immobilier et contribue à structurer des projets durables et attractifs pour les territoires.</p>
             </div>
+
         `
     };
-    
+
     const servicesSection = Array.from(document.querySelectorAll('.footer-section')).find(sec => sec.querySelector('h3')?.textContent?.toLowerCase().includes('services'));
     const serviceLinks = servicesSection ? servicesSection.querySelectorAll('a[href="#"]') : [];
 
     const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
-    
+
     const textKeyMap = {
         'organisationdeconcerts': 'concerts',
         'spectaclesculturels': 'spectacles',

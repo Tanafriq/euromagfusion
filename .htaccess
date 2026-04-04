@@ -4,19 +4,36 @@
 ErrorDocument 404 /404.html
 
 # ------------------------------
-# Forcer le HTTPS
+# Désactiver MultiViews (évite les conflits)
+# ------------------------------
+Options -MultiViews
+
+# ------------------------------
+# Activer la réécriture et définir base
 # ------------------------------
 RewriteEngine On
-
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteBase /
 
 # ------------------------------
-# Cacher l'extension .html
+# Forcer le HTTPS (redirection permanente)
 # ------------------------------
-# Si la ressource n'est pas un dossier
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ------------------------------
+# Rediriger /fichier.html -> /fichier  (canonical)
+# ------------------------------
+# Eviter boucles : si l'URL demande déjà sans .html et que le fichier physique existe, on passe.
+RewriteCond %{THE_REQUEST} \s/([^\s?]*)\.html[^\s]* [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# ------------------------------
+# Cacher l'extension .html (internally rewrite /page -> /page.html)
+# ------------------------------
+# Ne pas réécrire si c'est un dossier
 RewriteCond %{REQUEST_FILENAME} !-d
-# Si un fichier .html correspondant existe
-RewriteCond %{REQUEST_FILENAME}\.html -f
-# Réécrit l'URL sans l'extension vers le fichier .html réel
+# Si le fichier demandé existe déjà (images, css, js...), ne rien faire
+RewriteCond %{REQUEST_FILENAME} !-f
+# Si un fichier .html correspondant existe -> servir le .html
+RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L,QSA]

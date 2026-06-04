@@ -193,7 +193,7 @@ const eventData = {
         price: '35€',
         image: './assets/img/banner-kamel-aziz-tarik-ayad.webp',
         video: 'c7UwD-7BBt0',
-        reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/kamel-aziz-tarik-ayad-les-nuits-de-la-casbah',
+        reservation: '',
         description: `
             <br />
             <p>Les Nuits de la Casbah vous invitent à une soirée exceptionnelle dédiée au chaâbi algérien, portée par deux concerts complets de Tarik Ayad et Kamel Aziz, sous la présentation du comédien Hicham Mesbah.</p>
@@ -232,7 +232,7 @@ const eventData = {
         ]
     },
     'cheb-bilal': {
-        title: 'CHEB BILAL',
+        title: 'CHEB BILAL & CHAZIL',
         date: '16 Mai 2026',
         location: 'Cabaret Sauvage, Paris',
         type: 'Concert',
@@ -242,6 +242,22 @@ const eventData = {
         video: 'c7UwD-7BBt0',
         reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/cheb-bilal',
         description: `
+            <br />
+            <p><strong>EUROMAG FUSION</strong> vous invite à une soirée musicale exceptionnelle au Cabaret Sauvage le 16 mai 2026, avec le légendaire <strong>Cheb Bilal</strong> et notre étoile montante <strong>Chazil</strong> !</p>
+            <p>Une soirée à ne pas manquer pour célébrer la magie du raï avec ses plus grands ambassadeurs !</p>
+            <br />
+            <strong><h3>Chazil</h3></strong>
+            <br />
+            <p><strong>Chazil Adlene Bahloul</strong> est un chanteur, auteur et compositeur algérien originaire de Constantine, qui s’impose aujourd’hui comme l’une des voix montantes du raï moderne. Ayant grandi au cœur de la Casbah, il forge une identité artistique profondément ancrée dans la culture algérienne, nourrie par son vécu et les réalités sociales qui l’entourent.</p>
+            <p>Doté d’une voix grave et expressive, <strong>Chazil</strong> se distingue par une approche sincère et émotionnelle de la musique. Ses chansons explorent des thèmes universels tels que l’amour, le manque, le regret et l’espoir, créant une connexion directe avec une génération en quête d’authenticité.</p>
+            <p>Son univers musical repose sur une fusion audacieuse entre les sonorités traditionnelles algériennes — raï, chaâbi, malouf, gnawi, aïssaoua — et des influences internationales comme le flamenco, le rock, le reggae ou encore la musique africaine et turque. Cette richesse donne naissance à un style singulier, à la fois enraciné et ouvert sur le monde.</p>
+            <p>À travers son projet <strong>“RAI RAYI”, Chazil</strong> propose une vision moderne du raï, en créant un pont entre héritage et innovation, avec l’ambition de faire rayonner la musique algérienne à l’international.</p>
+            <p>L’année 2025 marque un tournant dans son parcours : entre son passage dans <strong>The Voice Arabe</strong> et une performance remarquée au Palais des Congrès de Paris devant plus de 4000 spectateurs, il franchit un cap important et élargit considérablement son audience.</p>
+            <p>En 2026, il confirme cette dynamique avec la sortie du single <strong>“Mani Nassi”</strong>, qui connaît un véritable engouement sur les plateformes et les réseaux sociaux, générant un fort buzz et renforçant sa présence auprès d’un public toujours plus large.</p>
+            <p>Aujourd’hui, <strong>Chazil</strong> enchaîne les projets et les scènes, affirmant une identité artistique forte, entre émotion, modernité et héritage.<p/>
+            <p><strong>Chazil</strong> incarne une génération d’artistes qui transforment leurs racines en une force créative moderne. À travers sa musique, il porte une vision claire : toucher les cœurs et faire voyager la culture algérienne, sans frontières.</p>
+            <br />
+            <strong><h3>Cheb Bilal</h3></strong>
             <br />
             <p>Référence incontestée du raï, <strong>Cheb Bilal</strong> s’impose depuis plus de trois décennies comme l’une des voix les plus marquantes de la musique algérienne. Il rejoint aujourd’hui Cheb Khaled et Cheb Mami dans le club très fermé des grandes vedettes du raï, grâce à une carrière exceptionnelle jalonnée de succès et de tournées à travers le monde.</p><br />
             <p>Son style unique, reconnaissable entre tous, mêle puissance vocale, mélodies profondes et textes sincères qui parlent d’amour, de nostalgie, d’exil et de réalités sociales. Cheb Bilal a su toucher plusieurs générations de fans et inscrire durablement ses chansons dans le patrimoine musical du raï à l'international.</p><br />

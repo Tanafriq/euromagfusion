@@ -240,7 +240,7 @@ const eventData = {
         price: '35€ / 39€',
         image: './assets/img/banner-bilal.webp',
         video: 'c7UwD-7BBt0',
-        reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/cheb-bilal',
+        reservation: '',
         description: `
             <br />
             <p><strong>EUROMAG FUSION</strong> vous invite à une soirée musicale exceptionnelle au Cabaret Sauvage le 16 mai 2026, avec le légendaire <strong>Cheb Bilal</strong> et notre étoile montante <strong>Chazil</strong> !</p>
@@ -274,6 +274,63 @@ const eventData = {
             './assets/img/event-5-1.webp',
             './assets/img/event-5-2.webp',
             './assets/img/event-5-3.webp'
+        ]
+    },
+    'manal-lamia': {
+        title: 'MANAL GHERBI & LAMIA AIT AMARA',
+        date: '13 Juin 2026',
+        location: 'Alhambra, Paris',
+        type: 'Concert',
+        time: '19h00 - 22h30',
+        price: '35€',
+        image: './assets/img/banner-manal-lamia.webp',
+        video: 'c7UwD-7BBt0',
+        reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/les-nuits-de-la-casbah-manal-gherbi-lamia-ait-amara',
+        description: `
+            <br />
+            <p><strong>EUROMAG FUSION</strong> vous invite à une soirée musicale exceptionnelle à Alhambra le 13 juin 2026, rythmée par l'animation de <strong>Hichem Mesbah</strong>, avec l'élégante <strong>Manal Gherbi</strong> et la talentueuse <strong>Lamia Ait Amara</strong> !</p>
+            <p>Une soirée à ne pas manquer pour célébrer la richesse et la magie de la musique algérienne avec ses plus brillantes ambassadrices !</p>
+            <br />
+
+            <strong><h3>Manal Gherbi</h3></strong>
+            <br />
+            <p>Artiste accomplie, chanteuse et musicienne virtuose, <strong>Manal Gherbi</strong> s’impose aujourd’hui comme l’une des figures incontournables de la scène musicale algérienne. Dotée d'une formation classique solide et d'un amour profond pour le patrimoine, elle sublime avec une élégance rare la musique andalouse et le répertoire chaâbi.</p>
+            <p>Sa voix cristalline et sa maîtrise technique lui permettent d'explorer des genres variés, créant un univers artistique raffiné où la tradition dialogue harmonieusement avec la modernité. Sur scène, sa présence magnétique et sa sensibilité captivent un public toujours plus large, en quête d'émotion pure et d'authenticité.</p>
+            <p>Reconnue pour son engagement à faire rayonner la culture algérienne, <strong>Manal Gherbi</strong> enchaîne les projets d'envergure et les scènes prestigieuses, affirmant son rôle de passerelle culturelle entre les générations et les continents.</p>
+            <br />
+
+            <strong><h3>Lamia Ait Amara</h3></strong>
+            <br />
+            <p>Véritable perle de la musique andalouse et du patrimoine algérien, <strong>Lamia Ait Amara</strong> séduit par la douceur et la puissance de ses interprétations. Étoile lumineuse de sa génération, elle porte en elle l'héritage des grands maîtres tout en y insufflant une brise de fraîcheur contemporaine.</p>
+            <p>Son parcours est marqué par une recherche constante de perfectionnement et de partage. À travers ses performances intenses et généreuses, elle redonne vie aux poèmes anciens et aux mélodies intemporelles, touchant les cœurs par sa sincérité et sa grâce naturelle.</p>
+            <p>Ambassadrice d'un art subtil, <strong>Lamia Ait Amara</strong> continue de marquer les esprits à chaque apparition, transformant ses concerts en de véritables moments de communion et de voyage poétique au-delà des frontières.</p>
+            <br />
+
+            <strong><h3>Hichem Mesbah</h3></strong>
+            <br />
+            <p>Homme de scène complet, comédien talentueux et animateur chevronné, <strong>Hichem Mesbah</strong> apportera son énergie unique et son charisme à cette soirée exceptionnelle. Grâce à son sens inné du public et sa répartie, il saura guider les spectateurs tout au long de ce voyage musical, créant une ambiance à la fois chaleureuse, complice et festive.</p>
+            <p><strong>Rendez-vous le 13 juin 2026 à Alhambra, Paris</strong> pour un concert événement exceptionnel à ne surtout pas manquer.</p>
+            <br />
+        `,
+        program: [
+            { time: '19h00',title: "Ouvertures des portes et accueil public", description: "Accueil du public et installation. L’atmosphère se charge doucement de magie."},
+            { time: '19h50', title: 'Animation MC Hichem Mesbah', description: "Entrée en scène de notre Maître de Cérémonie. Présentation de la soirée et lancement des festivités." },
+            { time: '20h00', title: 'Concert Manal Gherbi & Lamia Ait Amara', description: "Première partie du voyage musical. Une fusion élégante entre émotions et traditions." },
+            { time: '21h00', title: 'Entract', description: "Pause conviviale. Un moment d'échange et de partage avec le public." },
+            { time: '21h20', title: 'Animation MC Hichem Mesbah', description: "Retour de Hichem Mesbah pour introduire la suite de ce double concert événement." },
+            { time: '21h30', title: 'Concert Manal Gherbi & Lamia Ait Amara', description: "Le grand final. Immersion totale au cœur du patrimoine andalou et chaâbi." }
+        ],
+        gallery: [
+            './assets/img/event-7-1.webp',
+            './assets/img/event-7-2.webp',
+            './assets/img/event-7-3.webp',
+            './assets/img/event-7-4.webp',
+            './assets/img/event-7-5.webp',
+            './assets/img/event-7-6.webp',
+            './assets/img/event-7-7.webp',
+            './assets/img/event-7-8.webp',
+            './assets/img/event-7-9.webp',
+            './assets/img/event-7-10.webp'
         ]
     }
 };

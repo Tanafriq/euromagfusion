@@ -1,6 +1,7 @@
 // ===== EVENT DATA =====
 // Bannières : `image` = version ordinateur (1920 × 540 px),
-// `imageMobile` (facultatif) = version mobile (1080 × 1080 px), utilisée jusqu'à 768 px de large.
+// `imageMobile` (facultatif) = version mobile au format 10:7 (800 × 560 px),
+// la même que l'image de la carte du concert sur l'accueil, utilisée jusqu'à 768 px de large.
 const eventData = {
     chazil: {
         title: 'CHAZIL',
@@ -10,6 +11,7 @@ const eventData = {
         time: '19h30 - 23h00',
         price: '25€ / 29€',
         image: './assets/img/banner-chazil.webp',
+        imageMobile: './assets/img/event-chazil.webp',
         reservation: '',
         description: `
             <br />       
@@ -59,6 +61,7 @@ const eventData = {
         time: '18h30 - 22h30',
         price: '35€ / 38€',
         image: './assets/img/banner-babylone-djam-timoh.webp',
+        imageMobile: './assets/img/event-babylone-djam-timoh.webp',
         reservation: '',
         description: `
             <br />
@@ -101,6 +104,7 @@ const eventData = {
         time: '16h00 - 20h00',
         price: '25€ / 33€',
         image: './assets/img/banner-tarhanine-freeklane.webp',
+        imageMobile: './assets/img/event-kader-tarhanine-freeklane.webp',
         reservation: '',
         description: `
             <br />
@@ -147,6 +151,7 @@ const eventData = {
         time: '18h30 - 22h30',
         price: '29€ / 35€',
         image: './assets/img/banner-tarhanine-cameleon.webp',
+        imageMobile: './assets/img/event-tarhanine-cameleon.webp',
         reservation: '',
         description: `
             <br />
@@ -190,6 +195,7 @@ const eventData = {
         time: '18h30 - 22h30',
         price: '35€',
         image: './assets/img/banner-kamel-aziz-tarik-ayad.webp',
+        imageMobile: './assets/img/event-kamel-aziz-tarik-ayad.webp',
         reservation: '',
         description: `
             <br />
@@ -236,6 +242,7 @@ const eventData = {
         time: '19h00 - 22h30',
         price: '35€ / 39€',
         image: './assets/img/banner-bilal.webp',
+        imageMobile: './assets/img/event-bilal.webp',
         reservation: '',
         description: `
             <br />
@@ -280,6 +287,7 @@ const eventData = {
         time: '19h00 - 22h30',
         price: '35€',
         image: './assets/img/banner-manal-lamia.webp',
+        imageMobile: './assets/img/event-manal-lamia.webp',
         reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/les-nuits-de-la-casbah-manal-gherbi-lamia-ait-amara',
         description: `
             <br />

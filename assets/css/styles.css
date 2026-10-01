@@ -514,9 +514,11 @@
     box-shadow: var(--shadow-xl), 0 0 50px rgba(0, 0, 0, 0.1);
 }
 
+/* Format fixe 10:7 (400 × 280 sur ordinateur) : la hauteur suit la largeur de la carte,
+   l'image n'est donc jamais rognée sur les côtés quand la carte rétrécit (mobile). */
 .event-image {
     position: relative;
-    height: 280px;
+    aspect-ratio: 10 / 7;
     overflow: hidden;
     flex-shrink: 0;
 }
@@ -1040,6 +1042,7 @@
 
 .contact-details a {
     text-decoration: none;
+    overflow-wrap: anywhere;
 }
 
 .contact-form {
@@ -1251,12 +1254,12 @@
     }
 
     .about-content {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: var(--space-12);
     }
 
     .contact-content {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: var(--space-12);
     }
 
@@ -1275,7 +1278,7 @@
     }
 
     .form-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .events-tabs {
@@ -1364,6 +1367,14 @@
 }
 
 @media (max-width: 480px) {
+    .contact-form {
+        padding: var(--space-6) var(--space-4);
+    }
+
+    .contact-card {
+        padding: var(--space-4);
+    }
+
     .hero-title {
         font-size: 2.5rem;
     }

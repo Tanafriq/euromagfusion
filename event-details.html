@@ -6,52 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concert de Fusion Algérienne | Euromag Fusion</title>
     <meta name="description"
-        content="Vivez la fusion musicale algérienne lors du concert Euromag Fusion à Paris, le 21 juillet 2025. Programme, artistes, billets et infos pratiques.">
-    <link rel="canonical" href="https://www.euromagfusion.com/event-details.html?event=chazil" />
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+        content="Programme, artistes, galerie photos et informations pratiques des concerts Euromag Fusion à Paris.">
     <meta name="robots" content="index, follow">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Event",
-      "name": "Concert de Fusion Algérienne - Euromag Fusion",
-      "startDate": "2025-07-21T19:00",
-      "endDate": "2025-07-21T23:00",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {
-        "@type": "Place",
-        "name": "Salle Pleyel",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "252 Rue du Faubourg Saint-Honoré",
-          "addressLocality": "Paris",
-          "postalCode": "75008",
-          "addressCountry": "FR"
-        }
-      },
-      "image": [
-        "https://www.euromagfusion.com/assets/img/concert.jpg"
-      ],
-      "description": "Venez découvrir la fusion musicale algérienne avec les artistes Euromag Fusion lors d'un concert exceptionnel à Paris.",
-      "organizer": {
-        "@type": "Organization",
-        "name": "Euromag Fusion",
-        "url": "https://www.euromagfusion.com"
-      },
-      "offers": {
-        "@type": "Offer",
-        "url": "https://www.euromagfusion.com/billetterie",
-        "price": "35",
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock",
-        "validFrom": "2025-05-01T08:00"
-      }
-    }
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-    <link rel="stylesheet" href="./assets/css/styles-event-details.css">
-    <link rel="stylesheet" href="./assets/css/common.css">
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <link rel="stylesheet" href="./assets/css/styles-event-details.css">
 </head>
 
 <body>
@@ -59,29 +24,29 @@
         <div class="nav-container">
             <a href="index.html" class="logo" title="Euromag Fusion, accueil">
                 <span class="logo-icon"><img class="logo-img" src="./assets/img/logo.png" alt="Logo Euromag Fusion"
-                        loading="lazy" /></span>
+                        width="45" height="45" /></span>
                 <span class="logo-text">Euromag Fusion</span>
             </a>
             <ul class="nav-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="index.html#apropos">À Propos</a></li>
                 <li><a href="index.html#evenements">Concerts</a></li>
-                <!-- <li><a href="sapimmo.html" class="sapimmo-link active">
-                    <span>SAPIMMO</span>
-                    <span class="premium-tag">Premium</span>
-                </a></li> -->
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <div class="mobile-menu" id="mobileMenu">
+            <button type="button" class="mobile-menu" id="mobileMenu" aria-label="Ouvrir le menu"
+                aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
     <section class="event-hero" id="eventHero">
-        <img src="" alt="" class="event-hero-bg" id="eventHeroBg">
+        <picture>
+            <source media="(max-width: 768px)" id="eventHeroSourceMobile">
+            <img alt="" class="event-hero-bg" id="eventHeroBg">
+        </picture>
         <div class="event-hero-content">
             <h1 id="eventTitle">Chargement...</h1>
             <div class="event-meta-hero">
@@ -103,7 +68,7 @@
 
     <div class="breadcrumb">
         <div class="container">
-            <nav>
+            <nav aria-label="Fil d'Ariane">
                 <a href="index.html">Accueil</a>
                 <span>›</span>
                 <a href="index.html#evenements">Concerts</a>
@@ -161,12 +126,12 @@
                         </div>
                     </div>
 
-                    <div class="sidebar-card reservation-card" id="reservationCard" style="display: none;">
+                    <div class="sidebar-card reservation-card" id="reservationCard" hidden>
                         <h3>🎫 Réservation</h3>
                         <p class="reservation-description">Réservez vos billets dès maintenant pour ne pas manquer cet
                             événement exceptionnel !</p>
                         <a href="#" id="reservationButton" class="reservation-btn" target="_blank"
-                            rel="noopener noreferrer" onclick="return true;">
+                            rel="noopener noreferrer">
                             <span class="btn-text">Réserver mes billets</span>
                             <span class="btn-icon">→</span>
                         </a>
@@ -213,21 +178,16 @@
                 </div>
             </div>
 
-            <div class="video-section" id="videoSection">
-                <h2 style="text-align: center; margin-bottom: var(--space-8);">Vidéo du concert</h2>
-                <div class="video-player">
-                    <iframe id="eventVideo" src="" frameborder="0" allowfullscreen></iframe>
-                </div>
-            </div>
-
             <div class="gallery-section">
-                <h2 style="text-align: center; margin-bottom: var(--space-8);">Galerie photos</h2>
+                <h2>Galerie photos</h2>
 
-                <div class="carousel-container" id="galleryCarousel">
-                    <div class="carousel-dots" id="carouselDots">
-                    </div>
+                <div class="carousel-container" id="galleryCarousel" tabindex="0" role="region"
+                    aria-label="Galerie photos : flèches gauche et droite pour naviguer, Entrée pour agrandir">
+                    <div class="sr-only" id="carouselAnnouncement" aria-live="polite" aria-atomic="true"></div>
 
                     <div class="carousel-wrapper">
+                        <div class="carousel-dots" id="carouselDots"></div>
+
                         <button class="carousel-nav carousel-nav--prev" id="prevBtn" aria-label="Image précédente">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -261,18 +221,22 @@
                 </div>
             </div>
 
-            <div class="gallery-modal" id="galleryModal">
+            <div class="gallery-modal" id="galleryModal" tabindex="-1" role="dialog" aria-modal="true"
+                aria-label="Photo en plein écran">
                 <div class="gallery-modal-content">
-                    <button class="gallery-modal-close" id="modalCloseBtn">&times;</button>
+                    <button type="button" class="gallery-modal-close" id="modalCloseBtn"
+                        aria-label="Fermer">&times;</button>
 
-                    <button class="gallery-modal-nav gallery-modal-nav--prev" id="modalPrevBtn">
+                    <button type="button" class="gallery-modal-nav gallery-modal-nav--prev" id="modalPrevBtn"
+                        aria-label="Image précédente">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
                     </button>
 
-                    <button class="gallery-modal-nav gallery-modal-nav--next" id="modalNextBtn">
+                    <button type="button" class="gallery-modal-nav gallery-modal-nav--next" id="modalNextBtn"
+                        aria-label="Image suivante">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
@@ -295,18 +259,18 @@
                 <h2>Partager ce concert</h2>
                 <p>Faites découvrir la culture algérienne à vos proches</p>
                 <div class="share-buttons">
-                    <a href="#" class="share-btn" onclick="shareOnFacebook()" title="Facebook"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="share-btn" onclick="shareOnTwitter()" title="Twitter/X"><i
-                            class="fab fa-twitter"></i></a>
-                    <a href="#" class="share-btn" onclick="shareOnLinkedIn()" title="LinkedIn"><i
-                            class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="share-btn" onclick="shareOnWhatsApp()" title="WhatsApp"><i
-                            class="fab fa-whatsapp"></i></a>
-                    <a href="#" class="share-btn" onclick="shareOnTelegram()" title="Telegram"><i
-                            class="fab fa-telegram-plane"></i></a>
-                    <a href="#" class="share-btn" onclick="copyLink()" title="Copier le lien"><i
-                            class="fas fa-link"></i></a>
+                    <button type="button" class="share-btn" data-share="facebook" title="Facebook"
+                        aria-label="Partager sur Facebook"><i class="fab fa-facebook-f"></i></button>
+                    <button type="button" class="share-btn" data-share="twitter" title="X (Twitter)"
+                        aria-label="Partager sur X"><i class="fab fa-x-twitter"></i></button>
+                    <button type="button" class="share-btn" data-share="linkedin" title="LinkedIn"
+                        aria-label="Partager sur LinkedIn"><i class="fab fa-linkedin-in"></i></button>
+                    <button type="button" class="share-btn" data-share="whatsapp" title="WhatsApp"
+                        aria-label="Partager sur WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                    <button type="button" class="share-btn" data-share="telegram" title="Telegram"
+                        aria-label="Partager sur Telegram"><i class="fab fa-telegram-plane"></i></button>
+                    <button type="button" class="share-btn" data-share="copy" title="Copier le lien"
+                        aria-label="Copier le lien"><i class="fas fa-link"></i></button>
                 </div>
             </div>
         </div>
@@ -340,10 +304,6 @@
                             aria-label="Youtube Euromag Fusion" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-youtube"></i>
                         </a>
-                        <a href="#" class="social-link linkedin" aria-label="LinkedIn Euromag Fusion" target="_blank"
-                            rel="noopener noreferrer">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
                     </div>
                 </div>
                 <div class="footer-section">
@@ -352,26 +312,24 @@
                         <li><a href="index.html">Accueil</a></li>
                         <li><a href="index.html#apropos">À Propos</a></li>
                         <li><a href="index.html#evenements">Concerts</a></li>
-                        <!-- <li><a href="sapimmo.html">SAPIMMO</a></li> -->
                         <li><a href="index.html#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h3>Services</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Organisation de concerts</a></li>
-                        <li><a href="#">Spectacles culturels</a></li>
-                        <li><a href="#">Expositions et salons</a></li>
+                        <li><a href="#" data-legal="concerts">Organisation de concerts</a></li>
+                        <li><a href="#" data-legal="spectacles">Spectacles culturels</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h3>Informations Légales</h3>
                     <ul class="footer-links">
-                        <li><a href="#" class="legal-link" data-legal="mentions">Mentions légales</a></li>
-                        <li><a href="#" class="legal-link" data-legal="conditions">Conditions générales</a></li>
-                        <li><a href="#" class="legal-link" data-legal="confidentialite">Politique de confidentialité</a>
+                        <li><a href="#" data-legal="mentions">Mentions légales</a></li>
+                        <li><a href="#" data-legal="conditions">Conditions générales</a></li>
+                        <li><a href="#" data-legal="confidentialite">Politique de confidentialité</a>
                         </li>
-                        <li><a href="#" class="legal-link" data-legal="cookies">Gestion des cookies</a></li>
+                        <li><a href="#" data-legal="cookies">Gestion des cookies</a></li>
                     </ul>
                 </div>
             </div>
@@ -383,23 +341,14 @@
         </div>
     </footer>
 
-    <div id="videoModal" class="modal">
-        <div class="modal-content video-modal-content">
-            <span class="close-btn">&times;</span>
-            <div class="video-wrapper">
-                <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-
     <div id="legalModal" class="modal">
         <div class="modal-content legal-modal-content">
-            <span class="close-btn">&times;</span>
+            <button type="button" class="close-btn" aria-label="Fermer">&times;</button>
             <div id="legalContent"></div>
         </div>
     </div>
 
-    <button class="scroll-top" id="scrollTop">↑</button>
+    <button type="button" class="scroll-top" id="scrollTop" aria-label="Remonter en haut de la page">↑</button>
 
     <script src="./assets/js/common.js"></script>
     <script src="./assets/js/script-event-details.js"></script>

@@ -1,4 +1,6 @@
 // ===== EVENT DATA =====
+// Bannières : `image` = version ordinateur (1920 × 540 px),
+// `imageMobile` (facultatif) = version mobile (1080 × 1080 px), utilisée jusqu'à 768 px de large.
 const eventData = {
     chazil: {
         title: 'CHAZIL',
@@ -8,7 +10,6 @@ const eventData = {
         time: '19h30 - 23h00',
         price: '25€ / 29€',
         image: './assets/img/banner-chazil.webp',
-        video: '8hH7f3WKHyY',
         reservation: '',
         description: `
             <br />       
@@ -58,7 +59,6 @@ const eventData = {
         time: '18h30 - 22h30',
         price: '35€ / 38€',
         image: './assets/img/banner-babylone-djam-timoh.webp',
-        video: 'ng6WRvuHRxM',
         reservation: '',
         description: `
             <br />
@@ -101,7 +101,6 @@ const eventData = {
         time: '16h00 - 20h00',
         price: '25€ / 33€',
         image: './assets/img/banner-tarhanine-freeklane.webp',
-        video: 'c7UwD-7BBt0',
         reservation: '',
         description: `
             <br />
@@ -148,7 +147,6 @@ const eventData = {
         time: '18h30 - 22h30',
         price: '29€ / 35€',
         image: './assets/img/banner-tarhanine-cameleon.webp',
-        video: 'c7UwD-7BBt0',
         reservation: '',
         description: `
             <br />
@@ -192,7 +190,6 @@ const eventData = {
         time: '18h30 - 22h30',
         price: '35€',
         image: './assets/img/banner-kamel-aziz-tarik-ayad.webp',
-        video: 'c7UwD-7BBt0',
         reservation: '',
         description: `
             <br />
@@ -239,7 +236,6 @@ const eventData = {
         time: '19h00 - 22h30',
         price: '35€ / 39€',
         image: './assets/img/banner-bilal.webp',
-        video: 'c7UwD-7BBt0',
         reservation: '',
         description: `
             <br />
@@ -284,7 +280,6 @@ const eventData = {
         time: '19h00 - 22h30',
         price: '35€',
         image: './assets/img/banner-manal-lamia.webp',
-        video: 'c7UwD-7BBt0',
         reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/les-nuits-de-la-casbah-manal-gherbi-lamia-ait-amara',
         description: `
             <br />
@@ -335,195 +330,136 @@ const eventData = {
     }
 };
 
-// ===== GALLERY CAROUSEL CLASS =====
+// ===== GALLERY CAROUSEL =====
 class GalleryCarousel {
-    constructor(containerId, images) {
-        this.container = document.getElementById(containerId);
-        this.images = images || [];
+    constructor(container, images) {
+        this.container = container;
+        this.images = images;
         this.currentIndex = 0;
         this.isTransitioning = false;
         this.autoplayInterval = null;
         this.autoplayDelay = 4000;
         this.touchStartX = 0;
-        this.touchEndX = 0;
         this.isModalOpen = false;
-
-        if (this.images.length > 0) {
-            this.init();
-        }
-    }
-
-    init() {
-        if (!this.container) {
-            console.error('Carousel container not found');
-            return;
-        }
 
         this.createElements();
         this.bindEvents();
         this.updateDisplay();
-
-        if (this.images.length > 1) {
-            this.startAutoplay();
-        }
-
-        this.preloadImages();
+        this.startAutoplay();
     }
 
     createElements() {
-        this.track = this.container.querySelector('#carouselTrack');
-        this.dotsContainer = this.container.querySelector('#carouselDots');
-        this.thumbnailsContainer = this.container.querySelector('#carouselThumbnails');
-        this.prevBtn = this.container.querySelector('#prevBtn');
-        this.nextBtn = this.container.querySelector('#nextBtn');
-        this.progressBar = this.container.querySelector('#progressBar');
-        this.currentSlideSpan = this.container.querySelector('#currentSlide');
-        this.totalSlidesSpan = this.container.querySelector('#totalSlides');
-        this.track.innerHTML = '';
-        this.dotsContainer.innerHTML = '';
-        this.thumbnailsContainer.innerHTML = '';
+        const $ = (id) => document.getElementById(id);
+
+        this.track = $('carouselTrack');
+        this.dotsContainer = $('carouselDots');
+        this.thumbnailsContainer = $('carouselThumbnails');
+        this.prevBtn = $('prevBtn');
+        this.nextBtn = $('nextBtn');
+        this.progressBar = $('progressBar');
+        this.currentSlideSpan = $('currentSlide');
+        this.announcement = $('carouselAnnouncement');
+        this.modal = $('galleryModal');
+        this.modalImage = $('modalImage');
+        this.modalCurrentSlide = $('modalCurrentSlide');
 
         this.images.forEach((image, index) => {
             const slide = document.createElement('div');
             slide.className = 'carousel-slide';
-            slide.innerHTML = `
-                <img src="${image}" alt="Photo ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}" />
-            `;
+            slide.innerHTML = `<img src="${image}" alt="Photo ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">`;
             this.track.appendChild(slide);
-        });
 
-        this.images.forEach((_, index) => {
             const dot = document.createElement('button');
+            dot.type = 'button';
             dot.className = 'carousel-dot';
             dot.setAttribute('aria-label', `Aller à l'image ${index + 1}`);
             dot.addEventListener('click', () => this.goToSlide(index));
             this.dotsContainer.appendChild(dot);
-        });
 
-        this.images.forEach((image, index) => {
-            const thumbnail = document.createElement('div');
+            const thumbnail = document.createElement('button');
+            thumbnail.type = 'button';
             thumbnail.className = 'carousel-thumbnail';
-            thumbnail.innerHTML = `<img src="${image}" alt="Miniature ${index + 1}" loading="lazy" />`;
+            thumbnail.setAttribute('aria-label', `Afficher l'image ${index + 1}`);
+            thumbnail.innerHTML = `<img src="${image}" alt="" loading="lazy">`;
             thumbnail.addEventListener('click', () => this.goToSlide(index));
             this.thumbnailsContainer.appendChild(thumbnail);
         });
 
-        this.totalSlidesSpan.textContent = this.images.length;
-        this.modal = document.getElementById('galleryModal');
-        this.modalImage = document.getElementById('modalImage');
-        this.modalCurrentSlide = document.getElementById('modalCurrentSlide');
-        this.modalTotalSlides = document.getElementById('modalTotalSlides');
-        this.modalCloseBtn = document.getElementById('modalCloseBtn');
-        this.modalPrevBtn = document.getElementById('modalPrevBtn');
-        this.modalNextBtn = document.getElementById('modalNextBtn');
+        $('totalSlides').textContent = this.images.length;
+        $('modalTotalSlides').textContent = this.images.length;
 
-        if (this.modalTotalSlides) {
-            this.modalTotalSlides.textContent = this.images.length;
+        if (this.images.length <= 1) {
+            this.prevBtn.hidden = true;
+            this.nextBtn.hidden = true;
+            this.dotsContainer.hidden = true;
         }
     }
 
     bindEvents() {
-        this.prevBtn?.addEventListener('click', () => this.previousSlide());
-        this.nextBtn?.addEventListener('click', () => this.nextSlide());
+        this.prevBtn.addEventListener('click', () => this.previousSlide());
+        this.nextBtn.addEventListener('click', () => this.nextSlide());
 
-        this.track.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
-        this.track.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
+        this.track.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.touches[0].clientX;
+            this.stopAutoplay();
+        }, { passive: true });
 
-        this.container.addEventListener('keydown', (e) => this.handleKeyDown(e));
-
-        this.track.addEventListener('click', (e) => {
-            if (e.target.tagName === 'IMG') {
-                this.openModal();
+        this.track.addEventListener('touchend', (e) => {
+            const diff = this.touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                diff > 0 ? this.nextSlide() : this.previousSlide();
             }
+            this.startAutoplay();
+        }, { passive: true });
+
+        this.container.addEventListener('keydown', (e) => {
+            const actions = {
+                ArrowLeft: () => this.previousSlide(),
+                ArrowRight: () => this.nextSlide(),
+                Home: () => this.goToSlide(0),
+                End: () => this.goToSlide(this.images.length - 1),
+                Enter: () => this.openModal()
+            };
+            if (!actions[e.key] || e.target !== this.container) return;
+            e.preventDefault();
+            actions[e.key]();
         });
 
-        this.modalCloseBtn?.addEventListener('click', () => this.closeModal());
-        this.modalPrevBtn?.addEventListener('click', () => this.modalPreviousSlide());
-        this.modalNextBtn?.addEventListener('click', () => this.modalNextSlide());
+        this.track.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG') this.openModal();
+        });
 
-        this.modal?.addEventListener('click', (e) => {
-            if (e.target === this.modal) {
-                this.closeModal();
-            }
+        document.getElementById('modalCloseBtn').addEventListener('click', () => this.closeModal());
+        document.getElementById('modalPrevBtn').addEventListener('click', () => this.modalStep(-1));
+        document.getElementById('modalNextBtn').addEventListener('click', () => this.modalStep(1));
+
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) this.closeModal();
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isModalOpen) {
-                this.closeModal();
-            }
+            if (!this.isModalOpen) return;
+            if (e.key === 'Escape') this.closeModal();
+            if (e.key === 'ArrowLeft') this.modalStep(-1);
+            if (e.key === 'ArrowRight') this.modalStep(1);
         });
 
         this.container.addEventListener('mouseenter', () => this.stopAutoplay());
         this.container.addEventListener('mouseleave', () => this.startAutoplay());
 
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                this.stopAutoplay();
-            } else if (!this.isModalOpen && this.images.length > 1) {
-                this.startAutoplay();
-            }
+            document.hidden ? this.stopAutoplay() : this.startAutoplay();
         });
     }
 
-    handleTouchStart(e) {
-        this.touchStartX = e.touches[0].clientX;
-        this.stopAutoplay();
-    }
-
-    handleTouchEnd(e) {
-        this.touchEndX = e.changedTouches[0].clientX;
-        this.handleSwipe();
-        if (this.images.length > 1) {
-            this.startAutoplay();
-        }
-    }
-
-    handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = this.touchStartX - this.touchEndX;
-
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                this.nextSlide();
-            } else {
-                this.previousSlide();
-            }
-        }
-    }
-
-    handleKeyDown(e) {
-        switch (e.key) {
-            case 'ArrowLeft':
-                e.preventDefault();
-                this.previousSlide();
-                break;
-            case 'ArrowRight':
-                e.preventDefault();
-                this.nextSlide();
-                break;
-            case 'Home':
-                e.preventDefault();
-                this.goToSlide(0);
-                break;
-            case 'End':
-                e.preventDefault();
-                this.goToSlide(this.images.length - 1);
-                break;
-        }
-    }
-
     goToSlide(index) {
-        if (this.isTransitioning || index === this.currentIndex || this.images.length <= 1) return;
+        if (this.isTransitioning || this.images.length <= 1) return;
+
+        const nextIndex = (index + this.images.length) % this.images.length;
+        if (nextIndex === this.currentIndex) return;
 
         this.isTransitioning = true;
-        this.currentIndex = index;
-
-        if (this.currentIndex < 0) {
-            this.currentIndex = this.images.length - 1;
-        } else if (this.currentIndex >= this.images.length) {
-            this.currentIndex = 0;
-        }
-
+        this.currentIndex = nextIndex;
         this.updateDisplay();
 
         setTimeout(() => {
@@ -540,11 +476,9 @@ class GalleryCarousel {
     }
 
     updateDisplay() {
-        const translateX = -this.currentIndex * 100;
-        this.track.style.transform = `translateX(${translateX}%)`;
+        this.track.style.transform = `translateX(${-this.currentIndex * 100}%)`;
 
-        const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
-        dots.forEach((dot, index) => {
+        this.dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, index) => {
             dot.classList.toggle('active', index === this.currentIndex);
         });
 
@@ -552,729 +486,197 @@ class GalleryCarousel {
         thumbnails.forEach((thumbnail, index) => {
             thumbnail.classList.toggle('active', index === this.currentIndex);
         });
+        this.scrollThumbnailIntoView(thumbnails[this.currentIndex]);
 
-        const activeThumbnail = thumbnails[this.currentIndex];
-        if (activeThumbnail && this.thumbnailsContainer) {
-            const gallerySection = document.querySelector('.gallery-section');
-            if (gallerySection) {
-                const galleryRect = gallerySection.getBoundingClientRect();
-                const viewportHeight = window.innerHeight;
-
-                const isGalleryVisible = galleryRect.top < viewportHeight && galleryRect.bottom > 0;
-
-                if (isGalleryVisible) {
-                    const containerRect = this.thumbnailsContainer.getBoundingClientRect();
-                    const thumbnailRect = activeThumbnail.getBoundingClientRect();
-
-                    if (thumbnailRect.left < containerRect.left || thumbnailRect.right > containerRect.right) {
-                        activeThumbnail.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'nearest',
-                            inline: 'center'
-                        });
-                    }
-                }
-            }
-        }
-
-        const progressWidth = ((this.currentIndex + 1) / this.images.length) * 100;
-        this.progressBar.style.width = `${progressWidth}%`;
-
+        this.progressBar.style.width = `${((this.currentIndex + 1) / this.images.length) * 100}%`;
         this.currentSlideSpan.textContent = this.currentIndex + 1;
-
-        this.updateNavigationState();
-
-        this.announceSlideChange();
+        this.announcement.textContent = `Image ${this.currentIndex + 1} sur ${this.images.length}`;
     }
 
-    updateNavigationState() {
-        if (this.images.length <= 1) {
-            if (this.prevBtn) this.prevBtn.style.display = 'none';
-            if (this.nextBtn) this.nextBtn.style.display = 'none';
-            if (this.dotsContainer) this.dotsContainer.style.display = 'none';
-            this.stopAutoplay();
-            return;
+    // Fait défiler la bande de miniatures sans faire sauter la page quand la galerie n'est pas visible.
+    scrollThumbnailIntoView(thumbnail) {
+        if (!thumbnail) return;
+
+        const galleryRect = this.container.getBoundingClientRect();
+        if (galleryRect.top >= window.innerHeight || galleryRect.bottom <= 0) return;
+
+        const containerRect = this.thumbnailsContainer.getBoundingClientRect();
+        const thumbnailRect = thumbnail.getBoundingClientRect();
+        if (thumbnailRect.left < containerRect.left || thumbnailRect.right > containerRect.right) {
+            thumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
-
-        if (this.prevBtn) this.prevBtn.style.display = 'flex';
-        if (this.nextBtn) this.nextBtn.style.display = 'flex';
-        if (this.dotsContainer) this.dotsContainer.style.display = 'flex';
-    }
-
-    announceSlideChange() {
-        let announcement = document.getElementById('carousel-announcement');
-        if (!announcement) {
-            announcement = document.createElement('div');
-            announcement.id = 'carousel-announcement';
-            announcement.setAttribute('aria-live', 'polite');
-            announcement.setAttribute('aria-atomic', 'true');
-            announcement.style.cssText = `
-                position: absolute;
-                left: -10000px;
-                width: 1px;
-                height: 1px;
-                overflow: hidden;
-            `;
-            document.body.appendChild(announcement);
-        }
-
-        announcement.textContent = `Image ${this.currentIndex + 1} sur ${this.images.length}`;
     }
 
     startAutoplay() {
-        if (this.autoplayInterval || this.images.length <= 1) return;
+        if (this.autoplayInterval || this.images.length <= 1 || this.isModalOpen) return;
 
         this.autoplayInterval = setInterval(() => {
-            if (!this.isModalOpen && !this.isTransitioning) {
-                this.nextSlide();
-            }
+            if (!this.isTransitioning) this.nextSlide();
         }, this.autoplayDelay);
     }
 
     stopAutoplay() {
-        if (this.autoplayInterval) {
-            clearInterval(this.autoplayInterval);
-            this.autoplayInterval = null;
-        }
-    }
-
-    preloadImages() {
-        this.images.forEach((src, index) => {
-            if (index <= 2) {
-                const img = new Image();
-                img.src = src;
-            }
-        });
+        clearInterval(this.autoplayInterval);
+        this.autoplayInterval = null;
     }
 
     openModal() {
         this.isModalOpen = true;
-        if (this.modal) {
-            this.modal.classList.add('active');
-            this.updateModalDisplay();
-        }
         this.stopAutoplay();
-
+        this.updateModalDisplay();
+        this.modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-
-        if (this.modal) {
-            this.modal.focus();
-        }
+        this.modal.focus();
     }
 
     closeModal() {
         this.isModalOpen = false;
-        if (this.modal) {
-            this.modal.classList.remove('active');
-        }
-
+        this.modal.classList.remove('active');
         document.body.style.overflow = '';
-
-        if (this.images.length > 1) {
-            this.startAutoplay();
-        }
-
         this.container.focus();
+        this.startAutoplay();
     }
 
-    modalNextSlide() {
-        this.goToSlide(this.currentIndex + 1);
-        this.updateModalDisplay();
-    }
-
-    modalPreviousSlide() {
-        this.goToSlide(this.currentIndex - 1);
+    modalStep(step) {
+        this.goToSlide(this.currentIndex + step);
         this.updateModalDisplay();
     }
 
     updateModalDisplay() {
-        if (this.modalImage && this.images[this.currentIndex]) {
-            this.modalImage.src = this.images[this.currentIndex];
-            this.modalImage.alt = `Photo ${this.currentIndex + 1}`;
-        }
-
-        if (this.modalCurrentSlide) {
-            this.modalCurrentSlide.textContent = this.currentIndex + 1;
-        }
-    }
-
-    destroy() {
-        this.stopAutoplay();
-
-        const announcement = document.getElementById('carousel-announcement');
-        if (announcement) {
-            announcement.remove();
-        }
-    }
-
-    getCurrentIndex() {
-        return this.currentIndex;
-    }
-
-    getTotalSlides() {
-        return this.images.length;
+        this.modalImage.src = this.images[this.currentIndex];
+        this.modalImage.alt = `Photo ${this.currentIndex + 1}`;
+        this.modalCurrentSlide.textContent = this.currentIndex + 1;
     }
 }
 
-// ===== DOM ELEMENTS =====
-const elements = {
-    scrollTop: document.getElementById('scrollTop')
-};
-
-// ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', function () {
-    if (!document.documentElement.style.getPropertyValue('--gray-50')) {
-        document.documentElement.style.setProperty('--gray-50', '#f9fafb');
-    }
-
-    if (window.NavigationFooter) {
-        NavigationFooter.initNavigation();
-        NavigationFooter.initMobileMenu();
-        NavigationFooter.initScrollToTop();
-        NavigationFooter.initLegalAndServices();
-
-        window.addEventListener('scroll', NavigationFooter.debounce(() => {
-            requestAnimationFrame(() => {
-                NavigationFooter.handleScroll();
-                handleScroll();
-            });
-        }, 10));
-    }
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('event') || 'chazil';
+// ===== INITIALISATION =====
+document.addEventListener('DOMContentLoaded', () => {
+    const eventId = new URLSearchParams(window.location.search).get('event') || 'chazil';
     const event = eventData[eventId];
 
-    if (event) {
-        populateEventContent(event);
-    } else {
+    if (!event) {
         window.location.href = 'index.html#evenements';
+        return;
     }
 
-    initEventListeners();
-    enhanceKeyboardNavigation();
-    addAdvancedTouchSupport();
-    handleResponsiveImages();
-    setupLazyLoading();
-
-    document.documentElement.classList.add('js-enabled');
+    populateEventContent(event);
+    initShareButtons(event);
 
     console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
     console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
 });
 
-// ===== POPULATE EVENT CONTENT =====
+// ===== CONTENU DE L'ÉVÉNEMENT =====
 function populateEventContent(event) {
-    document.getElementById('eventTitle').textContent = event.title;
-    document.getElementById('eventDate').textContent = event.date;
-    document.getElementById('eventLocation').textContent = event.location;
-    document.getElementById('eventType').textContent = event.type;
-    document.getElementById('breadcrumbTitle').textContent = event.title;
-    document.getElementById('eventHeroBg').src = event.image;
-    document.getElementById('eventHeroBg').alt = event.title;
-    document.getElementById('sidebarDate').textContent = event.date;
-    document.getElementById('sidebarLocation').textContent = event.location;
-    document.getElementById('sidebarTime').textContent = event.time;
-    document.getElementById('sidebarPrice').textContent = event.price;
+    const setText = (id, text) => { document.getElementById(id).textContent = text; };
+
+    setText('eventTitle', event.title);
+    setText('eventDate', event.date);
+    setText('eventLocation', event.location);
+    setText('eventType', event.type);
+    setText('breadcrumbTitle', event.title);
+    setText('sidebarDate', event.date);
+    setText('sidebarLocation', event.location);
+    setText('sidebarTime', event.time);
+    setText('sidebarPrice', event.price);
+
+    setupHeroBanner(event);
+
     document.getElementById('eventFullDescription').innerHTML = event.description;
 
-    // GESTION BOUTON RÉSERVATION
-    const reservationCard = document.getElementById('reservationCard');
-    const reservationButton = document.getElementById('reservationButton');
-
-    if (reservationCard && reservationButton) {
-        if (event.reservation && event.reservation.trim() !== '') {
-            reservationCard.style.display = 'block';
-            reservationButton.href = event.reservation;
-
-            // FORCER L'OUVERTURE DU LIEN AU CLIC
-            reservationButton.onclick = function (e) {
-                e.stopPropagation();
-                window.open(event.reservation, '_blank', 'noopener,noreferrer');
-                return false;
-            };
-
-            console.log('✅ Réservation activée:', event.reservation);
-        } else {
-            reservationCard.style.display = 'none';
-            console.log('❌ Pas de réservation');
-        }
+    if (event.reservation) {
+        document.getElementById('reservationButton').href = event.reservation;
+        document.getElementById('reservationCard').hidden = false;
     }
 
     populateProgram(event.program);
-    populateVideo(event.video);
-    populateGallery(event.gallery);
+
+    const carousel = document.getElementById('galleryCarousel');
+    if (event.gallery?.length) {
+        new GalleryCarousel(carousel, event.gallery);
+    } else {
+        carousel.closest('.gallery-section').hidden = true;
+    }
 
     document.title = `${event.title} - Euromag Fusion`;
 }
 
-// ===== POPULATE PROGRAM =====
+// Bannière : version mobile facultative (imageMobile). Si le format de l'image affichée
+// correspond à peu près au cadre, elle le remplit ; sinon elle reste entière sur un fond flou.
+const BANNER_RATIO_TOLERANCE = 1.5;
+
+function setupHeroBanner(event) {
+    const hero = document.getElementById('eventHero');
+    const banner = document.getElementById('eventHeroBg');
+    const mobileSource = document.getElementById('eventHeroSourceMobile');
+
+    if (event.imageMobile) {
+        mobileSource.srcset = event.imageMobile;
+    } else {
+        mobileSource.remove();
+    }
+
+    const updateFit = () => {
+        if (!banner.naturalWidth) return;
+
+        const imageRatio = banner.naturalWidth / banner.naturalHeight;
+        const frameRatio = hero.clientWidth / hero.clientHeight;
+        const isCloseToFrame = Math.max(imageRatio / frameRatio, frameRatio / imageRatio) <= BANNER_RATIO_TOLERANCE;
+
+        hero.classList.toggle('is-banner-fitted', isCloseToFrame);
+        // URL absolue : dans une variable CSS, un chemin relatif serait résolu depuis le dossier de la feuille de style.
+        hero.style.setProperty('--hero-image', `url("${banner.currentSrc}")`);
+    };
+
+    // "load" se redéclenche quand le navigateur bascule entre version mobile et ordinateur.
+    banner.addEventListener('load', updateFit);
+    window.addEventListener('resize', updateFit);
+
+    banner.alt = event.title;
+    banner.src = event.image;
+}
+
 function populateProgram(program) {
     const programTimeline = document.getElementById('programTimeline');
-    programTimeline.innerHTML = '';
 
-    program.forEach(item => {
-        const programItem = document.createElement('div');
-        programItem.className = 'program-item';
-        programItem.innerHTML = `
+    programTimeline.innerHTML = program.map(item => `
+        <div class="program-item">
             <div class="program-time">${item.time}</div>
             <div class="program-title">${item.title}</div>
             <div class="program-description">${item.description}</div>
-        `;
-        programTimeline.appendChild(programItem);
-    });
+        </div>
+    `).join('');
 }
 
-// ===== POPULATE VIDEO =====
-function populateVideo(videoId) {
-    const videoSection = document.getElementById('videoSection');
-    const eventVideo = document.getElementById('eventVideo');
+// ===== PARTAGE =====
+function initShareButtons(event) {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(`${event.title} - Découvrez cet événement culturel algérien`);
+    const shareUrls = {
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+        twitter: `https://twitter.com/intent/tweet?url=${url}&text=${text}`,
+        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+        whatsapp: `https://wa.me/?text=${text}%20${url}`,
+        telegram: `https://t.me/share/url?url=${url}&text=${text}`
+    };
 
-    if (videoId) {
-        eventVideo.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
-        videoSection.style.display = 'block';
-    } else {
-        videoSection.style.display = 'none';
-    }
-}
-
-// ===== POPULATE GALLERY WITH NEW CAROUSEL =====
-function populateGallery(gallery) {
-    if (window.galleryCarousel && typeof window.galleryCarousel.destroy === 'function') {
-        window.galleryCarousel.destroy();
-    }
-
-    window.galleryCarousel = null;
-
-    if (gallery && gallery.length > 0) {
-        window.galleryCarousel = new GalleryCarousel('galleryCarousel', gallery);
-    }
-}
-
-// ===== SCROLL FUNCTIONALITY =====
-function handleScroll() {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (elements.scrollTop) {
-        if (scrollY > 300) {
-            elements.scrollTop.classList.add('show');
-        } else {
-            elements.scrollTop.classList.remove('show');
-        }
-    }
-}
-
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-// ===== EVENT LISTENERS =====
-function initEventListeners() {
-    window.addEventListener('scroll', throttle(handleScroll, 16), { passive: true });
-
-    if (elements.scrollTop) {
-        elements.scrollTop.addEventListener('click', scrollToTop);
-    }
-
-    window.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            const imageModal = document.querySelector('.image-modal');
-            if (imageModal) {
-                closeImageModal(imageModal);
+    document.querySelectorAll('[data-share]').forEach(button => {
+        button.addEventListener('click', () => {
+            const network = button.dataset.share;
+            if (network === 'copy') {
+                copyLink();
+            } else {
+                window.open(shareUrls[network], '_blank', 'noopener');
             }
-        }
+        });
     });
 }
 
-// ===== SHARE FUNCTIONS =====
-function shareOnFacebook() {
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-}
-
-function shareOnTwitter() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('event') || 'chazil';
-    const event = eventData[eventId];
-
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(`${event.title} - Découvrez cet événement culturel algérien`);
-    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
-}
-
-function shareOnLinkedIn() {
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
-}
-
-function shareOnWhatsApp() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('event') || 'chazil';
-    const event = eventData[eventId];
-
-    const text = encodeURIComponent(`${event.title} - Découvrez cet événement culturel algérien ${window.location.href}`);
-    window.open(`https://wa.me/?text=${text}`, '_blank');
-}
-
-function shareOnTelegram() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('event') || 'chazil';
-    const event = eventData[eventId];
-
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(`${event.title} - Découvrez cet événement culturel algérien`);
-    window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
-}
-
-function copyLink() {
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-            showNotification('Lien copié dans le presse-papiers !', 'success');
-        }).catch(() => {
-            fallbackCopyTextToClipboard(window.location.href);
-        });
-    } else {
-        fallbackCopyTextToClipboard(window.location.href);
-    }
-}
-
-// ===== FALLBACK COPY FUNCTION =====
-function fallbackCopyTextToClipboard(text) {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.top = '0';
-    textArea.style.left = '0';
-    textArea.style.width = '2em';
-    textArea.style.height = '2em';
-    textArea.style.padding = '0';
-    textArea.style.border = 'none';
-    textArea.style.outline = 'none';
-    textArea.style.boxShadow = 'none';
-    textArea.style.background = 'transparent';
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-
+async function copyLink() {
     try {
-        document.execCommand('copy');
-        showNotification('Lien copié dans le presse-papiers !', 'success');
-    } catch (err) {
-        showNotification('Impossible de copier le lien', 'error');
-    }
-
-    document.body.removeChild(textArea);
-}
-
-// ===== NOTIFICATION SYSTEM =====
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.textContent = message;
-    notification.className = `notification notification-${type}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 1rem;
-        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        z-index: 3000;
-        animation: slideInRight 0.3s ease;
-        font-weight: 600;
-        max-width: 300px;
-    `;
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 3000);
-}
-
-// ===== LEGACY IMAGE MODAL SUPPORT =====
-function openImageModal(imageSrc) {
-    const modal = document.createElement('div');
-    modal.className = 'image-modal';
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 3000;
-        cursor: pointer;
-        animation: fadeIn 0.3s ease;
-    `;
-
-    const img = document.createElement('img');
-    img.src = imageSrc.replace('w=300&h=200', 'w=1200&h=800');
-    img.style.cssText = `
-        max-width: 90%;
-        max-height: 90%;
-        border-radius: 1rem;
-        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-        animation: scaleIn 0.3s ease;
-    `;
-
-    const closeBtn = document.createElement('button');
-    closeBtn.innerHTML = '&times;';
-    closeBtn.style.cssText = `
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: rgba(255, 255, 255, 0.9);
-        color: #000;
-        border: none;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        font-size: 2rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-    `;
-
-    closeBtn.addEventListener('mouseenter', () => {
-        closeBtn.style.background = '#ef4444';
-        closeBtn.style.color = 'white';
-    });
-
-    closeBtn.addEventListener('mouseleave', () => {
-        closeBtn.style.background = 'rgba(255, 255, 255, 0.9)';
-        closeBtn.style.color = '#000';
-    });
-
-    modal.appendChild(img);
-    modal.appendChild(closeBtn);
-    document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
-
-    const closeModal = () => closeImageModal(modal);
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-    closeBtn.addEventListener('click', closeModal);
-}
-
-function closeImageModal(modal) {
-    modal.style.animation = 'fadeOut 0.3s ease';
-    setTimeout(() => {
-        if (document.body.contains(modal)) {
-            document.body.removeChild(modal);
-        }
-        document.body.style.overflow = 'auto';
-    }, 300);
-}
-
-// ===== UTILITY FUNCTIONS =====
-function loadImageWithRetry(src, maxRetries = 3) {
-    return new Promise((resolve, reject) => {
-        let retries = 0;
-
-        function attemptLoad() {
-            const img = new Image();
-
-            img.onload = () => resolve(img);
-            img.onerror = () => {
-                retries++;
-                if (retries <= maxRetries) {
-                    setTimeout(attemptLoad, 1000 * retries);
-                } else {
-                    reject(new Error(`Failed to load image after ${maxRetries} retries`));
-                }
-            };
-
-            img.src = src;
-        }
-
-        attemptLoad();
-    });
-}
-
-function setupLazyLoading() {
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    const src = img.dataset.src;
-
-                    if (src) {
-                        loadImageWithRetry(src)
-                            .then(() => {
-                                img.src = src;
-                                img.classList.remove('loading');
-                                img.removeAttribute('data-src');
-                            })
-                            .catch(() => {
-                                img.classList.add('error');
-                                console.error('Failed to load image:', src);
-                            });
-                    }
-
-                    observer.unobserve(img);
-                }
-            });
-        }, {
-            rootMargin: '50px 0px',
-            threshold: 0.01
-        });
-
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
+        await navigator.clipboard.writeText(window.location.href);
+        showNotification('Lien copié dans le presse-papiers !', 'success', 3000);
+    } catch {
+        showNotification('Impossible de copier le lien', 'error', 3000);
     }
 }
-
-function enhanceKeyboardNavigation() {
-    const carousel = document.getElementById('galleryCarousel');
-    if (carousel) {
-        carousel.setAttribute('tabindex', '0');
-        carousel.setAttribute('role', 'region');
-        carousel.setAttribute('aria-label', 'Galerie photos avec navigation au clavier');
-
-        const instructions = document.createElement('div');
-        instructions.className = 'sr-only';
-        instructions.textContent = 'Utilisez les flèches gauche et droite pour naviguer, Entrée pour ouvrir en plein écran';
-        carousel.appendChild(instructions);
-    }
-}
-
-function addAdvancedTouchSupport() {
-    let isPointerDown = false;
-    let startX = 0;
-    let currentX = 0;
-    let diff = 0;
-
-    const carousel = document.getElementById('galleryCarousel');
-    if (!carousel) return;
-
-    const track = carousel.querySelector('.carousel-track');
-    if (!track) return;
-
-    track.addEventListener('pointerdown', (e) => {
-        isPointerDown = true;
-        startX = e.clientX;
-        track.style.cursor = 'grabbing';
-        e.preventDefault();
-    });
-
-    track.addEventListener('pointermove', (e) => {
-        if (!isPointerDown) return;
-
-        currentX = e.clientX;
-        diff = currentX - startX;
-
-        if (window.galleryCarousel) {
-            track.style.transform = `translateX(calc(-${window.galleryCarousel.currentIndex * 100}% + ${diff * 0.3}px))`;
-        }
-    });
-
-    track.addEventListener('pointerup', () => {
-        if (!isPointerDown) return;
-
-        isPointerDown = false;
-        track.style.cursor = 'grab';
-
-        if (window.galleryCarousel) {
-            track.style.transform = `translateX(-${window.galleryCarousel.currentIndex * 100}%)`;
-
-            const threshold = 50;
-            if (Math.abs(diff) > threshold) {
-                if (diff > 0) {
-                    window.galleryCarousel.previousSlide();
-                } else {
-                    window.galleryCarousel.nextSlide();
-                }
-            }
-        }
-
-        diff = 0;
-    });
-
-    track.addEventListener('pointerleave', () => {
-        if (isPointerDown) {
-            isPointerDown = false;
-            track.style.cursor = 'grab';
-            if (window.galleryCarousel) {
-                track.style.transform = `translateX(-${window.galleryCarousel.currentIndex * 100}%)`;
-            }
-        }
-    });
-}
-
-function handleResponsiveImages() {
-    const carousel = document.getElementById('galleryCarousel');
-    if (!carousel) return;
-
-    function updateImageSources() {
-        const images = carousel.querySelectorAll('img');
-        const isLargeScreen = window.innerWidth > 1024;
-        const isMediumScreen = window.innerWidth > 768;
-
-        images.forEach(img => {
-            const baseSrc = img.src || img.dataset.src;
-            if (baseSrc) {
-                let newSrc = baseSrc;
-
-                if (isLargeScreen) {
-                    newSrc = baseSrc.replace(/w=\d+/, 'w=1200').replace(/h=\d+/, 'h=800');
-                } else if (isMediumScreen) {
-                    newSrc = baseSrc.replace(/w=\d+/, 'w=800').replace(/h=\d+/, 'h=600');
-                } else {
-                    newSrc = baseSrc.replace(/w=\d+/, 'w=600').replace(/h=\d+/, 'h=400');
-                }
-
-                if (img.src !== newSrc) {
-                    img.src = newSrc;
-                }
-            }
-        });
-    }
-
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(updateImageSources, 250);
-    });
-
-    updateImageSources();
-}
-
-// ===== PERFORMANCE OPTIMIZATION =====
-function throttle(func, limit) {
-    let inThrottle;
-    return function () {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    }
-}
-
-window.shareOnFacebook = shareOnFacebook;
-window.shareOnTwitter = shareOnTwitter;
-window.shareOnLinkedIn = shareOnLinkedIn;
-window.shareOnWhatsApp = shareOnWhatsApp;
-window.shareOnTelegram = shareOnTelegram;
-window.copyLink = copyLink;

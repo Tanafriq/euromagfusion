@@ -431,21 +431,6 @@ body {
     transform: translateY(0);
 }
 
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: left 0.8s;
-}
-
-.btn:hover::before {
-    left: 100%;
-}
-
 .btn-shine {
     position: absolute;
     top: 0;
@@ -633,6 +618,7 @@ body {
     opacity: 0.92;
     line-height: 1.6;
     margin: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 /* ===== INTERACTIVE ELEMENTS ===== */
@@ -814,13 +800,6 @@ body {
     padding-top: 2rem;
 }
 
-.footer-divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    margin-bottom: 1.5rem;
-}
-
 .footer-bottom p {
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
@@ -843,8 +822,6 @@ body {
     border-radius: 0.25rem;
     border: 1px solid transparent;
     transition: all 300ms ease;
-    position: relative;
-    overflow: hidden;
     cursor: pointer;
 }
 
@@ -857,11 +834,64 @@ body {
     text-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
 }
 
-.developer-link:hover::before {
-    left: 100%;
+/* ===== EFFETS GÉNÉRÉS PAR 404.js ===== */
+.particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.6;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple 0.8s ease-out;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.sparkle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: #fbbf24;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    animation: sparkleAnimation 0.6s ease-out forwards;
 }
 
 /* ===== ANIMATIONS ===== */
+@keyframes ripple {
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes sparkleAnimation {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1) rotate(180deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0) rotate(360deg);
+        opacity: 0;
+    }
+}
+
 @keyframes gradientShift {
     0%, 100% {
         background-position: 0% 50%;
@@ -1216,13 +1246,6 @@ body {
     
     .glitch-overlay {
         display: none;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --white: #f8fafc;
-        --gray-100: #f1f5f9;
     }
 }
 

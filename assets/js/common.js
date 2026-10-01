@@ -1,108 +1,6 @@
-// ==================== NAVIGATION & FOOTER ====================
-
-let navbar;
-let scrollTopBtn;
-
-// ==================== NAVIGATION ====================
-function initNavigation() {
-    navbar = document.getElementById('navbar');
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = anchor.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
-            if (!targetElement) return;
-
-            const navHeight = navbar.offsetHeight;
-            const targetPosition = targetElement.offsetTop - navHeight;
-            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-
-            const navLinks = document.querySelector('.nav-links');
-            const mobileMenu = document.getElementById('mobileMenu');
-            navLinks.classList.remove('active');
-            mobileMenu.classList.remove('active');
-        });
-    });
-}
-
-// ==================== MOBILE MENU ====================
-function initMobileMenu() {
-    const mobileMenu = document.getElementById('mobileMenu');
-    const navLinks = document.querySelector('.nav-links');
-    if (!mobileMenu || !navLinks) return;
-
-    mobileMenu.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
-        navLinks.classList.toggle('active');
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!mobileMenu.contains(e.target) && !navLinks.contains(e.target)) {
-            mobileMenu.classList.remove('active');
-            navLinks.classList.remove('active');
-        }
-    });
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            mobileMenu.classList.remove('active');
-            navLinks.classList.remove('active');
-        }
-    });
-}
-
-// ==================== SCROLL TO TOP ====================
-function initScrollToTop() {
-    scrollTopBtn = document.getElementById('scrollTop');
-    if (!scrollTopBtn) return;
-    scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-}
-
-// ==================== MODAL MANAGER FOR LEGAL CONTENT ====================
-const LegalModalManager = (() => {
-    const modals = {};
-
-    function register(id, { onOpen, onClose } = {}) {
-        const modal = document.getElementById(id);
-        if (!modal) return;
-
-        const closeButtons = modal.querySelectorAll('.close-btn');
-
-        function open() {
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            onOpen?.(modal);
-        }
-
-        function close() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            onClose?.(modal);
-        }
-
-        closeButtons.forEach(btn => btn.addEventListener('click', close));
-        modal.addEventListener('click', e => { if (e.target === modal) close(); });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.style.display === 'block') close(); });
-
-        modals[id] = { open, close, modal };
-    }
-
-    function open(id) { modals[id]?.open(); }
-    function close(id) { modals[id]?.close(); }
-
-    return { register, open, close };
-})();
-
-// ==================== LEGAL & SERVICES CONTENT ====================
-function initLegalAndServices() {
-    const legalModal = document.getElementById('legalModal');
-    const legalContent = document.getElementById('legalContent');
-    if (!legalModal || !legalContent) return;
-
-    LegalModalManager.register('legalModal');
-
-    const legalData = {
-        mentions: `
+// ==================== CONTENU DES MODALES (LÉGAL & SERVICES) ====================
+const modalContent = {
+    mentions: `
         <h2>Mentions Légales</h2><br>
         <div class="legal-section">
             <h3>Éditeur du site</h3>
@@ -146,7 +44,7 @@ function initLegalAndServices() {
             <p>Les présentes mentions légales sont régies par le droit français. En cas de litige, et après tentative de résolution amiable, les tribunaux français seront seuls compétents.</p>
         </div>
     `,
-        conditions: `
+    conditions: `
         <h2>Conditions Générales d'Utilisation</h2><br>
         <div class="legal-section">
             <h3>Article 1 - Objet</h3>
@@ -161,7 +59,6 @@ function initLegalAndServices() {
             <p>L'association Euromag Fusion propose :</p>
             <ul>
                 <li>L'organisation d'événements culturels et de spectacles mettant en valeur la culture algérienne</li>
-                <li>L'organisation d'expositions et salons culturels</li>
             </ul>
         </div>
         <div class="legal-section">
@@ -188,7 +85,7 @@ function initLegalAndServices() {
             <p>Les présentes conditions sont régies par le droit français. Tout litige sera soumis aux tribunaux compétents français après tentative de résolution amiable.</p>
         </div>
     `,
-        confidentialite: `
+    confidentialite: `
         <h2>Politique de Confidentialité</h2><br>
         <div class="legal-section">
             <h3>Responsable du traitement</h3>
@@ -255,7 +152,7 @@ function initLegalAndServices() {
             <p>Vous disposez également du droit d'introduire une réclamation auprès de la CNIL : www.cnil.fr</p>
         </div>
     `,
-        cookies: `
+    cookies: `
         <h2>Politique relative aux Cookies</h2><br>
         <div class="legal-section">
             <h3>Notre engagement pour votre vie privée</h3>
@@ -285,23 +182,8 @@ function initLegalAndServices() {
             <p>Vous pouvez naviguer sur notre site en toute tranquillité, sans risque de traçage ou de collecte de données via des cookies. Nous privilégions une approche respectueuse de votre vie privée.</p>
             <p>Pour toute question concernant cette politique, contactez-nous à : contact@euromagfusion.com</p>
         </div>
-    `
-    };
-
-    document.querySelectorAll('.legal-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const legalType = link.dataset.legal;
-            const html = legalData[legalType];
-            if (html) {
-                legalContent.innerHTML = html;
-                LegalModalManager.open('legalModal');
-            }
-        });
-    });
-
-    const serviceData = {
-        concerts: `
+    `,
+    concerts: `
             <h2>Organisation de concerts</h2><br>
             <div class="legal-section">
                 <h3>Notre expertise</h3>
@@ -324,7 +206,7 @@ function initLegalAndServices() {
                 <p>Chaque concert est conçu comme une expérience culturelle authentique, offrant au public une immersion dans la beauté et la diversité de la culture algérienne.</p>
             </div>
         `,
-        spectacles: `
+    spectacles: `
             <h2>Spectacles culturels</h2><br>
             <div class="legal-section">
                 <h3>Créations originales</h3>
@@ -350,114 +232,134 @@ function initLegalAndServices() {
                 <h3>Impact culturel</h3>
                 <p>Nos spectacles visent à créer des ponts entre les cultures, à transmettre les traditions et à faire découvrir la modernité algérienne à un public large et diversifié.</p>
             </div>
-        `,
-        expositions: `
-            <h2>Expositions et salons</h2><br>
-            <div class="legal-section">
-                <h3>SAPIMMO - Salon de la Promotion Immobilière</h3>
-                <p>SAPIMMO est un salon dédié à la promotion immobilière et à l’investissement, réunissant promoteurs, investisseurs, institutions financières et particuliers autour des opportunités du marché immobilier.</p>
-
-                <h3>Concept d'exposition</h3>
-                <ul>
-                    <li><strong>Projets immobiliers :</strong> Présentation de programmes résidentiels, tertiaires et mixtes</li>
-                    <li><strong>Investissement et financement :</strong> Mise en relation avec banques, organismes de crédit et experts</li>
-                    <li><strong>Conseil et accompagnement :</strong> Information juridique, fiscale et patrimoniale pour les acquéreurs et investisseurs</li>
-                    <li><strong>Aménagement et architecture :</strong> Mise en avant des nouvelles tendances en design, urbanisme et construction</li>
-                    <li><strong>Innovation :</strong> Solutions digitales, smart buildings et technologies pour l’immobilier</li>
-                </ul>
-
-                <h3>Services d'organisation</h3>
-                <ul>
-                    <li>Conception et aménagement des stands et espaces thématiques</li>
-                    <li>Gestion des exposants, sponsors et partenaires institutionnels</li>
-                    <li>Organisation de conférences, ateliers et présentations de projets</li>
-                    <li>Création de parcours dédiés aux investisseurs et aux particuliers</li>
-                    <li>Coordination logistique, technique et accueil des visiteurs</li>
-                    <li>Stratégie de communication et promotion de l’événement</li>
-                </ul>
-
-                <h3>Impact et rayonnement</h3>
-                <p>SAPIMMO favorise la rencontre entre l’offre et la demande, dynamise le secteur immobilier et contribue à structurer des projets durables et attractifs pour les territoires.</p>
-            </div>
-
         `
+};
+
+// ==================== MODALES ====================
+const ModalManager = (() => {
+    const modals = {};
+
+    function register(id, { onOpen, onClose } = {}) {
+        const modal = document.getElementById(id);
+        if (!modal) return;
+
+        const open = (trigger) => {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            onOpen?.(modal, trigger);
+        };
+
+        const close = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            onClose?.(modal);
+        };
+
+        document.querySelectorAll(`[data-modal="${id}"]`).forEach(trigger => {
+            trigger.addEventListener('click', () => open(trigger));
+        });
+        modal.querySelectorAll('.close-btn').forEach(btn => btn.addEventListener('click', close));
+        modal.addEventListener('click', e => { if (e.target === modal) close(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && modal.style.display === 'block') close();
+        });
+
+        modals[id] = { open, close };
+    }
+
+    return {
+        register,
+        open: (id, trigger) => modals[id]?.open(trigger),
+        close: (id) => modals[id]?.close()
     };
+})();
 
-    const servicesSection = Array.from(document.querySelectorAll('.footer-section')).find(sec => sec.querySelector('h3')?.textContent?.toLowerCase().includes('services'));
-    const serviceLinks = servicesSection ? servicesSection.querySelectorAll('a[href="#"]') : [];
+function initLegalModal() {
+    const legalContent = document.getElementById('legalContent');
+    if (!legalContent) return;
 
-    const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
+    ModalManager.register('legalModal');
 
-    const textKeyMap = {
-        'organisationdeconcerts': 'concerts',
-        'spectaclesculturels': 'spectacles',
-        'expositionsetdelsalons': 'expositions',
-        'expositionsetsalons': 'expositions'
-    };
-
-    serviceLinks.forEach(a => {
-        const key = textKeyMap[normalize(a.textContent)];
-        if (!key) return;
-        a.addEventListener('click', (e) => {
+    document.querySelectorAll('[data-legal]').forEach(link => {
+        link.addEventListener('click', (e) => {
             e.preventDefault();
-            const html = serviceData[key];
-            if (html) {
-                legalContent.innerHTML = html;
-                LegalModalManager.open('legalModal');
-            }
+            const html = modalContent[link.dataset.legal];
+            if (!html) return;
+            legalContent.innerHTML = html;
+            ModalManager.open('legalModal');
         });
     });
 }
 
-// ==================== DEVELOPER SIGNATURE ====================
-function initDeveloperSignature() {
-    const developerSignature = document.getElementById('developer-signature');
-    if (developerSignature) {
-        developerSignature.addEventListener('click', function (e) {
+// ==================== NAVIGATION ====================
+function initNavigation() {
+    const navbar = document.getElementById('navbar');
+    const navLinks = document.querySelector('.nav-links');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const scrollTopBtn = document.getElementById('scrollTop');
+
+    const closeMenu = () => {
+        navLinks?.classList.remove('active');
+        mobileMenu?.classList.remove('active');
+        mobileMenu?.setAttribute('aria-expanded', 'false');
+    };
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
             e.preventDefault();
-            const link = document.createElement('a');
-            link.href = 'mailto:slimanelami@proton.me';
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const target = document.getElementById(anchor.getAttribute('href').slice(1));
+            if (!target) return;
+
+            window.scrollTo({ top: target.offsetTop - navbar.offsetHeight, behavior: 'smooth' });
+            closeMenu();
+        });
+    });
+
+    if (mobileMenu && navLinks) {
+        mobileMenu.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('active', isOpen);
+            mobileMenu.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !navLinks.contains(e.target)) closeMenu();
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) closeMenu();
         });
     }
-}
 
-// ==================== GLOBAL SCROLL HANDLER ====================
-function handleScroll() {
-    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
-    if (scrollTopBtn) scrollTopBtn.classList.toggle('show', window.pageYOffset > 500);
-}
+    scrollTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// ==================== UTILS ====================
-function debounce(func, wait) {
-    let timeout;
-    return (...args) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func(...args), wait);
+    const onScroll = () => {
+        navbar?.classList.toggle('scrolled', window.scrollY > 50);
+        scrollTopBtn?.classList.toggle('show', window.scrollY > 500);
     };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 }
 
-// ==================== INITIALIZATION ====================
-document.addEventListener('DOMContentLoaded', function () {
-    const currentYearElement = document.getElementById('current-year');
-    if (currentYearElement) {
-        currentYearElement.textContent = new Date().getFullYear();
-    }
+// ==================== NOTIFICATIONS ====================
+function showNotification(message, type = 'info', duration = 5000) {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    notification.textContent = message;
+    document.body.appendChild(notification);
 
-    initDeveloperSignature();
+    setTimeout(() => {
+        notification.classList.add('is-leaving');
+        notification.addEventListener('animationend', () => notification.remove(), { once: true });
+    }, duration);
+}
+
+// ==================== INITIALISATION ====================
+document.addEventListener('DOMContentLoaded', () => {
+    const currentYear = document.getElementById('current-year');
+    if (currentYear) currentYear.textContent = new Date().getFullYear();
+
+    initNavigation();
+    initLegalModal();
 });
-
-window.NavigationFooter = {
-    initNavigation,
-    initMobileMenu,
-    initScrollToTop,
-    initLegalAndServices,
-    initDeveloperSignature,
-    handleScroll,
-    debounce
-};
-
-window.LegalModalManager = LegalModalManager;

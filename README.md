@@ -2,25 +2,26 @@
 
 ## Description
 
-Site web officiel de Euromag Fusion, dédiée à la promotion de la culture algérienne en France et en Europe. Le site présente les concerts organisés par l'annonce du futur événement "Algérie Expo Paris 2026".
+Site web officiel de Euromag Fusion, dédiée à la promotion de la culture algérienne en France et en Europe. Le site présente les concerts organisés par l'association.
 
 ## Structure du projet
 
 ```
 euromag-fusion/
 ├── index.html              # Page d'accueil principale
-├── algerie-expo.html       # Page dédiée à l'événement Algérie Expo
 ├── event-details.html      # Page de détails des concerts (générée dynamiquement)
+├── 404.html                # Page d'erreur 404
 ├── assets/
 │   ├── css/
 │   │   ├── common.css      # Styles partagés
 │   │   ├── styles.css      # Styles principaux
-│   │   └── styles-algerie-expo.css  # Styles spécifiques à Algérie Expo
+│   │   ├── styles-event-details.css # Styles détails concerts
+│   │   └── 404.css         # Styles page 404
 │   ├── js/
 │   │   ├── common.js       # Scripts partagés (navigation, légal)
 │   │   ├── script.js       # Scripts page d'accueil
-│   │   ├── script-algerie-expo.js   # Scripts Algérie Expo
-│   │   └── event-details.js # Scripts détails concerts
+│   │   ├── script-event-details.js # Scripts détails concerts
+│   │   └── 404.js          # Scripts page 404
 │   └── img/               # Images et assets visuels
 └── README.md              # Documentation du projet
 ```
@@ -34,13 +35,6 @@ euromag-fusion/
 - Section concerts à venir avec newsletter
 - Formulaire de contact
 - Navigation responsive avec menu mobile
-
-### Page Algérie Expo (`algerie-expo.html`)
-- Page de présentation de l'événement "Algérie Expo Paris 2026"
-- Compte à rebours interactif jusqu'au lancement
-- Présentation des secteurs d'exposition
-- Section partenaires
-- Newsletter dédiée
 
 ### Détails des concerts (`event-details.html`)
 - Pages dynamiques générées via JavaScript
@@ -88,7 +82,7 @@ python -m http.server 8080
 
 ### Structure des données
 
-Les données des concerts sont stockées dans `assets/js/event-details.js` :
+Les données des concerts sont stockées dans `assets/js/script-event-details.js` :
 
 ```javascript
 const eventData = {
@@ -136,11 +130,6 @@ const eventData = {
 - Formulaires de contact et newsletter
 - Animation des particules en arrière-plan
 
-### Algérie Expo (`script-algerie-expo.js`)
-- Compte à rebours dynamique
-- Éléments flottants animés
-- Newsletter dédiée
-
 ## Déploiement
 
 ### Hébergement statique
@@ -157,8 +146,18 @@ Aucune configuration backend requise. Le site est entièrement statique.
 
 ### Ajout d'un nouveau concert
 1. Ajouter les images dans `assets/img/`
-2. Mettre à jour `eventData` dans `event-details.js`
+2. Mettre à jour `eventData` dans `script-event-details.js`
 3. Créer la carte événement dans `index.html`
+
+### Bannières des pages concert
+| Version | Champ dans `eventData` | Dimensions | Zone sûre (contenu important) |
+|---|---|---|---|
+| Ordinateur | `image` | 1920 × 540 px | marge de ~120 px à gauche/droite et ~70 px en haut/bas |
+| Mobile (≤ 768 px) | `imageMobile` (facultatif) | 1080 × 1080 px | carré central de 1080 × 720 px |
+
+- Format WebP, qualité ~80 (< 300 Ko ordinateur, < 150 Ko mobile).
+- Éviter le texte dans l'image : titre, date et lieu sont déjà affichés par-dessus.
+- Une image au bon format remplit tout le cadre. Une image d'un autre format reste affichée entière sur un fond flou.
 
 ### Modification du design
 - Couleurs principales dans `:root` du CSS

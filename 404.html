@@ -9,17 +9,19 @@
         content="Oops ! La page que vous recherchez est introuvable. Retournez à l'accueil d'Euromag Fusion.">
     <meta name="robots" content="noindex, nofollow">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
     <link rel="stylesheet" href="./assets/css/404.css">
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
 </head>
 
 <body>
-    <div class="animated-bg">
+    <div class="animated-bg" aria-hidden="true">
         <div class="floating-shape shape-1"></div>
         <div class="floating-shape shape-2"></div>
         <div class="floating-shape shape-3"></div>
@@ -34,7 +36,7 @@
         <div class="error-content">
             <div class="logo-section">
                 <div class="logo-wrapper">
-                    <img class="logo-img" src="./assets/img/logo.png" alt="Logo Euromag Fusion" loading="lazy" />
+                    <img class="logo-img" src="./assets/img/logo.png" alt="Logo Euromag Fusion" width="80" height="80" />
                     <div class="logo-pulse"></div>
                 </div>
                 <h2 class="brand-name">Euromag Fusion</h2>
@@ -43,16 +45,16 @@
             <div class="error-number">
                 <span class="digit digit-4-1">4</span>
                 <span class="digit digit-0">
-                    <div class="zero-animation">
-                        <div class="zero-outer"></div>
-                        <div class="zero-inner"></div>
-                        <div class="zero-center"></div>
-                    </div>
+                    <span class="zero-animation">
+                        <span class="zero-outer"></span>
+                        <span class="zero-inner"></span>
+                        <span class="zero-center"></span>
+                    </span>
                 </span>
                 <span class="digit digit-4-2">4</span>
             </div>
 
-            <div class="glitch-overlay" id="glitchOverlay">
+            <div class="glitch-overlay" id="glitchOverlay" aria-hidden="true">
                 <span class="glitch-text">404</span>
                 <span class="glitch-text">404</span>
                 <span class="glitch-text">404</span>
@@ -104,15 +106,6 @@
                                 <i class="fas fa-arrow-right"></i>
                             </div>
                         </a>
-                        <a href="sapimmo.html" class="quick-link">
-                            <div class="link-icon">
-                                <i class="fas fa-calendar-alt"></i>
-                            </div>
-                            <span>Algérie SAPIMMO</span>
-                            <div class="link-arrow">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </a>
                     </div>
                 </div>
 
@@ -129,7 +122,7 @@
             </div>
         </div>
 
-        <div class="interactive-elements">
+        <div class="interactive-elements" aria-hidden="true">
             <div class="floating-icon icon-1">
                 <i class="fas fa-star"></i>
             </div>
@@ -146,7 +139,7 @@
                 <i class="fas fa-moon"></i>
             </div>
             <div class="floating-icon icon-6">
-                <i class="fas fa-sparkles"></i>
+                <i class="fas fa-wand-magic-sparkles"></i>
             </div>
         </div>
 
@@ -168,7 +161,7 @@
                         <p>La promotion de la culture algérienne</p>
                     </div>
                 </div>
-                
+
                 <div class="footer-links">
                     <a href="index.html" class="footer-link">
                         <i class="fas fa-home"></i>
@@ -180,7 +173,7 @@
                     </a>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
                 <p>&copy; <span id="current-year"></span> Euromag Fusion. Tous droits réservés.</p>
                 <p class="developer-credit">Développé par <a href="mailto:slimanelami@proton.me" class="developer-link"
@@ -189,7 +182,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="./assets/js/404.js"></script>
 </body>
 

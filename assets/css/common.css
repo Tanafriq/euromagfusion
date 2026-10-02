@@ -5,18 +5,31 @@
 }
 
 :root {
-    --primary: #6366f1;
-    --secondary: #ec4899;
-    --accent: #f59e0b;
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
+    /* Palette « Soleil méditerranéen » (or du logo, canard, safran, corail) */
+    --gold: #c9930e;
+    --gold-light: #e8b54a;
+    --gold-dark: #9a6b07;
+    --teal: #0e3b43;
+    --teal-light: #17707a;
+    --teal-deep: #0a2a30;
+    --coral: #e8505b;
+    --coral-dark: #c73a46;
+    --saffron: #f4a300;
+    --sand: #fdf6ea;
 
-    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-    --gradient-secondary: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);
-    --gradient-accent: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    --primary: var(--gold-dark);
+    --secondary: var(--coral);
+    --accent: var(--gold);
+    --success: #2e7d4f;
+    --danger: var(--coral);
+    --warning: var(--gold);
 
-    --dark: #0f172a;
+    --gradient-primary: linear-gradient(135deg, #0a2a30 0%, #0e3b43 55%, #17707a 100%);
+    --gradient-secondary: linear-gradient(135deg, #e8505b 0%, #f4a300 100%);
+    --gradient-accent: linear-gradient(135deg, #c9930e 0%, #9a6b07 100%);
+    --gradient-coral: linear-gradient(135deg, #e8505b 0%, #c73a46 100%);
+
+    --dark: var(--teal-deep);
     --gray-900: #1e293b;
     --gray-800: #334155;
     --gray-700: #475569;
@@ -25,8 +38,8 @@
     --gray-400: #cbd5e1;
     --gray-300: #e2e8f0;
     --gray-200: #f1f5f9;
-    --gray-100: #f8fafc;
-    --gray-50: #f9fafb;
+    --gray-100: #fdf6ea;
+    --gray-50: #fffaf2;
     --white: #ffffff;
     --black: #000000;
 
@@ -298,7 +311,7 @@ h6 {
     justify-content: center;
     width: 50px;
     height: 50px;
-    background: var(--gray-800);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-full);
     color: var(--white);
     text-decoration: none;
@@ -306,12 +319,12 @@ h6 {
 }
 
 .footer .social-link:hover {
-    background: var(--primary);
+    background: var(--gold);
     transform: translateY(-3px);
 }
 
 .footer-bottom {
-    border-top: 1px solid var(--gray-800);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
     padding-top: var(--space-8);
     display: flex;
     justify-content: space-between;
@@ -329,7 +342,7 @@ h6 {
 .footer-links a:focus-visible,
 .footer .social-link:focus-visible,
 .developer-link:focus-visible {
-    outline: 2px solid var(--primary);
+    outline: 2px solid var(--gold);
     outline-offset: 3px;
     border-radius: var(--radius-sm);
 }
@@ -351,11 +364,11 @@ h6 {
 }
 
 .developer-link:hover {
-    color: var(--primary);
+    color: var(--gold-light);
     background-color: rgba(255, 255, 255, 0.1);
-    border-color: var(--primary);
+    border-color: var(--gold);
     transform: translateY(-1px) scale(1.05);
-    text-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    text-shadow: 0 0 8px rgba(201, 147, 14, 0.5);
 }
 
 /* ========================================

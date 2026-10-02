@@ -570,8 +570,8 @@ document.addEventListener('DOMContentLoaded', () => {
     populateEventContent(event);
     initShareButtons(event);
 
-    console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
-    console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
+    console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #c9930e; font-size: 24px; font-weight: bold;');
+    console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #e8505b; font-size: 14px;');
 });
 
 // ===== CONTENU DE L'ÉVÉNEMENT =====

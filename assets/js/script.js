@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
-    console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
+    console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #c9930e; font-size: 24px; font-weight: bold;');
+    console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #e8505b; font-size: 14px;');
 });
 
 function getYouTubeId(url) {
@@ -70,7 +70,7 @@ function initParticles() {
     const particlesContainer = document.getElementById('particles');
     if (!particlesContainer) return;
 
-    const colors = ['#6366f1', '#ec4899', '#f59e0b', '#10b981'];
+    const colors = ['#c9930e', '#e8b54a', '#e8505b', '#fdf6ea'];
 
     function createParticle() {
         const particle = document.createElement('div');
@@ -241,12 +241,12 @@ function bindFormSubmission(form, { validate, getFields, messages }) {
 
         try {
             await sendToFormSubmit(getFields(value));
-            setButton(messages.done, 'fas fa-check', 'linear-gradient(135deg, #059669, #10b981)');
+            setButton(messages.done, 'fas fa-check', 'linear-gradient(135deg, #2e7d4f, #3a9a63)');
             showNotification(messages.success, 'success');
             form.reset();
         } catch (err) {
             console.error('Erreur formulaire :', err);
-            setButton('Erreur', 'fas fa-exclamation-triangle', 'linear-gradient(135deg, #dc2626, #ef4444)');
+            setButton('Erreur', 'fas fa-exclamation-triangle', 'linear-gradient(135deg, #c73a46, #e8505b)');
             showNotification(getNetworkErrorMessage(err, messages.error), 'error');
         } finally {
             button.style.opacity = '';

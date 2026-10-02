@@ -67,10 +67,10 @@ class Particle {
     constructor(width, height) {
         const colors = [
             'rgba(255, 255, 255, ',
-            'rgba(245, 158, 11, ',
-            'rgba(236, 72, 153, ',
-            'rgba(139, 92, 246, ',
-            'rgba(59, 130, 246, '
+            'rgba(201, 147, 14, ',
+            'rgba(232, 181, 74, ',
+            'rgba(232, 80, 91, ',
+            'rgba(253, 246, 234, '
         ];
 
         this.x = Math.random() * width;
@@ -244,6 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initKeyboardShortcuts(glitchOverlay, factElement);
 
-    console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
-    console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #ec4899; font-size: 14px;');
+    console.log('%c🎭 Bienvenue sur Euromag Fusion!', 'color: #c9930e; font-size: 24px; font-weight: bold;');
+    console.log('%cSite développé par SL avec ❤️ pour promouvoir la culture algérienne', 'color: #e8505b; font-size: 14px;');
 });

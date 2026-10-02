@@ -1,15 +1,24 @@
 /* ===== CSS VARIABLES ===== */
 :root {
     /* Colors */
-    --primary: #6366f1;
-    --primary-light: #818cf8;
-    --primary-dark: #4f46e5;
-    --secondary: #ec4899;
-    --accent: #f59e0b;
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-    --info: #3b82f6;
+    --gold: #c9930e;
+    --gold-light: #e8b54a;
+    --gold-dark: #9a6b07;
+    --teal: #0e3b43;
+    --teal-light: #17707a;
+    --teal-deep: #0a2a30;
+    --coral: #e8505b;
+    --sand: #fdf6ea;
+
+    --primary: var(--teal);
+    --primary-light: var(--teal-light);
+    --primary-dark: var(--teal-deep);
+    --secondary: var(--coral);
+    --accent: var(--gold);
+    --success: #2e7d4f;
+    --danger: var(--coral);
+    --warning: var(--gold);
+    --info: var(--teal-light);
     
     /* Grays */
     --white: #ffffff;
@@ -23,12 +32,12 @@
     --gray-700: #374151;
     --gray-800: #1f2937;
     --gray-900: #111827;
-    --dark: #0f172a;
+    --dark: var(--teal-deep);
     
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    --gradient-warm: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    --gradient-primary: linear-gradient(135deg, #0a2a30 0%, #0e3b43 55%, #17707a 100%);
+    --gradient-secondary: linear-gradient(135deg, #e8505b 0%, #f4a300 100%);
+    --gradient-accent: linear-gradient(135deg, #c9930e 0%, #9a6b07 100%);
+    --gradient-warm: linear-gradient(135deg, #e8b54a 0%, #fdf6ea 100%);
     
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-display: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -81,7 +90,7 @@ body {
     font-family: var(--font-primary);
     line-height: 1.6;
     color: var(--gray-800);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+    background: linear-gradient(135deg, #0a2a30 0%, #0e3b43 50%, #0a2a30 100%);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
     min-height: 100vh;
@@ -111,7 +120,7 @@ body {
 .shape-1 {
     width: 80px;
     height: 80px;
-    background: linear-gradient(45deg, #ffffff, #f59e0b);
+    background: linear-gradient(45deg, #fdf6ea, #c9930e);
     top: 10%;
     left: 10%;
     animation-delay: 0s;
@@ -120,7 +129,7 @@ body {
 .shape-2 {
     width: 120px;
     height: 120px;
-    background: linear-gradient(45deg, #f59e0b, #ec4899);
+    background: linear-gradient(45deg, #c9930e, #e8505b);
     top: 60%;
     right: 15%;
     animation-delay: -3s;
@@ -129,7 +138,7 @@ body {
 .shape-3 {
     width: 60px;
     height: 60px;
-    background: linear-gradient(45deg, #ec4899, #8b5cf6);
+    background: linear-gradient(45deg, #e8505b, #c73a46);
     top: 80%;
     left: 20%;
     animation-delay: -6s;
@@ -138,7 +147,7 @@ body {
 .shape-4 {
     width: 100px;
     height: 100px;
-    background: linear-gradient(45deg, #10b981, #3b82f6);
+    background: linear-gradient(45deg, #17707a, #0e3b43);
     top: 30%;
     right: 30%;
     animation-delay: -9s;
@@ -147,7 +156,7 @@ body {
 .shape-5 {
     width: 70px;
     height: 70px;
-    background: linear-gradient(45deg, #3b82f6, #6366f1);
+    background: linear-gradient(45deg, #f4a300, #e8505b);
     bottom: 20%;
     right: 10%;
     animation-delay: -12s;
@@ -156,7 +165,7 @@ body {
 .shape-6 {
     width: 90px;
     height: 90px;
-    background: linear-gradient(45deg, #ffffff, #e5e7eb);
+    background: linear-gradient(45deg, #ffffff, #fdf6ea);
     top: 20%;
     left: 60%;
     animation-delay: -15s;
@@ -165,7 +174,7 @@ body {
 .shape-7 {
     width: 50px;
     height: 50px;
-    background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    background: linear-gradient(45deg, #e8b54a, #c9930e);
     top: 50%;
     left: 5%;
     animation-delay: -18s;
@@ -174,7 +183,7 @@ body {
 .shape-8 {
     width: 110px;
     height: 110px;
-    background: linear-gradient(45deg, #a78bfa, #c084fc);
+    background: linear-gradient(45deg, #9a6b07, #e8b54a);
     bottom: 10%;
     right: 35%;
     animation-delay: -21s;
@@ -342,17 +351,17 @@ body {
 }
 
 .glitch-text:nth-child(1) {
-    color: #ff0066;
+    color: #e8505b;
     animation: glitch1 0.4s infinite;
 }
 
 .glitch-text:nth-child(2) {
-    color: #00ff88;
+    color: #e8b54a;
     animation: glitch2 0.4s infinite;
 }
 
 .glitch-text:nth-child(3) {
-    color: #0088ff;
+    color: #17707a;
     animation: glitch3 0.4s infinite;
 }
 
@@ -382,7 +391,7 @@ body {
 }
 
 .gradient-text {
-    background: linear-gradient(45deg, #f59e0b, #ec4899, #8b5cf6, #06b6d4);
+    background: linear-gradient(45deg, #f4a300, #e8505b, #e8b54a, #f4a300);
     background-size: 300% 300%;
     background-clip: text;
     -webkit-background-clip: text;
@@ -529,13 +538,13 @@ body {
     justify-content: center;
     font-size: 1.3rem;
     color: var(--white);
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 4px 12px rgba(201, 147, 14, 0.3);
     transition: var(--transition-base);
 }
 
 .quick-link:hover .link-icon {
     transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+    box-shadow: 0 6px 20px rgba(201, 147, 14, 0.5);
 }
 
 .quick-link span {
@@ -578,7 +587,7 @@ body {
     flex-shrink: 0;
     width: 60px;
     height: 60px;
-    background: linear-gradient(45deg, var(--accent), #fbbf24);
+    background: linear-gradient(45deg, var(--accent), var(--gold-light));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -586,7 +595,7 @@ body {
     color: var(--white);
     font-size: 1.5rem;
     position: relative;
-    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 6px 20px rgba(201, 147, 14, 0.3);
 }
 
 .icon-glow {
@@ -831,7 +840,7 @@ body {
     border-color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transform: translateY(-1px) scale(1.05);
-    text-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    text-shadow: 0 0 8px rgba(201, 147, 14, 0.5);
 }
 
 /* ===== EFFETS GÉNÉRÉS PAR 404.js ===== */
@@ -860,7 +869,7 @@ body {
     position: fixed;
     width: 4px;
     height: 4px;
-    background: #fbbf24;
+    background: var(--gold-light);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;

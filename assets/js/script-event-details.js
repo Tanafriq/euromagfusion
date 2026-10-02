@@ -1,5 +1,5 @@
 // ===== EVENT DATA =====
-// Bannières : `image` = version ordinateur (1920 × 540 px),
+// Bannières : `image` = version ordinateur (1920 × 540 px, format 32:9 ; un autre format est recadré),
 // `imageMobile` (facultatif) = version mobile au format 10:7 (800 × 560 px),
 // la même que l'image de la carte du concert sur l'accueil, utilisée jusqu'à 768 px de large.
 const eventData = {
@@ -276,7 +276,15 @@ const eventData = {
         gallery: [
             './assets/img/event-5-1.webp',
             './assets/img/event-5-2.webp',
-            './assets/img/event-5-3.webp'
+            './assets/img/event-5-3.webp',
+            './assets/img/event-5-4.webp',
+            './assets/img/event-5-5.webp',
+            './assets/img/event-5-6.webp',
+            './assets/img/event-5-7.webp',
+            './assets/img/event-5-8.webp',
+            './assets/img/event-5-9.webp',
+            './assets/img/event-5-10.webp',
+            './assets/img/event-5-11.webp'
         ]
     },
     'manal-lamia': {
@@ -288,7 +296,7 @@ const eventData = {
         price: '35€',
         image: './assets/img/banner-manal-lamia.webp',
         imageMobile: './assets/img/event-manal-lamia.webp',
-        reservation: 'https://www.helloasso.com/associations/euromag-fusion/evenements/les-nuits-de-la-casbah-manal-gherbi-lamia-ait-amara',
+        reservation: '',
         description: `
             <br />
             <p><strong>EUROMAG FUSION</strong> vous invite à une soirée musicale exceptionnelle à Alhambra le 13 juin 2026, rythmée par l'animation de <strong>Hichem Mesbah</strong>, avec l'élégante <strong>Manal Gherbi</strong> et la talentueuse <strong>Lamia Ait Amara</strong> !</p>
@@ -333,7 +341,51 @@ const eventData = {
             './assets/img/event-7-7.webp',
             './assets/img/event-7-8.webp',
             './assets/img/event-7-9.webp',
-            './assets/img/event-7-10.webp'
+            './assets/img/event-7-10.webp',
+            './assets/img/event-7-11.webp',
+            './assets/img/event-7-12.webp'
+        ]
+    },
+    'kamel-aziz': {
+        title: 'KAMEL AZIZ',
+        date: '24 Octobre 2026',
+        location: 'Théâtre de la Tour Eiffel, 4 Square Rapp, 75007 Paris',
+        type: 'Concert',
+        time: '19h00 - 23h00',
+        price: '35€',
+        image: './assets/img/banner-kamel-aziz.webp',
+        imageMobile: './assets/img/event-kamel-aziz.webp',
+        reservation: '',
+        description: `
+            <br />
+            <p><strong>Euromag Fusion</strong> a le plaisir de vous inviter à la <strong>3ème édition des Nuits de la Casbah !</strong></p><br />
+            <p>Rejoignez-nous dans le cadre prestigieux du <strong>Théâtre de la Tour Eiffel</strong> à Paris pour célébrer la richesse et l'authenticité de la musique chaâbi.</p><br />
+            <p>Pour cette édition exceptionnelle, le virtuose <strong>Kamel Aziz</strong> illuminera la scène en interprétant aussi bien les grands classiques du patrimoine que ses propres compositions.</p><br />
+            <p>La soirée sera orchestrée et animée par le charismatique <strong>Hichem Mesbah</strong>, maître de cérémonie de cette nuit d'exception.</p><br />
+            <p>Entre tradition, convivialité et émotion, laissez-vous emporter par la magie d'une nuit parisienne aux sonorités d'Alger.</p><br />
+        `,
+        program: [
+            { time: '19h00', title: 'Ouverture des portes', description: 'Ouverture des portes et accueil du public.' },
+            { time: '19h50', title: 'Animation MC Hichem Mesbah', description: 'Entrée en scène du Maître de Cérémonie Hichem Mesbah.' },
+            { time: '20h00', title: 'Concert Kamel Aziz — 1ère partie', description: 'Première partie du concert de Kamel Aziz.' },
+            { time: '21h15', title: 'Entracte', description: 'Pause et moment d’échange avec le public.' },
+            { time: '21h30', title: 'Animation MC Hichem Mesbah', description: 'Retour de Hichem Mesbah pour introduire la suite de la soirée.' },
+            { time: '21h40', title: 'Concert Kamel Aziz — 2ème partie', description: 'Deuxième partie et grand final du concert de Kamel Aziz.' },
+            { time: '23h00', title: 'Clôture de la soirée', description: 'Fin de l’événement.' }
+        ],
+        gallery: [
+            './assets/img/event-6-1.webp',
+            './assets/img/event-6-2.webp',
+            './assets/img/event-6-14.webp',
+            './assets/img/event-6-4.webp',
+            './assets/img/event-6-5.webp',
+            './assets/img/event-6-6.webp',
+            './assets/img/event-6-15.webp',
+            './assets/img/event-6-8.webp',
+            './assets/img/event-6-16.webp',
+            './assets/img/event-6-10.webp',
+            './assets/img/event-6-11.webp',
+            './assets/img/event-6-13.webp'
         ]
     }
 };
@@ -609,12 +661,9 @@ function populateEventContent(event) {
     document.title = `${event.title} - Euromag Fusion`;
 }
 
-// Bannière : version mobile facultative (imageMobile). Si le format de l'image affichée
-// correspond à peu près au cadre, elle le remplit ; sinon elle reste entière sur un fond flou.
-const BANNER_RATIO_TOLERANCE = 1.5;
-
+// Bannière : affichée seule, au format fixe du cadre (voir styles-event-details.css).
+// Version mobile facultative (imageMobile), utilisée jusqu'à 768 px de large.
 function setupHeroBanner(event) {
-    const hero = document.getElementById('eventHero');
     const banner = document.getElementById('eventHeroBg');
     const mobileSource = document.getElementById('eventHeroSourceMobile');
 
@@ -623,22 +672,6 @@ function setupHeroBanner(event) {
     } else {
         mobileSource.remove();
     }
-
-    const updateFit = () => {
-        if (!banner.naturalWidth) return;
-
-        const imageRatio = banner.naturalWidth / banner.naturalHeight;
-        const frameRatio = hero.clientWidth / hero.clientHeight;
-        const isCloseToFrame = Math.max(imageRatio / frameRatio, frameRatio / imageRatio) <= BANNER_RATIO_TOLERANCE;
-
-        hero.classList.toggle('is-banner-fitted', isCloseToFrame);
-        // URL absolue : dans une variable CSS, un chemin relatif serait résolu depuis le dossier de la feuille de style.
-        hero.style.setProperty('--hero-image', `url("${banner.currentSrc}")`);
-    };
-
-    // "load" se redéclenche quand le navigateur bascule entre version mobile et ordinateur.
-    banner.addEventListener('load', updateFit);
-    window.addEventListener('resize', updateFit);
 
     banner.alt = event.title;
     banner.src = event.image;

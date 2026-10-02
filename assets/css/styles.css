@@ -316,6 +316,8 @@
 }
 
 .about-image img {
+    /* block : supprime l'espace sous l'image (ligne de base du texte) visible en bas du cadre incliné */
+    display: block;
     width: 100%;
     height: 500px;
     object-fit: cover;
@@ -339,6 +341,14 @@
 
 .about-image:hover .image-overlay {
     opacity: 1;
+}
+
+/* Mobile : image droite, sans inclinaison */
+@media (max-width: 768px) {
+    .about-image,
+    .about-image:hover {
+        transform: none;
+    }
 }
 
 .music-genres {

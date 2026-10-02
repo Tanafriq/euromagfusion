@@ -1,76 +1,56 @@
 /* ===== EVENT HERO SECTION ===== */
+/* Bannière seule, sans texte ni voile par-dessus.
+   Ordinateur : format fixe 32:9 (image à fournir en 1920 × 540 px).
+   Mobile (≤ 768 px) : format 10:7 (image à fournir en 800 × 560 px). */
 .event-hero {
-    height: 50vh;
-    background: var(--gradient-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
-    overflow: hidden;
     margin-top: 80px;
+    aspect-ratio: 32 / 9;
+    overflow: hidden;
+    background: var(--gray-100);
 }
 
-/* Les bannières n'ont pas toutes le même format : l'image est affichée entière
-   (sans déformation ni rognage) par-dessus une copie floutée qui remplit le cadre. */
-.event-hero::before {
-    content: '';
-    position: absolute;
-    inset: -40px;
-    background: var(--hero-image) center / cover no-repeat;
-    filter: blur(30px);
-    opacity: 0.35;
+.event-hero picture {
+    display: block;
+    height: 100%;
 }
 
 .event-hero-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    opacity: 0.35;
-}
-
-/* Bannière au bon format (classe ajoutée par le script) : elle remplit tout le cadre */
-.event-hero.is-banner-fitted .event-hero-bg {
     object-fit: cover;
 }
 
-.event-hero.is-banner-fitted::before {
-    display: none;
+/* ===== EVENT HEADER (titre et infos, sous la bannière) ===== */
+.event-header {
+    margin-bottom: var(--space-8);
 }
 
-.event-hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: var(--white);
-    max-width: 800px;
-    padding: 0 var(--space-6);
-}
-
-.event-hero h1 {
-    font-size: 3.5rem;
+.event-header h1 {
+    font-size: 3rem;
+    line-height: 1.1;
+    color: var(--dark);
     margin-bottom: var(--space-4);
-    color: var(--white);
 }
 
-.event-meta-hero {
+.event-meta {
     display: flex;
-    justify-content: center;
-    gap: var(--space-8);
-    margin-bottom: var(--space-6);
     flex-wrap: wrap;
+    gap: var(--space-3);
 }
 
 .meta-item {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    background: rgba(255, 255, 255, 0.2);
+    /* Teinte claire dérivée de la couleur principale : suit la palette du site */
+    background: color-mix(in srgb, var(--primary) 10%, var(--white));
+    border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--white));
+    color: var(--gray-900);
+    font-weight: 500;
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-full);
-    backdrop-filter: blur(10px);
 }
 
 /* ===== BREADCRUMB ===== */
@@ -98,7 +78,7 @@
 
 /* ===== EVENT CONTENT ===== */
 .event-content {
-    padding: var(--space-16) 0;
+    padding: var(--space-8) 0 var(--space-16);
 }
 
 .event-details-grid {
@@ -180,7 +160,6 @@
 /* ===== GALLERY CAROUSEL STYLES ===== */
 .gallery-section {
     margin-bottom: var(--space-16);
-    padding: 0 var(--space-4);
 }
 
 .gallery-section h2 {
@@ -686,10 +665,6 @@
         height: 10px;
     }
 
-    .event-hero h1 {
-        font-size: 1.8rem;
-        padding: 0 var(--space-4);
-    }
 }
 
 /* ===== ACCESSIBILITY ===== */
@@ -883,16 +858,15 @@
 @media (max-width: 768px) {
     .event-hero {
         margin-top: 90px;
-        height: auto;
         aspect-ratio: 10 / 7;
-        /* Si un titre très long ne tient pas, le cadre s'agrandit au lieu de couper le texte */
-        min-height: fit-content;
-        padding: var(--space-4) 0;
     }
 
-    .event-hero h1 {
-        font-size: clamp(1.4rem, 6vw, 2rem);
-        line-height: 1.1;
+    .event-content {
+        padding-top: var(--space-5);
+    }
+
+    .event-header h1 {
+        font-size: clamp(1.6rem, 7vw, 2.2rem);
     }
 
     .event-details-grid {
@@ -900,9 +874,8 @@
         gap: var(--space-8);
     }
 
-    .event-meta-hero {
+    .event-meta {
         gap: var(--space-2);
-        margin-bottom: 0;
     }
 
     .meta-item {

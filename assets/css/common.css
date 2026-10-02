@@ -259,6 +259,10 @@ h6 {
 }
 
 .footer-section h3 {
+    /* Même hauteur que la ligne du logo pour aligner les titres */
+    display: flex;
+    align-items: center;
+    min-height: 45px;
     color: var(--white);
     margin-bottom: var(--space-4);
     font-weight: 600;
@@ -620,7 +624,8 @@ h6 {
         text-align: center;
     }
 
-    .footer-logo {
+    .footer-logo,
+    .footer-section h3 {
         justify-content: center;
     }
 

@@ -1315,14 +1315,17 @@
 }
 
 @media (max-width: 599px) {
+    .events .container {
+        padding: 0 var(--space-4);
+    }
+
     .events-grid {
         gap: var(--space-6);
-        padding: 0 var(--space-4);
     }
 
     .event-card {
         width: 100%;
-        max-width: 400px;
+        max-width: 440px;
     }
 
     .event-content {
@@ -1334,9 +1337,10 @@
     }
 
     .upcoming-content .upcoming-message {
-        margin: 0 var(--space-2);
+        margin: 0;
         padding: var(--space-6) var(--space-3);
-        width: calc(100% - var(--space-4));
+        width: 100%;
+        max-width: 440px;
     }
 
     .upcoming-message .newsletter--signup {

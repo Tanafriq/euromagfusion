@@ -1063,9 +1063,21 @@ body {
         text-align: center;
         gap: 2rem;
     }
-    
+
+    .footer-logo {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
     .footer-links {
         justify-content: center;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 0.5rem;
     }
 }
 

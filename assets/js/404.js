@@ -196,10 +196,10 @@ function initKeyboardShortcuts(glitchOverlay, factElement) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 break;
             case 'h':
-                window.location.href = '/';
+                window.location.href = 'index.html';
                 break;
             case 'c':
-                window.location.href = '/#contact';
+                window.location.href = 'index.html#contact';
                 break;
             case 'r':
                 if (factElement) showNextFact(factElement);

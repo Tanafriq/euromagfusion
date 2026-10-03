@@ -613,7 +613,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const event = eventData[eventId];
 
     if (!event) {
-        window.location.href = '/#evenements';
+        window.location.href = 'index.html#evenements';
         return;
     }
 

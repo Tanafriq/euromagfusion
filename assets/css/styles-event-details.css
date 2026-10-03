@@ -857,7 +857,7 @@
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
     .event-hero {
-        margin-top: 90px;
+        margin-top: 80px;
         aspect-ratio: 10 / 7;
     }
 

@@ -747,7 +747,7 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    border: none;
+    border: 2px solid transparent;
 }
 
 .reserve-btn::before {
@@ -793,7 +793,8 @@
 }
 
 .reserve-btn .arrow-icon {
-    font-size: 1.3rem;
+    font-size: 1rem;
+    line-height: 1;
     font-weight: bold;
     transition: transform var(--transition-base);
 }
@@ -817,7 +818,8 @@
 }
 
 @media (max-width: 480px) {
-    .reserve-btn {
+    .reserve-btn,
+    .read-more-btn {
         font-size: 0.9rem;
         padding: var(--space-1) var(--space-4);
     }

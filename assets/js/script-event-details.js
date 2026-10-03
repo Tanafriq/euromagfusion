@@ -104,7 +104,7 @@ const eventData = {
         time: '16h00 - 20h00',
         price: '25€ / 33€',
         image: './assets/img/banner-tarhanine-freeklane.webp',
-        imageMobile: './assets/img/event-kader-tarhanine-freeklane.webp',
+        imageMobile: './assets/img/event-tarhanine-freeklane.webp',
         reservation: '',
         description: `
             <br />
@@ -341,9 +341,7 @@ const eventData = {
             './assets/img/event-7-7.webp',
             './assets/img/event-7-8.webp',
             './assets/img/event-7-9.webp',
-            './assets/img/event-7-10.webp',
-            './assets/img/event-7-11.webp',
-            './assets/img/event-7-12.webp'
+            './assets/img/event-7-10.webp'
         ]
     },
     'kamel-aziz': {
@@ -355,7 +353,7 @@ const eventData = {
         price: '35€',
         image: './assets/img/banner-kamel-aziz.webp',
         imageMobile: './assets/img/event-kamel-aziz.webp',
-        reservation: '',
+        reservation: 'https://yassir.go.link/gBydo',
         description: `
             <br />
             <p><strong>Euromag Fusion</strong> a le plaisir de vous inviter à la <strong>3ème édition des Nuits de la Casbah !</strong></p><br />
@@ -615,7 +613,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const event = eventData[eventId];
 
     if (!event) {
-        window.location.href = 'index.html#evenements';
+        window.location.href = '/#evenements';
         return;
     }
 

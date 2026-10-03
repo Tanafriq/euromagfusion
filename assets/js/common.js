@@ -306,10 +306,15 @@ function initNavigation() {
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
-            e.preventDefault();
-            const target = document.getElementById(anchor.getAttribute('href').slice(1));
+            // Relit le href au moment du clic : certains liens (ex. bouton de réservation)
+            // démarrent en "#" puis sont mis à jour dynamiquement vers une vraie URL.
+            const href = anchor.getAttribute('href');
+            if (!href || href === '#' || !href.startsWith('#')) return;
+
+            const target = document.getElementById(href.slice(1));
             if (!target) return;
 
+            e.preventDefault();
             window.scrollTo({ top: target.offsetTop - navbar.offsetHeight, behavior: 'smooth' });
             closeMenu();
         });

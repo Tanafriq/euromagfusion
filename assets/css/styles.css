@@ -803,6 +803,15 @@
     transform: translateX(5px);
 }
 
+.yassir-note {
+    width: 100%;
+    margin-top: var(--space-2);
+    font-size: 0.8rem;
+    font-style: italic;
+    text-align: center;
+    color: var(--gray-600, #6b7280);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .event-actions {

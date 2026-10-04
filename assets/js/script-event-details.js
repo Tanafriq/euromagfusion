@@ -645,6 +645,7 @@ function populateEventContent(event) {
     if (event.reservation) {
         document.getElementById('reservationButton').href = event.reservation;
         document.getElementById('reservationCard').hidden = false;
+        document.getElementById('yassirNote').hidden = !/yassir/i.test(event.reservation);
     }
 
     populateProgram(event.program);

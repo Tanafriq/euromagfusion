@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initNewsletterForm();
     initCardTilt();
+    initYassirNotes();
 
     ModalManager.register('videoModal', {
         onOpen: (modal, trigger) => {
@@ -136,6 +137,18 @@ function initEventTabs(revealObserver) {
 
             tabContents.forEach(content => content.classList.toggle('active', content === targetContent));
         });
+    });
+}
+
+// Affiche une mention sous les cartes dont la billetterie passe par Yassir
+function initYassirNotes() {
+    document.querySelectorAll('.event-card .reserve-btn').forEach(button => {
+        if (!/yassir/i.test(button.getAttribute('href') || '')) return;
+
+        const note = document.createElement('p');
+        note.className = 'yassir-note';
+        note.textContent = 'La billetterie est disponible sur l’application Yassir';
+        button.closest('.event-actions').after(note);
     });
 }
 

@@ -519,9 +519,13 @@
     flex-direction: column;
 }
 
-.event-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-xl), 0 0 50px rgba(0, 0, 0, 0.1);
+/* Effets de survol réservés aux appareils avec souris : sur écran tactile, le premier appui
+   déclenchait le survol au lieu du lien (double appui nécessaire). */
+@media (hover: hover) and (pointer: fine) {
+    .event-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-xl), 0 0 50px rgba(0, 0, 0, 0.1);
+    }
 }
 
 /* Format fixe 10:7 (400 × 280 sur ordinateur) : la hauteur suit la largeur de la carte,
@@ -540,8 +544,10 @@
     transition: transform var(--transition-slow);
 }
 
-.event-card:hover .event-image img {
-    transform: scale(1.1);
+@media (hover: hover) and (pointer: fine) {
+    .event-card:hover .event-image img {
+        transform: scale(1.1);
+    }
 }
 
 .event-badge {
@@ -575,8 +581,10 @@
     transition: opacity var(--transition-base);
 }
 
-.event-card:hover .event-overlay {
-    opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+    .event-card:hover .event-overlay {
+        opacity: 1;
+    }
 }
 
 .play-btn {
@@ -638,8 +646,10 @@
     transition: color var(--transition-base);
 }
 
-.event-card:hover .event-title {
-    color: var(--primary);
+@media (hover: hover) and (pointer: fine) {
+    .event-card:hover .event-title {
+        color: var(--primary);
+    }
 }
 
 .event-description {
@@ -668,20 +678,22 @@
     user-select: none;
 }
 
-.read-more-btn:hover {
-    background: var(--primary);
-    color: var(--white);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
 .read-more-btn::after {
     content: '→';
     transition: transform var(--transition-base);
 }
 
-.read-more-btn:hover::after {
-    transform: translateX(3px);
+@media (hover: hover) and (pointer: fine) {
+    .read-more-btn:hover {
+        background: var(--primary);
+        color: var(--white);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .read-more-btn:hover::after {
+        transform: translateX(3px);
+    }
 }
 
 
@@ -704,14 +716,8 @@
     }
 }
 
+/* Retour visuel immédiat au toucher, à la place du survol */
 @media (hover: none) and (pointer: coarse) {
-    .read-more-btn:hover {
-        background: var(--primary);
-        color: var(--white);
-        transform: none;
-        box-shadow: none;
-    }
-
     .read-more-btn:active {
         background: var(--primary);
         color: var(--white);
@@ -748,6 +754,8 @@
     overflow: hidden;
     cursor: pointer;
     border: 2px solid transparent;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .reserve-btn::before {
@@ -761,14 +769,20 @@
     transition: left 0.5s;
 }
 
-.reserve-btn:hover::before {
-    left: 100%;
-}
+@media (hover: hover) and (pointer: fine) {
+    .reserve-btn:hover::before {
+        left: 100%;
+    }
 
-.reserve-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.6);
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    .reserve-btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.6);
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+
+    .reserve-btn:hover .arrow-icon {
+        transform: translateX(5px);
+    }
 }
 
 .reserve-btn:active {
@@ -797,10 +811,6 @@
     line-height: 1;
     font-weight: bold;
     transition: transform var(--transition-base);
-}
-
-.reserve-btn:hover .arrow-icon {
-    transform: translateX(5px);
 }
 
 .yassir-note {

@@ -508,6 +508,25 @@ h6 {
     animation: tutoUnmuteBounce 1.6s ease-in-out infinite;
 }
 
+/* Libellé selon l'appareil : sur écran tactile, le bouton passe aussi en plein écran */
+.tuto-unmute-mobile {
+    display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .tuto-unmute-desktop {
+        display: none;
+    }
+
+    .tuto-unmute-mobile {
+        display: inline;
+    }
+}
+
+.tuto-unmute i {
+    margin-right: var(--space-1);
+}
+
 /* Masqué sans libérer sa place : la vidéo ne saute pas quand le son est activé */
 .tuto-unmute[hidden] {
     display: inline-flex;

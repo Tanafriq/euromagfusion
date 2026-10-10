@@ -296,6 +296,17 @@ function initTutoModal() {
     const modal = document.getElementById('tutoModal');
     const unmuteBtn = modal?.querySelector('.tuto-unmute');
 
+    const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+    // Plein écran natif (iPhone : lecteur Safari via webkitEnterFullscreen). N'est autorisé
+    // par les navigateurs qu'à la suite d'un appui de l'utilisateur.
+    const enterFullscreen = (video) => {
+        try {
+            if (video.requestFullscreen) video.requestFullscreen().catch(() => {});
+            else video.webkitEnterFullscreen?.();
+        } catch { /* plein écran refusé : la vidéo reste dans la modale */ }
+    };
+
     const setMuted = (video, muted) => {
         video.muted = muted;
         if (unmuteBtn) unmuteBtn.hidden = !muted;
@@ -310,7 +321,16 @@ function initTutoModal() {
         const video = modal.querySelector('.tuto-video');
         setMuted(video, false);
         video.play().catch(() => {});
+        if (isTouchDevice()) enterFullscreen(video);
     });
+
+    // En sortant du plein écran sur mobile, on referme la modale pour revenir à la page
+    const video = modal?.querySelector('.tuto-video');
+    const onFullscreenExit = () => {
+        if (isTouchDevice() && !document.fullscreenElement) ModalManager.close('tutoModal');
+    };
+    video?.addEventListener('webkitendfullscreen', onFullscreenExit);
+    document.addEventListener('fullscreenchange', onFullscreenExit);
 
     ModalManager.register('tutoModal', {
         onOpen: (modal, trigger) => {
@@ -326,6 +346,9 @@ function initTutoModal() {
                 setMuted(video, true);
                 video.play().catch(() => {});
             });
+
+            // Ouverture par un appui (bouton « Comment réserver ») sur mobile : plein écran direct
+            if (isTouchDevice() && navigator.userActivation?.isActive) enterFullscreen(video);
         },
         onClose: (modal) => {
             modal.querySelector('.tuto-video')?.pause();

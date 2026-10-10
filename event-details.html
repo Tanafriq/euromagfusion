@@ -137,6 +137,12 @@
                         </a>
                         <p class="yassir-note" id="yassirNote" hidden>La billetterie est disponible sur l’application
                             Yassir</p>
+                        <button type="button" class="tuto-btn tuto-btn--light" id="tutoButton" data-modal="tutoModal"
+                            aria-label="Voir la vidéo : comment réserver ses billets sur Yassir" hidden>
+                            <span class="tuto-btn-icon" aria-hidden="true"><i class="fas fa-play"></i></span>
+                            <span class="tuto-btn-label">Comment réserver sur Yassir ?</span>
+                            <span class="tuto-btn-duration">1 min</span>
+                        </button>
 
                         <div class="reservation-features">
                             <div class="feature-item">
@@ -342,6 +348,16 @@
             </div>
         </div>
     </footer>
+
+    <div id="tutoModal" class="modal" role="dialog" aria-modal="true" aria-label="Tutoriel de réservation Yassir">
+        <div class="modal-content tuto-modal-content">
+            <button type="button" class="close-btn" aria-label="Fermer">&times;</button>
+            <video class="tuto-video" controls playsinline preload="none"></video>
+            <button type="button" class="tuto-unmute" hidden>
+                <i class="fas fa-volume-xmark" aria-hidden="true"></i> Activer le son
+            </button>
+        </div>
+    </div>
 
     <div id="legalModal" class="modal">
         <div class="modal-content legal-modal-content">

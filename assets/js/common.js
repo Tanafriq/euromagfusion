@@ -291,6 +291,43 @@ function initLegalModal() {
     });
 }
 
+// Modale du tutoriel vidéo de réservation (vidéo locale au format vertical)
+function initTutoModal() {
+    const modal = document.getElementById('tutoModal');
+    const unmuteBtn = modal?.querySelector('.tuto-unmute');
+
+    const setMuted = (video, muted) => {
+        video.muted = muted;
+        if (unmuteBtn) unmuteBtn.hidden = !muted;
+    };
+
+    unmuteBtn?.addEventListener('click', () => {
+        const video = modal.querySelector('.tuto-video');
+        setMuted(video, false);
+        video.play().catch(() => {});
+    });
+
+    ModalManager.register('tutoModal', {
+        onOpen: (modal, trigger) => {
+            const video = modal.querySelector('.tuto-video');
+            const src = trigger?.dataset.tuto;
+            if (!video || !src) return;
+            if (video.getAttribute('src') !== src) video.src = src;
+            video.currentTime = 0;
+            setMuted(video, false);
+            // Sans interaction préalable (ouverture automatique), les navigateurs refusent
+            // la lecture avec le son : on relance alors en muet avec un bouton pour l'activer.
+            video.play().catch(() => {
+                setMuted(video, true);
+                video.play().catch(() => {});
+            });
+        },
+        onClose: (modal) => {
+            modal.querySelector('.tuto-video')?.pause();
+        }
+    });
+}
+
 // ==================== NAVIGATION ====================
 function initNavigation() {
     const navbar = document.getElementById('navbar');
@@ -367,4 +404,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initNavigation();
     initLegalModal();
+    initTutoModal();
 });

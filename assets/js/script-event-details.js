@@ -353,7 +353,9 @@ const eventData = {
         price: '35€',
         image: './assets/img/banner-kamel-aziz.webp',
         imageMobile: './assets/img/event-kamel-aziz.webp',
-        reservation: 'https://yassir.go.link/gBydo',
+        reservation: 'https://yassir.go.link/wS2Xi',
+        tutorialVideo: './assets/video/tuto-billetterie-yassir.mp4',
+        autoplayTutorial: true,
         description: `
             <br />
             <p><strong>Euromag Fusion</strong> a le plaisir de vous inviter à la <strong>3ème édition des Nuits de la Casbah !</strong></p><br />
@@ -646,6 +648,13 @@ function populateEventContent(event) {
         document.getElementById('reservationButton').href = event.reservation;
         document.getElementById('reservationCard').hidden = false;
         document.getElementById('yassirNote').hidden = !/yassir/i.test(event.reservation);
+
+        const tutoButton = document.getElementById('tutoButton');
+        if (event.tutorialVideo) {
+            tutoButton.dataset.tuto = event.tutorialVideo;
+            tutoButton.hidden = false;
+            if (event.autoplayTutorial) ModalManager.open('tutoModal', tutoButton);
+        }
     }
 
     populateProgram(event.program);

@@ -448,6 +448,186 @@ h6 {
     color: var(--white);
 }
 
+/* Modale tutoriel vidéo (format vertical 9:16) */
+.tuto-modal-content {
+    width: min(90vw, calc(85vh * 9 / 16));
+    margin: 7.5vh auto;
+    background: #000;
+}
+
+.tuto-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    max-height: 85vh;
+    background: #000;
+}
+
+/* Bouton « Activer le son » quand la vidéo démarre automatiquement en muet */
+.tuto-unmute {
+    position: absolute;
+    left: 50%;
+    bottom: 70px;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    z-index: 5;
+    animation: tutoUnmuteBounce 1.6s ease-in-out infinite;
+}
+
+.tuto-unmute[hidden] {
+    display: none;
+}
+
+@keyframes tutoUnmuteBounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-4px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tuto-unmute {
+        animation: none;
+    }
+}
+
+/* Bouton d'ouverture du tutoriel (dégradé rose, distinct du bouton vert « Réserver ») */
+.tuto-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    max-width: 100%;
+    margin: var(--space-3) auto 0;
+    padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+    background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.tuto-btn[hidden] {
+    display: none;
+}
+
+.tuto-btn:focus-visible {
+    outline: 3px solid rgba(236, 72, 153, 0.45);
+    outline-offset: 3px;
+}
+
+.tuto-btn:active {
+    transform: scale(0.97);
+}
+
+.tuto-btn-label {
+    white-space: nowrap;
+}
+
+.tuto-btn-icon {
+    position: relative;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--white);
+    color: #ec4899;
+    font-size: 0.65rem;
+    padding-left: 2px;
+}
+
+/* Onde pulsée autour de l'icône pour attirer l'œil */
+.tuto-btn-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    animation: tutoPulse 2s ease-out infinite;
+}
+
+@keyframes tutoPulse {
+    from {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    to {
+        transform: scale(1.7);
+        opacity: 0;
+    }
+}
+
+.tuto-btn-duration {
+    flex-shrink: 0;
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.22);
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Variante pleine largeur (carte de réservation de la page détails) */
+.tuto-btn--light {
+    display: flex;
+    width: 100%;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile : pleine largeur, aligné sur les boutons « Lire plus » et « Réserver » */
+@media (max-width: 768px) {
+    .tuto-btn {
+        width: 100%;
+    }
+}
+
+/* Petits écrans : on masque la durée pour garder le libellé sur une ligne */
+@media (max-width: 360px) {
+    .tuto-btn {
+        font-size: 0.8rem;
+        padding-right: var(--space-3);
+    }
+
+    .tuto-btn-duration {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tuto-btn-icon::after {
+        animation: none;
+        opacity: 0;
+    }
+}
+
 /* ========================================
    SCROLL TO TOP & NOTIFICATIONS
    ======================================== */
@@ -641,5 +821,13 @@ h6 {
     .navbar,
     .scroll-top {
         display: none !important;
+    }
+}
+
+/* Survol uniquement sur les appareils avec pointeur (évite l'état collant au toucher) */
+@media (hover: hover) and (pointer: fine) {
+    .tuto-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(236, 72, 153, 0.55);
     }
 }

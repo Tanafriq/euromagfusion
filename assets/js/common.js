@@ -324,6 +324,12 @@ function initTutoModal() {
         if (isTouchDevice()) enterFullscreen(video);
     });
 
+    // La zone de contenu couvre tout l'écran : un clic sur le fond (hors vidéo/boutons) ferme
+    const content = modal?.querySelector('.tuto-modal-content');
+    content?.addEventListener('click', (e) => {
+        if (e.target === content) ModalManager.close('tutoModal');
+    });
+
     // En sortant du plein écran sur mobile, on referme la modale pour revenir à la page
     const video = modal?.querySelector('.tuto-video');
     const onFullscreenExit = () => {

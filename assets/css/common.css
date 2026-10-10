@@ -449,20 +449,19 @@ h6 {
 }
 
 /* Modale tutoriel vidéo (format vertical 9:16)
-   Pile verticale centrée : croix de fermeture, vidéo, bouton « Activer le son ».
+   Occupe tout l'écran : croix dans le coin haut droit, vidéo + « Activer le son » centrés.
    Les boutons restent hors de la vidéo pour ne pas masquer les contrôles natifs (iOS).
    dvh = hauteur réellement visible, hors barres du navigateur mobile (repli en vh). */
 .tuto-modal-content {
-    --tuto-reserved: 150px;
+    --tuto-reserved: 156px;
     position: absolute;
     inset: 0;
-    margin: auto;
-    width: min(92vw, 420px, calc((100vh - var(--tuto-reserved)) * 9 / 16));
-    width: min(92vw, 420px, calc((100dvh - var(--tuto-reserved)) * 9 / 16));
-    height: fit-content;
+    margin: 0;
+    padding: 72px var(--space-4) var(--space-4);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: var(--space-3);
     background: transparent;
     border-radius: 0;
@@ -471,14 +470,15 @@ h6 {
 }
 
 .tuto-modal-content .close-btn {
-    position: static;
-    align-self: flex-end;
-    flex-shrink: 0;
+    top: max(var(--space-4), env(safe-area-inset-top));
+    right: max(var(--space-4), env(safe-area-inset-right));
 }
 
 .tuto-video {
     display: block;
-    width: 100%;
+    flex-shrink: 0;
+    width: min(92vw, 420px, calc((100vh - var(--tuto-reserved)) * 9 / 16));
+    width: min(92vw, 420px, calc((100dvh - var(--tuto-reserved)) * 9 / 16));
     aspect-ratio: 9 / 16;
     border-radius: var(--radius-2xl);
     background: #000;

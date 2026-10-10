@@ -301,6 +301,11 @@ function initTutoModal() {
         if (unmuteBtn) unmuteBtn.hidden = !muted;
     };
 
+    // Son réactivé via les contrôles natifs (ex. icône haut-parleur d'iOS) : on masque le bouton
+    modal?.querySelector('.tuto-video')?.addEventListener('volumechange', (e) => {
+        if (!e.target.muted && unmuteBtn) unmuteBtn.hidden = true;
+    });
+
     unmuteBtn?.addEventListener('click', () => {
         const video = modal.querySelector('.tuto-video');
         setMuted(video, false);

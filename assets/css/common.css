@@ -448,56 +448,80 @@ h6 {
     color: var(--white);
 }
 
-/* Modale tutoriel vidéo (format vertical 9:16) */
+/* Modale tutoriel vidéo (format vertical 9:16)
+   Pile verticale centrée : croix de fermeture, vidéo, bouton « Activer le son ».
+   Les boutons restent hors de la vidéo pour ne pas masquer les contrôles natifs (iOS).
+   dvh = hauteur réellement visible, hors barres du navigateur mobile (repli en vh). */
 .tuto-modal-content {
-    width: min(90vw, calc(85vh * 9 / 16));
-    margin: 7.5vh auto;
-    background: #000;
+    --tuto-reserved: 150px;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: min(92vw, 420px, calc((100vh - var(--tuto-reserved)) * 9 / 16));
+    width: min(92vw, 420px, calc((100dvh - var(--tuto-reserved)) * 9 / 16));
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+}
+
+.tuto-modal-content .close-btn {
+    position: static;
+    align-self: flex-end;
+    flex-shrink: 0;
 }
 
 .tuto-video {
     display: block;
     width: 100%;
     aspect-ratio: 9 / 16;
-    max-height: 85vh;
+    border-radius: var(--radius-2xl);
     background: #000;
+    box-shadow: var(--shadow-xl);
 }
 
 /* Bouton « Activer le son » quand la vidéo démarre automatiquement en muet */
 .tuto-unmute {
-    position: absolute;
-    left: 50%;
-    bottom: 70px;
-    transform: translateX(-50%);
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
+    min-height: 44px;
+    padding: var(--space-2) var(--space-5);
     background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
     color: var(--white);
     border: none;
     border-radius: var(--radius-full);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 4px 14px rgba(236, 72, 153, 0.45);
     font: inherit;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
     white-space: nowrap;
     cursor: pointer;
-    z-index: 5;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     animation: tutoUnmuteBounce 1.6s ease-in-out infinite;
 }
 
+/* Masqué sans libérer sa place : la vidéo ne saute pas quand le son est activé */
 .tuto-unmute[hidden] {
-    display: none;
+    display: inline-flex;
+    visibility: hidden;
+    animation: none;
 }
 
 @keyframes tutoUnmuteBounce {
     0%, 100% {
-        transform: translateX(-50%) translateY(0);
+        transform: translateY(0);
     }
 
     50% {
-        transform: translateX(-50%) translateY(-4px);
+        transform: translateY(-4px);
     }
 }
 

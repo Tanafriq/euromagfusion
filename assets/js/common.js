@@ -338,6 +338,13 @@ function initTutoModal() {
     video?.addEventListener('webkitendfullscreen', onFullscreenExit);
     document.addEventListener('fullscreenchange', onFullscreenExit);
 
+    // Fin de la vidéo : on quitte le plein écran éventuel et on referme la modale
+    video?.addEventListener('ended', () => {
+        if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+        else if (video.webkitDisplayingFullscreen) video.webkitExitFullscreen?.();
+        ModalManager.close('tutoModal');
+    });
+
     ModalManager.register('tutoModal', {
         onOpen: (modal, trigger) => {
             const video = modal.querySelector('.tuto-video');

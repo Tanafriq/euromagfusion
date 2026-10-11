@@ -350,7 +350,7 @@ const eventData = {
         location: 'Théâtre de la Tour Eiffel, 4 Square Rapp, 75007 Paris',
         type: 'Concert',
         time: '19h00 - 23h00',
-        price: '35€',
+        price: '35.5€',
         image: './assets/img/banner-kamel-aziz.webp',
         imageMobile: './assets/img/event-kamel-aziz.webp',
         reservation: 'https://yassir.go.link/wS2Xi',

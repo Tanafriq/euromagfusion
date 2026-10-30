@@ -353,9 +353,6 @@ const eventData = {
         price: '35.5€',
         image: './assets/img/banner-kamel-aziz.webp',
         imageMobile: './assets/img/event-kamel-aziz.webp',
-        reservation: 'https://yassir.go.link/wS2Xi',
-        tutorialVideo: './assets/video/tuto-billetterie-yassir.mp4',
-        autoplayTutorial: true,
         description: `
             <br />
             <p><strong>Euromag Fusion</strong> a le plaisir de vous inviter à la <strong>3ème édition des Nuits de la Casbah !</strong></p><br />
